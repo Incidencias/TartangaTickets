@@ -29,6 +29,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(
             name="findAllDepartmentsOrderByName",
             query="SELECT d FROM Department d order by d.name"
+    ),
+    @NamedQuery(
+            name="findDepartmentsByCodeOrderByName",
+            query="SELECT d FROM Department d where d.code = :code order by d.name"
+    ),
+    @NamedQuery(
+            name="findDepartmentsByNameOrderByName",
+            query="SELECT d FROM Department d where d.name = :name order by d.name"
     )
 })
 
