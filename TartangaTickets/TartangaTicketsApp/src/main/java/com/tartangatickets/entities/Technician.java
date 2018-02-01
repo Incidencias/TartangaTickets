@@ -33,7 +33,7 @@ public class Technician extends User implements Serializable {
     
     private Boolean isAdmin;
     @OneToMany(mappedBy="technician",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Tickets> assignedTickets;
+    private List<Ticket> assignedTickets;
 
     public Boolean getIsAdmin() {
         return isAdmin;
@@ -43,11 +43,11 @@ public class Technician extends User implements Serializable {
         this.isAdmin = isAdmin;
     }
 
-    public List<Tickets> getAssignedTickets() {
+    public List<Ticket> getAssignedTickets() {
         return assignedTickets;
     }
 
-    public void setAssignedTickets(List<Tickets> assignedTickets) {
+    public void setAssignedTickets(List<Ticket> assignedTickets) {
         this.assignedTickets = assignedTickets;
     }
     
