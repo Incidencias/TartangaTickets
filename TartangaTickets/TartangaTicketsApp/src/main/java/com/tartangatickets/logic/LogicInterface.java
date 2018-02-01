@@ -5,6 +5,8 @@
  */
 package com.tartangatickets.logic;
 
+import com.tartangatickets.entities.Credential;
+
 /**
  *
  * @author ubuntu
