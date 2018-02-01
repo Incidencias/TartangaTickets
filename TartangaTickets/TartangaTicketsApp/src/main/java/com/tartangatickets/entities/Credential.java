@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @author ionut
  */
 @Entity(name="Credential")
-@Table(name="credentials", schema="tartanga_tickets_db")
+@Table(name="credentials", schema="tartanga_ticket_db")
 @NamedQueries({
     @NamedQuery(
         name="findAllCredentials",
