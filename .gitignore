@@ -1,4 +1,2 @@
-*.bin
-*.lock
 /TartangaTickets/TartangaTicketsApp/build/
 /TartangaTickets/.nb-gradle/
