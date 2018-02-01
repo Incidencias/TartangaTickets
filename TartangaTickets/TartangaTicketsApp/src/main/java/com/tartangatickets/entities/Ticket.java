@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.tartangatickets.entities;
 
 import java.io.Serializable;
@@ -5,12 +10,29 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import static javax.persistence.EnumType.ORDINAL;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+
+
 
 /**
+ *  Mantiene los datos que contienen los tickets
+ *  <ul>
+ *      <li><strong>id</strong>Número de identificación  </li>
+ *      <li><strong>createDate</strong> Fecha de creación del pedido</li>
+ *      <li><strong>endDate</strong> Fecha de  </li>
+ *      <li><strong>repartidors</strong> Lista de repartidores {@link  gestionrepartidores.entity.Repartidor} que reparten en ese área</li>
+ *      <li><strong>pedidos</strong> Collección de pedidos {@link  gestionrepartidores.entity.Pedido} existentes en ese área</li>
+ *  </ul>
  *
  * @author Sergio López
  */
@@ -18,33 +40,71 @@ import javax.persistence.Table;
 @Table(name="tickets", schema="tartanga_ticket_db")
 @NamedQueries({
     @NamedQuery(
-            name="findAllTicket",
-            query="SELECT u FROM Ticket u ORDER BY u.createDate"
+            name="findAllTickets",
+            query="SELECT u FROM Ticket u"
     )
-})
-public class Ticket implements Serializable{
-    
-    
+ })
+
+public class Ticket implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Date createDate;
     private Date endDate;
     private String machineCode;
     private String department;
     private String location;
+    @Enumerated(ORDINAL)
     private State state;
     @ManyToOne
     private User user;
-    @OneToMany(mappedBy="id",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy ="id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages;
     @ManyToOne
     private Technician technician;
 
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Ticket)) {
+            return false;
+        }
+        Ticket other = (Ticket) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.tartangatickets.entities.Ticket[ id=" + id + " ]";
     }
 
     public Date getCreateDate() {
