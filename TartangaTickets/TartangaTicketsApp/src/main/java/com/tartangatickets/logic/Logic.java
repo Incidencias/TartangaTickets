@@ -15,4 +15,5 @@ public class Logic implements LogicInterface {
     
     private static final Logger LOGGER = Logger.getLogger("com.tartangatickets.logic");
     
+    
 }

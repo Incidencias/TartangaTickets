@@ -11,4 +11,6 @@ package com.tartangatickets.logic;
  */
 public interface LogicInterface {
     
+    
+    
 }
