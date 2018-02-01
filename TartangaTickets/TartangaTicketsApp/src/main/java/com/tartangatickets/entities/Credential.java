@@ -31,7 +31,7 @@ public class Credential implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String login;
-    private byte[] password;
+    private Byte[] password;
     private Date lastAccess;
     private Date lastPassChange;
 
@@ -43,11 +43,11 @@ public class Credential implements Serializable {
         this.login = login;
     }
 
-    public byte[] getPassword() {
+    public Byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(byte[] password) {
+    public void setPassword(Byte[] password) {
         this.password = password;
     }
 
