@@ -1,16 +1,16 @@
+package com.tartangatickets.utils;
+
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.SimpleEmail;
 
-// Java program to send simple email using apache commons email
-// Uses the Gmail SMTP servers
-public class EmailSample {
+public class SendEmail {
     private static final String HOST = "smtp.gmail.com";
     private static final int PORT = 465;
     private static final boolean SSL_FLAG = true; 
 
     public static void main(String[] args) {
-        EmailSample sender = new EmailSample();
+        SendEmail sender = new SendEmail();
         sender.sendSimpleEmail();
     }
 
@@ -20,7 +20,8 @@ public class EmailSample {
         String password = "equipoa2018";
         
         String fromAddress="incidencias.tartanga@gmail.com";
-        String toAddress ="Miguelaxierlp@gmail.com";
+//        String toAddress ="Miguelaxierlp@gmail.com";
+        String toAddress ="zzz@gmail.com";
         String subject = "Prueba Email";
         String message = "Que pasa ninio cebolleta";
         
