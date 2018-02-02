@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-configuration>
+    <session-factory>
+        
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/tartanga_ticket_db?zeroDateTimeBehavior=convertToNull</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">ubuntu</property>
+    
+        <property name="hibernate.id.new_generator_mappings">true</property>  
+        <property name="show_sql">true</property>
+        <property name="connection.pool_size">10</property> 
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        
+        <mapping class="com.tartangatickets.entities.Credential"></mapping>
+        <mapping class="com.tartangatickets.entities.Department"></mapping>
+        <mapping class="com.tartangatickets.entities.Message"></mapping>
+        <mapping class="com.tartangatickets.entities.Technician"></mapping>
+        <mapping class="com.tartangatickets.entities.Ticket"></mapping>
+        <mapping class="com.tartangatickets.entities.User"></mapping>      
+        
+    </session-factory>
+</hibernate-configuration>
