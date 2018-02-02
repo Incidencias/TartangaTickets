@@ -22,9 +22,9 @@ public class Message implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String body;
-    @ManyToOne(mappedBy="message", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne
     private Ticket ticket;
-    @ManyToOne(mappedBy="message", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne
     private User user;
 
     public Integer getId() {

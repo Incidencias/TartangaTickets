@@ -12,6 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -85,7 +86,7 @@ public class User implements Serializable {
     private String lastName2;
     @NotNull
     private String email;
-    @OneToOne
+    @ManyToOne
     private String department;
     @OneToOne
     private Credential credential;
