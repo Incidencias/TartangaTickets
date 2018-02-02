@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.AppBar?>
+<?import com.gluonhq.charm.glisten.control.Icon?>
+<?import com.gluonhq.charm.glisten.mvc.View?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<View maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AppBar titleText="Usuarios" BorderPane.alignment="CENTER">
+         <navIcon>
+            <Button>
+               <graphic>
+                  <Icon content="ARROW_BACK" />
+               </graphic>
+            </Button>
+         </navIcon>
+         <menuItems>
+            <MenuItem text="Menu Item 1" />
+            <MenuItem text="Menu Item 2" />
+         </menuItems>
+      </AppBar>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="289.0" text="Crear nuevo usuario">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <graphic>
+                  <Icon content="HELP_OUTLINE" />
+               </graphic>
+            </Button>
+            <HBox prefHeight="25.0" prefWidth="295.0">
+               <children>
+                  <Label alignment="CENTER" style="-fx-font-size: 15;" text="Lista usuarios:" />
+               </children>
+            </HBox>
+            <ListView prefHeight="403.0" prefWidth="295.0" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="20.0" right="20.0" top="30.0" />
+         </padding>
+      </VBox>
+   </center>
+</View>
