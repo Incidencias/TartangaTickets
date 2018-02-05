@@ -1,6 +1,5 @@
 package com.tartangatickets.entities;
 
-import com.sun.istack.internal.NotNull;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -35,42 +34,37 @@ import javax.persistence.Table;
 @Table(name="users", schema="tartanga_ticket_db")
 @NamedQueries({
     @NamedQuery(
-        name="findAllUsersOrderByLastName1LastName2Name",
-        query="SELECT u FROM User u order by u.lastName1, u.lastName2, u.name"
+            name="findAllUsers",
+            query="SELECT u FROM User u order by u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
-        name="findUserById",
-        query="SELECT u FROM User u WHERE u.id = :id order by u.id"
+            name="findUserById",
+            query="SELECT u FROM User u WHERE u.id = :id"
     ),
     @NamedQuery(
-        name="findUserByNameOrderByLastName1LastName2Name",
-        query="SELECT u FROM User u WHERE u.name = :name order by u.lastName1, u.lastName2, u.name"
+            name="findUsersByName",
+            query="SELECT u FROM User u WHERE u.name = :name order by u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
-        name="findUserByLastName1OrderByLastName1LastName2Name",
-        query="SELECT u FROM User u WHERE u.lastName1 = :lastName1 order by u.lastName1, u.lastName2, u.name"
+            name="findUsersByLastName1",
+            query="SELECT u FROM User u WHERE u.lastName1 = :lastName1 order by u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
-        name="findUserByLastName2OrderByLastName1LastName2Name",
-        query="SELECT u FROM User u WHERE u.lastName2 = :lastName2 order by u.lastName1, u.lastName2, u.name"
+            name="findUsersByLastName2",
+            query="SELECT u FROM User u WHERE u.lastName2 = :lastName2 order by u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
-        name="findUserByEmailOrderByLastName1LastName2Name",
-        query="SELECT u FROM User u WHERE u.email = :email order by u.lastName1, u.lastName2, u.name"
+            name="findUsersByEmail",
+            query="SELECT u FROM User u WHERE u.email = :email order by u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
-        name="findUserByEmailOrderByLastName1LastName2Name",
-        query="SELECT u FROM User u WHERE u.department = :department order by u.lastName1, u.lastName2, u.name"
+            name="findUsersByDepartment",
+            query="SELECT u FROM User u WHERE u.department = :department order by u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
-        name="findUserByDepartmentOrderByLastName1LastName2Name",
-        query="SELECT u FROM User u WHERE u.department = :department order by u.lastName1, u.lastName2, u.name"
-    ),
-    @NamedQuery(
-        name="findUserByCredentialLoginOrderByLastName1LastName2Name",
-        query="SELECT u FROM User u WHERE u.credential.login = :login order by u.lastName1, u.lastName2, u.name"
+            name="findUserByLogin",
+            query="SELECT u FROM User u WHERE u.credential.login = :login AND u.credential.password = :password"
     )
-    
 })
 public class User implements Serializable {
 
@@ -78,16 +72,12 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @NotNull
     private String name;
-    @NotNull
     private String lastName1;
-    @NotNull
     private String lastName2;
-    @NotNull
     private String email;
     @ManyToOne
-    private String department;
+    private Department department;
     @OneToOne
     private Credential credential;
     @OneToMany(mappedBy="user",cascade = CascadeType.ALL, orphanRemoval = true)
@@ -148,11 +138,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 

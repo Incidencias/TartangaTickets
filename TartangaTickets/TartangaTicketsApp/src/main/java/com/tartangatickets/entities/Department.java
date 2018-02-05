@@ -5,14 +5,12 @@
  */
 package com.tartangatickets.entities;
 
-import com.sun.istack.internal.NotNull;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *The Department class encapsulates the data of each department:
@@ -48,7 +46,6 @@ public class Department implements Serializable {
     
     @Id
     private String code;
-    @NotNull
     private String name;
     
     public Department() {
