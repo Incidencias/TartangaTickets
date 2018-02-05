@@ -5,6 +5,9 @@ import com.tartangatickets.views.SecondaryView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.visual.Swatch;
+import com.tartangatickets.views.Modificar_usuarioView;
+import com.tartangatickets.views.Nuevo_usuarioView;
+import com.tartangatickets.views.UsuariosView;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
@@ -17,10 +20,10 @@ public class TartangaTickets extends MobileApplication {
     
     @Override
     public void init() {
-        addViewFactory(PRIMARY_VIEW, () -> new PrimaryView(PRIMARY_VIEW).getView());
-        addViewFactory(SECONDARY_VIEW, () -> new SecondaryView(SECONDARY_VIEW).getView());
-        
-        addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
+        addViewFactory(PRIMARY_VIEW, () -> new UsuariosView(PRIMARY_VIEW).getView());
+        addViewFactory(PRIMARY_VIEW, () -> new Modificar_usuarioView(PRIMARY_VIEW).getView());
+        addViewFactory(PRIMARY_VIEW, () -> new Nuevo_usuarioView(PRIMARY_VIEW).getView());
+       
     }
 
     @Override
