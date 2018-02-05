@@ -5,11 +5,16 @@
  */
 package com.tartangatickets.logic;
 
+import com.tartangatickets.entities.Credential;
+import com.tartangatickets.entities.Message;
+import com.tartangatickets.entities.Ticket;
+import com.tartangatickets.entities.User;
 import com.tartangatickets.utils.HibernateUtil;
 import java.util.logging.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import java.util.List;
 
 /**
  *
@@ -41,7 +46,7 @@ public class Logic implements LogicInterface {
         try {
             tx = session.beginTransaction();
             session.persist(message);
-            Ticket ticket = message.getTicket;
+            Ticket ticket = message.getTicket();
             session.merge(ticket);
             tx.commit();
         } catch (Exception e) {
@@ -67,8 +72,8 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public Object findAllTickets() throws Exception {
-        List<Ticket> tickets = null
+    public List<Ticket> findAllTickets() throws Exception {
+        List<Ticket> tickets = null;
         try {
             tx = session.beginTransaction();
             tickets = session.createNamedQuery("findAllTickets")
@@ -95,7 +100,7 @@ public class Logic implements LogicInterface {
     public void createUser(User user) throws Exception {
         try {
             tx = session.beginTransaction();
-            session.persist(ticket);
+            session.persist(user);
             Credential credential = user.getCredential();
             session.persist(credential);
             tx.commit();
@@ -118,8 +123,8 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public Object findAllUsers() throws Exception {
-        List<User> users = null
+    public List<User> findAllUsers() throws Exception {
+        List<User> users = null;
         try {
             tx = session.beginTransaction();
             users = session.createNamedQuery("findAllUsers")
@@ -161,7 +166,5 @@ public class Logic implements LogicInterface {
     @Override
     public void authenticate(String login, String password) throws Exception {
         // TODO
-    }
-    
-    
+    }   
 }

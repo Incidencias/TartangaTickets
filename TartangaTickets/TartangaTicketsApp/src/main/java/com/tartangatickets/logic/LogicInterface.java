@@ -6,6 +6,10 @@
 package com.tartangatickets.logic;
 
 import com.tartangatickets.entities.Credential;
+import com.tartangatickets.entities.Message;
+import com.tartangatickets.entities.Ticket;
+import com.tartangatickets.entities.User;
+import java.util.List;
 
 /**
  *
@@ -25,4 +29,5 @@ public interface LogicInterface {
     public void assignTicket(Ticket ticket) throws Exception;
     public void changeState(Ticket ticket) throws Exception;
     public void authenticate(String login, String password) throws Exception;
+       
 }
