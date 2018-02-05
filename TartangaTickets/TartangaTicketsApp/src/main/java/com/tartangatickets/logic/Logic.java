@@ -5,6 +5,7 @@
  */
 package com.tartangatickets.logic;
 
+
 import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Message;
@@ -14,6 +15,7 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.utils.EmailSender;
 import com.tartangatickets.utils.HibernateUtil;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
