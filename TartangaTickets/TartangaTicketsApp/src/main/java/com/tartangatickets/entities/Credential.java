@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -29,8 +31,10 @@ public class Credential implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String login;
-    private Byte[] password;
+    private String password;
+    @Temporal(TemporalType.DATE)
     private Date lastAccess;
+    @Temporal(TemporalType.DATE)
     private Date lastPassChange;
 
     public String getLogin() {
@@ -41,11 +45,11 @@ public class Credential implements Serializable {
         this.login = login;
     }
 
-    public Byte[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(Byte[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

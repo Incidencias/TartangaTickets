@@ -5,7 +5,6 @@
  */
 package com.tartangatickets.entities;
 
-import com.sun.istack.internal.NotNull;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -47,7 +46,6 @@ public class Department implements Serializable {
     
     @Id
     private String code;
-    @NotNull
     private String name;
     
     public Department() {
