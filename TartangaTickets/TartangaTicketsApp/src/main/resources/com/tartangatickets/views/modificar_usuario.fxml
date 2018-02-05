@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.AppBar?>
 <?import com.gluonhq.charm.glisten.control.DropdownButton?>
-<?import com.gluonhq.charm.glisten.control.Icon?>
 <?import com.gluonhq.charm.glisten.control.TextField?>
 <?import com.gluonhq.charm.glisten.mvc.View?>
 <?import javafx.geometry.Insets?>
@@ -45,7 +43,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <TextField />
+                              <TextField fx:id="tfID" />
                            </children>
                         </VBox>
                      </children>
@@ -59,7 +57,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <TextField />
+                              <TextField fx:id="tfNombre" />
                            </children>
                         </VBox>
                      </children>
@@ -76,7 +74,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <TextField />
+                              <TextField fx:id="tfApellido1" />
                            </children>
                         </VBox>
                      </children>
@@ -90,7 +88,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <TextField />
+                              <TextField fx:id="tfApellido2" />
                            </children>
                         </VBox>
                      </children>
@@ -102,9 +100,9 @@
                               <Label text="Email:" />
                            </children>
                         </VBox>
-                        <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
+                        <VBox fx:id="tfEmail" alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <TextField />
+                              <TextField fx:id="tfEmail" />
                            </children>
                         </VBox>
                      </children>
@@ -118,7 +116,7 @@
                         </VBox>
                         <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <DropdownButton prefHeight="27.0" prefWidth="104.0">
+                              <DropdownButton fx:id="dbDepartamento" prefHeight="27.0" prefWidth="104.0">
                                   <items>
                                       <MenuItem text="Choice 1" />
                                       <MenuItem text="Choice 2" />
@@ -138,7 +136,7 @@
                         </VBox>
                         <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <CheckBox mnemonicParsing="false" />
+                              <CheckBox fx:id="cbTecnico" mnemonicParsing="false" />
                            </children>
                         </VBox>
                      </children>
@@ -157,7 +155,7 @@
    <bottom>
       <HBox alignment="TOP_CENTER" prefHeight="79.0" prefWidth="335.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="122.0" layoutY="42.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="112.0" text="Modificar" />
+            <Button fx:id="btModifyUser" layoutX="122.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleButtonModifyUser" prefHeight="36.0" prefWidth="112.0" text="Modificar" />
          </children>
       </HBox>
    </bottom>
