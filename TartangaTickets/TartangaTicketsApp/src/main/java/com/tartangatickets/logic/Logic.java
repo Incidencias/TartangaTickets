@@ -5,7 +5,9 @@
  */
 package com.tartangatickets.logic;
 
+import com.tartangatickets.entities.User;
 import com.tartangatickets.utils.HibernateUtil;
+import java.util.List;
 import java.util.logging.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -118,8 +120,8 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public Object findAllUsers() throws Exception {
-        List<User> users = null
+    public List<User> findAllUsers() throws Exception {
+        List<User> users = null;
         try {
             tx = session.beginTransaction();
             users = session.createNamedQuery("findAllUsers")

@@ -9,9 +9,13 @@ package com.tartangatickets.views;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
+import com.tartangatickets.logic.Logic;
+import com.tartangatickets.logic.LogicInterface;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 /**
@@ -29,6 +33,8 @@ public class UsuariosController {
     @FXML
     private View usuarios;
     @FXML
+    private ListView lvUserList;
+    private LogicInterface logic = new Logic();
     
     public void initialize() {
         usuarios.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -37,6 +43,9 @@ public class UsuariosController {
                 
             }
         });
+        
+        lvUserList.setItems(FXCollections.observableArrayList(logic.findAllUsers()));
+        
     }
     
     private void handleButtonNewUser(){

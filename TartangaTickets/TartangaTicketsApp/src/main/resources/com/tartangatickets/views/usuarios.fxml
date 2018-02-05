@@ -29,7 +29,7 @@
                   <Label alignment="CENTER" style="-fx-font-size: 15;" text="Lista usuarios:" />
                </children>
             </HBox>
-            <ListView prefHeight="403.0" prefWidth="295.0" fx:id="userList" />
+            <ListView prefHeight="403.0" prefWidth="295.0" fx:id="lvUserList" />
          </children>
          <opaqueInsets>
             <Insets />

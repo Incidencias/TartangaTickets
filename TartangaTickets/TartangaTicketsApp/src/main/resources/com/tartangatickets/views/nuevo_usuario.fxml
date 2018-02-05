@@ -43,20 +43,6 @@
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="Contraseña:" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
-                           <children>
-                              <TextField fx:id="tfPass" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="335.0">
-                     <children>
-                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
-                           <children>
                               <Label text="Nombre:" />
                            </children>
                         </VBox>
