@@ -5,7 +5,6 @@
 <?import com.gluonhq.charm.glisten.mvc.View?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
@@ -54,9 +53,9 @@
                         <Label fx:id="lblUser" text="Usuario:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblUserTicket" />
+                        <Label fx:id="lblUserTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -68,9 +67,9 @@
                         <Label fx:id="lblTechnician" text="Tecnico:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblTechnicianTicket" />
+                        <Label fx:id="lblTechnicianTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -82,9 +81,9 @@
                         <Label fx:id="lblDepartment" text="Departamento:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblDepartmentTicket" />
+                        <Label fx:id="lblDepartmentTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -96,9 +95,9 @@
                         <Label fx:id="lblLocation" text="Ubicacion:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblLocationTicket" />
+                        <Label fx:id="lblLocationTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -110,9 +109,9 @@
                         <Label fx:id="lblMachineCode" prefHeight="18.0" prefWidth="140.0" text="Codigo maquina:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblMachineCodeTicket" />
+                        <Label fx:id="lblMachineCodeTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -124,9 +123,9 @@
                         <Label fx:id="lblState" text="Estado:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblStateTicket" />
+                        <Label fx:id="lblStateTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -138,9 +137,9 @@
                         <Label fx:id="lblCreateDate" text="Fecha creacion:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="120.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="190.0">
                      <children>
-                        <DatePicker fx:id="datePCreateDateTicket" />
+                        <Label fx:id="lblStateTicket1" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -152,21 +151,16 @@
                         <Label fx:id="lblEndDate" text="Fecha finalizacion:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="120.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="190.0">
                      <children>
-                        <DatePicker fx:id="datePEndDateTicket" />
+                        <Label fx:id="lblStateTicket2" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
-                     <children>
-                        <Button fx:id="btnSendMessage" mnemonicParsing="false" text="Enviar mensaje" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="120.0" />
+                  <Button fx:id="btnSendMessage" mnemonicParsing="false" prefHeight="32.0" prefWidth="94.0" text="Mensajes" />
                </children>
             </HBox>
          </children>
