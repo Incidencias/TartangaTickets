@@ -78,7 +78,6 @@ public class Ticket implements Serializable {
     @ManyToOne
     private Technician technician;
 
-
     public Integer getId() {
         return id;
     }

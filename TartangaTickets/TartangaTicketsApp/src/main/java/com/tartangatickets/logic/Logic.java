@@ -202,7 +202,13 @@ public class Logic implements LogicInterface {
         try {
             tx = session.beginTransaction();
             String newPassword = setPassword(user);
-            session.persist(user);
+            // TODO this needed
+            if (user instanceof Technician) {
+                Technician technician = (Technician) user;
+                session.persist(technician);
+            } else {
+                session.persist(user);
+            }
             tx.commit();
             LOGGER.info("Sending email");
             EmailSender.sendEmail(user.getCredential().getLogin(), newPassword);
@@ -282,6 +288,7 @@ public class Logic implements LogicInterface {
             tx = session.beginTransaction();
             session.merge(ticket);
             tx.commit();
+            // TODO send message to user
         } catch (Exception e) {
             tx.rollback();
             LOGGER.log(Level.SEVERE,
@@ -293,36 +300,61 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public User authenticate(String login, Byte[] password) throws Exception {
+    public User authenticate(String login, String password) throws Exception {
+        LOGGER.info("Authenticating user");
         User user = null;
         try {
+            String passwordHash = PasswordHandler.getHash(password, login);
             user = (User) session.createNamedQuery("findUserByLogin")
-                    .setParameter("credential.login", login)
-                    .setParameter("credential.password", password)
+                    .setParameter("login", login)
+                    .setParameter("password", passwordHash)
                     .getSingleResult();
         } catch (Exception e) {
+            LOGGER.log(Level.SEVERE,
+                "Error authenticating user. {0}",
+                e.getMessage());
             throw new Exception();
         }
+        LOGGER.info("Log in successful");
         return user;
     }   
-
+    
+    /*
     @Override
     public void createTechnician(Technician technician) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void deleteTechnician(Technician technician) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void updateTechnician(Technician technician) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    */
 
     @Override
-    public Department findDepartmentByName(String departmentName) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Department> findAllDepartments() throws Exception {
+        LOGGER.info("Fetching department by name");
+        List<Department> departments = null;
+        try {
+            tx = session.beginTransaction();
+            departments = session.createNamedQuery("findAllDepartments")
+                    .getResultList();
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            LOGGER.log(Level.SEVERE,
+                "Error afetching departments. {0}",
+                e.getMessage());
+            throw new Exception();
+        }
+        LOGGER.log(Level.INFO,
+                "{0} deparments found",
+                departments.size());
+        return departments;
     }
 }

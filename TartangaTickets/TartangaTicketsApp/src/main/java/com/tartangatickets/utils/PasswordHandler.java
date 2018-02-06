@@ -8,9 +8,11 @@ package com.tartangatickets.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.codec.binary.Hex;
 
 /**
  *
@@ -24,21 +26,12 @@ public class PasswordHandler {
     private static final char[] CHARACTERS = 
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&+=".toCharArray();
     
-    public static String getHash(String password, String salt) throws Exception {
+    public static String getHash(String password, String salt) throws NoSuchAlgorithmException {
         MessageDigest md;
         String saltedPassword = salt + password;
         byte[] passwordBytes = saltedPassword.getBytes();
-        StringBuilder sb;
-        try {
-            md = MessageDigest.getInstance(SHA_512);
-            md.update(passwordBytes);
-            sb = new StringBuilder();
-            for (byte theByte : md.digest()) 
-                sb.append(String.format("%02x", theByte & 0xff));          
-        } catch (NoSuchAlgorithmException e) {
-            throw new Exception();
-        }
-        return sb.toString();
+        md = MessageDigest.getInstance(SHA_512);
+        return Arrays.toString(Hex.encodeHex(md.digest(passwordBytes)));
     }
     
     public static boolean checkSecurity(String passwrod) {
