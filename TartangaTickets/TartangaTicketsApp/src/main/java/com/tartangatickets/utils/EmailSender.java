@@ -14,11 +14,11 @@ public class EmailSender {
     /*
     public static void main(String[] args) {
         EmailSender sender = new EmailSender();
-        sender.sendSimpleEmail();
+        sender.sendEmail();
     }
     */
 
-    public static void sendSimpleEmail(String toAddress) {
+    public static void sendEmail(String toAddress) {
         
         String password = "equipoa2018";
         
@@ -40,5 +40,9 @@ public class EmailSender {
             System.out.println("Unable to send email");
             System.out.println(ex);
         }
+    }
+    
+    public static void sendEmail(String toAddress, String newPassword) {
+        // TODO
     }
 }

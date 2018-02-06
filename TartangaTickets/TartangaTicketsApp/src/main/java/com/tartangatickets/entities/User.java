@@ -4,25 +4,21 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 
 /**
  *The User class encapsulates the data of each user:
  * <ul>
- *  <li><stron>id</strong> is the identifier of the user.</li>
  *  <li><stron>name</strong> is the name of the user.</li>
  *  <li><stron>lastName1</strong> is the fist last name of the user.</li>
  *  <li><stron>lastName2</strong> is the second last name of the user.</li>
- *  <li><stron>email</strong>is the email of the user.</li>
  *  <li><stron>department</strong>is the code department of the user.</li>
  *  <li><stron>credential</strong>is the Credential of the user.</li>
  *  <li><stron>createdTickets</strong>are the created tickets of the user.</li>
@@ -39,7 +35,7 @@ import javax.persistence.Table;
     ),
     @NamedQuery(
             name="findUserById",
-            query="SELECT u FROM User u WHERE u.id = :id"
+            query="SELECT u FROM User u WHERE u.credential.login = :login"
     ),
     @NamedQuery(
             name="findUsersByName",
@@ -54,10 +50,6 @@ import javax.persistence.Table;
             query="SELECT u FROM User u WHERE u.lastName2 = :lastName2 order by u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
-            name="findUsersByEmail",
-            query="SELECT u FROM User u WHERE u.email = :email order by u.lastName1, u.lastName2, u.name"
-    ),
-    @NamedQuery(
             name="findUsersByDepartment",
             query="SELECT u FROM User u WHERE u.department = :department order by u.lastName1, u.lastName2, u.name"
     ),
@@ -69,17 +61,15 @@ import javax.persistence.Table;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @MapsId
+    private Credential credential;
     private String name;
     private String lastName1;
     private String lastName2;
-    private String email;
     @ManyToOne
     private Department department;
-    @OneToOne
-    private Credential credential;
     @OneToMany(mappedBy="user",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> createdTickets;
     
@@ -87,23 +77,12 @@ public class User implements Serializable {
         
     }
     
-    public User(Integer id, String name, String lastName1, String lastName2,
-        String email, Credential credential, List<Ticket> createdTickets){
-        this.id = id;
+    public User(String name, String lastName1, String lastName2, Credential credential, List<Ticket> createdTickets){
         this.name = name;
         this.lastName1 = lastName1;
         this.lastName2 = lastName2;
-        this.email = email;
         this.credential = credential;
         this.createdTickets = createdTickets;
-    }
-    
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
     
     public String getName() {
@@ -128,14 +107,6 @@ public class User implements Serializable {
 
     public void setLastName2(String lastName2) {
         this.lastName2 = lastName2;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Department getDepartment() {
@@ -165,7 +136,7 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (credential.getLogin() != null ? credential.getLogin().hashCode() : 0);
         return hash;
     }
 
@@ -176,7 +147,7 @@ public class User implements Serializable {
             return false;
         }
         User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.credential.getLogin() == null && other.credential.getLogin() != null) || (this.credential.getLogin() != null && !this.credential.getLogin().equals(other.credential.getLogin()))) {
             return false;
         }
         return true;
@@ -184,7 +155,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tartangatickets.entities.User[ id=" + id + " ]";
+        return "com.tartangatickets.entities.User[ id=" + credential.getLogin() + " ]";
     }
-    
 }
