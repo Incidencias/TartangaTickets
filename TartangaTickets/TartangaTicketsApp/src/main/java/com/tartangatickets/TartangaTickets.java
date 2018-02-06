@@ -1,9 +1,9 @@
 package com.tartangatickets;
 
-import com.tartangatickets.views.PrimaryView;
-import com.tartangatickets.views.SecondaryView;
+import com.tartangatickets.views.LoginView;
+import com.tartangatickets.views.RecoverPassView;
+import com.tartangatickets.views.MainMenuView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
-import com.gluonhq.charm.glisten.layout.layer.SidePopupView;
 import com.gluonhq.charm.glisten.visual.Swatch;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -11,16 +11,15 @@ import javafx.scene.image.Image;
 
 public class TartangaTickets extends MobileApplication {
 
-    public static final String PRIMARY_VIEW = HOME_VIEW;
-    public static final String SECONDARY_VIEW = "Secondary View";
-    public static final String MENU_LAYER = "Side Menu";
+    public static final String LOGIN_VIEW = HOME_VIEW;
+    public static final String RECOVERPASS_VIEW = "RecoverPassView";
+    public static final String MAINMENU_VIEW = "MainMenuView";
     
     @Override
     public void init() {
-        addViewFactory(PRIMARY_VIEW, () -> new PrimaryView(PRIMARY_VIEW).getView());
-        addViewFactory(SECONDARY_VIEW, () -> new SecondaryView(SECONDARY_VIEW).getView());
-        
-        addLayerFactory(MENU_LAYER, () -> new SidePopupView(new DrawerManager().getDrawer()));
+        addViewFactory(LOGIN_VIEW, () -> new LoginView(LOGIN_VIEW).getView());
+        addViewFactory(RECOVERPASS_VIEW, () -> new RecoverPassView(RECOVERPASS_VIEW).getView());
+        addViewFactory(MAINMENU_VIEW, () -> new MainMenuView(MAINMENU_VIEW).getView());
     }
 
     @Override
