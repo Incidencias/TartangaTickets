@@ -9,66 +9,51 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<View maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tartangatickets.views.Menu_principalController">
-   <top>
-      <AppBar titleText="Incidencias" BorderPane.alignment="CENTER">
-         <navIcon>
-            <Button>
-               <graphic>
-                  <Icon content="ARROW_BACK" />
-               </graphic>
-            </Button>
-         </navIcon>
-         <menuItems>
-            <MenuItem text="Menu Item 1" />
-            <MenuItem text="Menu Item 2" />
-         </menuItems>
-      </AppBar>
-   </top>
-   <center>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-         <children>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="290.0" text="Ver incidencias">
-               <graphic>
-                  <Icon content="LIST" />
-               </graphic>
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="290.0" text="Crear incidencias">
-               <graphic>
-                  <Icon content="CREATE" />
-               </graphic>
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="290.0" text="Modificar contraseña">
-               <graphic>
-                  <Icon content="VPN_KEY" />
-               </graphic>
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="290.0" text="Usuarios">
-               <graphic>
-                  <Icon content="PERSON" />
-               </graphic>
-               <VBox.margin>
-                  <Insets bottom="20.0" />
-               </VBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="58.0">
-               <graphic>
-                  <Icon content="EXIT_TO_APP" />
-               </graphic>
-            </Button>
-         </children>
-      </VBox>
-   </center>
+<View fx:id="menu_principal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tartangatickets.views.Menu_principalController">
+    <center>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="290.0" text="Ver incidencias">
+                    <graphic>
+                        <Icon content="LIST" />
+                    </graphic>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="290.0" text="Crear incidencias">
+                    <graphic>
+                        <Icon content="CREATE" />
+                    </graphic>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="290.0" text="Modificar contraseña">
+                    <graphic>
+                        <Icon content="VPN_KEY" />
+                    </graphic>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="74.0" prefWidth="290.0" text="Usuarios">
+                    <graphic>
+                        <Icon content="PERSON" />
+                    </graphic>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="58.0">
+                    <graphic>
+                        <Icon content="EXIT_TO_APP" />
+                    </graphic>
+                </Button>
+            </children>
+        </VBox>
+    </center>
 </View>

@@ -4,24 +4,24 @@ import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.SimpleEmail;
 
-public class SendEmail {
+public class EmailSender {
     private static final String HOST = "smtp.gmail.com";
     private static final int PORT = 465;
-    private static final boolean SSL_FLAG = true; 
+    private static final boolean SSL_FLAG = true;
+    private static final String USER_NAME = "incidencias.tartanga@gmail.com";
+    private static final String PASSW = "equipoa2018";
 
+    /*
     public static void main(String[] args) {
-        SendEmail sender = new SendEmail();
-        sender.sendSimpleEmail();
+        EmailSender sender = new EmailSender();
+        sender.sendEmail();
     }
+    */
 
-    private void sendSimpleEmail() {
+    public static void sendEmail(String toAddress) {
         
-        String userName = "incidencias.tartanga@gmail.com";
         String password = "equipoa2018";
         
-        String fromAddress="incidencias.tartanga@gmail.com";
-//        String toAddress ="Miguelaxierlp@gmail.com";
-        String toAddress ="zzz@gmail.com";
         String subject = "Prueba Email";
         String message = "Que pasa ninio cebolleta";
         
@@ -29,9 +29,9 @@ public class SendEmail {
             Email email = new SimpleEmail();
             email.setHostName(HOST);
             email.setSmtpPort(PORT);
-            email.setAuthenticator(new DefaultAuthenticator(userName, password));
+            email.setAuthenticator(new DefaultAuthenticator(USER_NAME, password));
             email.setSSLOnConnect(SSL_FLAG);
-            email.setFrom(fromAddress);
+            email.setFrom(USER_NAME);
             email.setSubject(subject);
             email.setMsg(message);
             email.addTo(toAddress);
@@ -40,5 +40,9 @@ public class SendEmail {
             System.out.println("Unable to send email");
             System.out.println(ex);
         }
+    }
+    
+    public static void sendEmail(String toAddress, String newPassword) {
+        // TODO
     }
 }
