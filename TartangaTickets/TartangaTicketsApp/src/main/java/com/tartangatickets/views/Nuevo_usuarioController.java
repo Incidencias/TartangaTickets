@@ -18,12 +18,16 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 /**
@@ -68,29 +72,33 @@ public class Nuevo_usuarioController  {
         
         Credential credential = new Credential();
         Department department = new Department();
-        department = logic.findDepartmentByName(dbDepartment.getSelectedItem().getText());
+        
+        List<Department> departments = logic.findAllDepartments();
+        
+        for(Department dpt:departments){
+            dbDepartment.getItems().add(new MenuItem(dpt.getName()));
+        }
+        department=(Department) departments.stream().filter(c -> c.getName().equals(dbDepartment.getSelectedItem().getText()));
+
         
         credential.setLogin(tfEmail.getText());
-        //TODO CREDENTIAL PASSWORD
+
         if(!tfName.getText().isEmpty()&& !tfLastname1.getText().isEmpty()&&!tfLastname2.getText().isEmpty()){
             if(cbTechnician.isSelected()){
-                Technician technician = new Technician();
+                user = new Technician();
 
-                technician.setName(tfName.getText());
-                technician.setLastName1(tfLastname1.getText());
-                technician.setLastName2(tfLastname2.getText());
-                technician.setDepartment(department);
-
-                logic.createTechnician(user);
-            }{
+            }else{
                 user = new User();
-
+                 
+            }
                 user.setName(tfName.getText());
                 user.setLastName1(tfLastname1.getText());
                 user.setLastName2(tfLastname2.getText());
                 user.setDepartment(department);
-
-                logic.createUser(user);   
+            try {  
+                logic.createUser(user);
+            } catch (Exception ex) {
+                Logger.getLogger(Nuevo_usuarioController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

@@ -10,8 +10,10 @@ import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import static com.tartangatickets.TartangaTickets.USER_VIEW;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -45,12 +47,16 @@ public class UsuariosController {
             }
         });
         
-        lvUserList.setItems(FXCollections.observableArrayList(logic.findAllUsers()));
+        try {
+            lvUserList.setItems(FXCollections.observableArrayList(logic.findAllUsers()));
+        } catch (Exception ex) {
+            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
     private void handleButtonNewUser(){
-        
+        MobileApplication.getInstance().switchView(USER_VIEW);
         
     }
 }
