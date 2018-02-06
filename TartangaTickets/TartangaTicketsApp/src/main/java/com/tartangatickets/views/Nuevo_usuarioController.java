@@ -35,26 +35,21 @@ public class Nuevo_usuarioController  {
     private static final Logger LOGGER= Logger.getLogger("views");
     
     private Stage stage;
-    @FXML
-    private Button createUser;
+
     @FXML
     private View nuevo_usuario;
     @FXML
-    private TextField tfID;
+    private TextField tfName;
     @FXML
-    private TextField tfPass;
+    private TextField tfLastname1;
     @FXML
-    private TextField tfNombre;
-    @FXML
-    private TextField tfApellido1;
-    @FXML
-    private TextField tfApellido2;
+    private TextField tfLastname2;
     @FXML
     private TextField tfEmail;
     @FXML
-    private DropdownButton dbDepartamento;
+    private DropdownButton dbDepartment;
     @FXML
-    private CheckBox cbTecnico;
+    private CheckBox cbTechnician;
     private User user;
     private LogicInterface logic = new Logic();
     
@@ -71,32 +66,32 @@ public class Nuevo_usuarioController  {
         
         Credential credential = new Credential();
         Department department = new Department();
-        department = logic.findDepartmentByName(dbDepartamento.getSelectedItem().getText());
+        department = logic.findDepartmentByName(dbDepartment.getSelectedItem().getText());
         
-        credential.setLogin(tfID.getText());
+        credential.setLogin(tfEmail.getText());
         //TODO CREDENTIAL PASSWORD
-        
-        if(cbTecnico.isSelected()){
-            Technician technician = new Technician();
-            
-            technician.setName(tfNombre.getText());
-            technician.setLastName1(tfApellido1.getText());
-            technician.setLastName2(tfApellido2.getText());
-            technician.setEmail(tfEmail.getText());
-            technician.setDepartment(department);
-            
-            logic.createTechnician(user);
-        }{
-            user = new User();
-            
-            user.setName(tfNombre.getText());
-            user.setLastName1(tfApellido1.getText());
-            user.setLastName2(tfApellido2.getText());
-            user.setEmail(tfEmail.getText());
-            user.setDepartment(department);
-            
-            logic.createUser(user);   
+        if(!tfName.getText().isEmpty()&& !tfLastname1.getText().isEmpty()&&!tfLastname2.getText().isEmpty()){
+            if(cbTechnician.isSelected()){
+                Technician technician = new Technician();
+
+                technician.setName(tfName.getText());
+                technician.setLastName1(tfLastname1.getText());
+                technician.setLastName2(tfLastname2.getText());
+                technician.setDepartment(department);
+
+                logic.createTechnician(user);
+            }{
+                user = new User();
+
+                user.setName(tfName.getText());
+                user.setLastName1(tfLastname1.getText());
+                user.setLastName2(tfLastname2.getText());
+                user.setDepartment(department);
+
+                logic.createUser(user);   
+            }
         }
+
         
     }
     
