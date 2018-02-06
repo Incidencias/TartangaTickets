@@ -7,6 +7,7 @@ import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.visual.Swatch;
 import com.tartangatickets.views.Modificar_usuarioView;
 import com.tartangatickets.views.Nuevo_usuarioView;
+import com.tartangatickets.views.TicketView;
 import com.tartangatickets.views.UsuariosView;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
