@@ -10,6 +10,7 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.DropdownButton;
 import com.gluonhq.charm.glisten.control.TextField;
 import com.gluonhq.charm.glisten.mvc.View;
+import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Technician;
@@ -57,6 +58,7 @@ public class Nuevo_usuarioController  {
         nuevo_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
                 
             }
         });
