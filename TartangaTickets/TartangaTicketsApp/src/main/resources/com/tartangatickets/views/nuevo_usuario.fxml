@@ -29,26 +29,12 @@
                      <children>
                         <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="ID:" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
-                           <children>
-                              <TextField fx:id="tfID" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="335.0">
-                     <children>
-                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
-                           <children>
                               <Label text="Nombre:" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <TextField fx:id="tfNombre" />
+                              <TextField fx:id="tfName" />
                            </children>
                         </VBox>
                      </children>
@@ -65,7 +51,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <TextField fx:id="tfApellido1" />
+                              <TextField fx:id="tfLastname1" />
                            </children>
                         </VBox>
                      </children>
@@ -79,7 +65,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <TextField fx:id="tfApellido2" />
+                              <TextField fx:id="tfLastname2" />
                            </children>
                         </VBox>
                      </children>
@@ -107,7 +93,7 @@
                         </VBox>
                         <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <DropdownButton fx:id="dbDepartamento" prefHeight="27.0" prefWidth="104.0">
+                              <DropdownButton fx:id="dbDepartment" prefHeight="27.0" prefWidth="104.0">
                                   <items>
                                       <MenuItem text="Choice 1" />
                                       <MenuItem text="Choice 2" />
@@ -127,7 +113,7 @@
                         </VBox>
                         <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="160.0">
                            <children>
-                              <CheckBox fx:id="cbTecnico" mnemonicParsing="false" />
+                              <CheckBox fx:id="cbTechnician" mnemonicParsing="false" />
                            </children>
                         </VBox>
                      </children>

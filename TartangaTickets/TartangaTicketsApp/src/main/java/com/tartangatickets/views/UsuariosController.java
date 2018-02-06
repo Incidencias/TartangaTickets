@@ -9,6 +9,7 @@ package com.tartangatickets.views;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
+import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.logging.Logger;
@@ -40,7 +41,7 @@ public class UsuariosController {
         usuarios.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                
+                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
             }
         });
         
