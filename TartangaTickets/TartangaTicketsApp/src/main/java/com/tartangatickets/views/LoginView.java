@@ -4,17 +4,17 @@ import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 
-public class SecondaryView {
+public class LoginView {
 
     private final String name;
 
-    public SecondaryView(String name) {
+    public LoginView(String name) {
         this.name = name;
     }
     
     public View getView() {
         try {
-            View view = FXMLLoader.load(SecondaryView.class.getResource("secondary.fxml"));
+            View view = FXMLLoader.load(LoginView.class.getResource("login.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

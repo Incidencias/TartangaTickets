@@ -5,7 +5,6 @@
  */
 package com.tartangatickets.entities;
 
-import com.sun.istack.internal.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
@@ -42,7 +43,22 @@ import org.hibernate.annotations.NamedQuery;
 @NamedQueries({
     @NamedQuery(
             name="findAllTickets",
-            query="SELECT u FROM Ticket u"
+            query="SELECT u FROM Ticket u ORDER BY u.createDate"
+    ),
+    @NamedQuery(
+            name="findTicketsByUser",
+            query="SELECT t FROM Ticket t WHERE t.user.credential.login = :login "
+                    + "ORDER BY t.createDate"
+    ),
+    @NamedQuery(
+            name="findTicketsByTechnician",
+            query="SELECT t FROM Ticket t WHERE t.technician.credential.login = :login "
+                    + "ORDER BY t.createDate"
+    ),
+    @NamedQuery(
+            name="findTicketsByState",
+            query="SELECT t FROM Ticket t WHERE t.state = :state "
+                    + "ORDER BY t.createDate"
     )
  })
 
@@ -52,14 +68,12 @@ public class Ticket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @NotNull
+    @Temporal(TemporalType.DATE)
     private Date createDate;
+    @Temporal(TemporalType.DATE)
     private Date endDate;
-    @NotNull
     private String machineCode;
-    @NotNull
     private String department;
-    @NotNull
     private String location;
     @Enumerated(ORDINAL)
     private State state;
@@ -69,7 +83,6 @@ public class Ticket implements Serializable {
     private List<Message> messages;
     @ManyToOne
     private Technician technician;
-
 
     public Integer getId() {
         return id;

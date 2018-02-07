@@ -56,9 +56,11 @@ public class TicketController {
             data.add(ticketUser.get(i).getId());
         }
         lvTickets.setItems(data);
+        /*
         lvTickets.getSelectionModel().selectedItemProperty().addListener(
-                /*MobileApplication.getInstance().switchView("TicketDetailView")*/);
-            }
+                MobileApplication.getInstance().switchView("TicketDetailView"));
+        */            
+        }
         });
     }
     //TODO hacer que al seleccionar una incidencia que vaya a los detalles de esa incidencia

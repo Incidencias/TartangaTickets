@@ -5,14 +5,12 @@
  */
 package com.tartangatickets.entities;
 
-import com.sun.istack.internal.NotNull;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *The Department class encapsulates the data of each department:
@@ -27,20 +25,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name="departments", schema="tartanga_ticket_db")
 @NamedQueries({
     @NamedQuery(
-            name="findAllDepartmentsOrderByName",
-            query="SELECT d FROM Department d order by d.name"
+            name="findAllDepartments",
+            query="SELECT d FROM Department d ORDER BY d.name"
     ),
     @NamedQuery(
-            name="findDepartmentsByCodeOrderByName",
-            query="SELECT d FROM Department d where d.code = :code order by d.name"
+            name="findDepartmentsByCode",
+            query="SELECT d FROM Department d where d.code = :code ORDER BY d.name"
     ),
     @NamedQuery(
-            name="findDepartmentsByNameOrderByName",
-            query="SELECT d FROM Department d where d.name = :name order by d.name"
+            name="findDepartmentsByName",
+            query="SELECT d FROM Department d where d.name = :name ORDER BY d.name"
     )
 })
-
-
 
 public class Department implements Serializable {
 
@@ -48,7 +44,6 @@ public class Department implements Serializable {
     
     @Id
     private String code;
-    @NotNull
     private String name;
     
     public Department() {
