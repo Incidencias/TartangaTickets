@@ -8,6 +8,7 @@ import com.gluonhq.charm.glisten.visual.Swatch;
 import com.tartangatickets.views.ModifyUserView;
 import com.tartangatickets.views.NewUserView;
 import com.tartangatickets.views.UsersView;
+
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
