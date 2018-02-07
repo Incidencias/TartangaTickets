@@ -5,10 +5,12 @@ import com.tartangatickets.views.RecoverPassView;
 import com.tartangatickets.views.MainMenuView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.visual.Swatch;
+import com.tartangatickets.logic.Logic;
 import com.tartangatickets.views.ModifyUserView;
 import com.tartangatickets.views.NewUserView;
+import com.tartangatickets.views.TicketDetailView;
+import com.tartangatickets.views.TicketView;
 import com.tartangatickets.views.UsersView;
-
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
@@ -26,6 +28,7 @@ public class TartangaTickets extends MobileApplication {
     public static final String NEWTICKET_VIEW = "NewTicketView";
     public static final String PASSMODIFY_VIEW = "PassModifyView";
     public static final String TICKET_VIEW = "TicketView";
+    public static final Logic LOGIC = new Logic();
     
     @Override
     public void init() {

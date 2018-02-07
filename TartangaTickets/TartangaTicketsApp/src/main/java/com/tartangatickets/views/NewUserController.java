@@ -11,6 +11,7 @@ import com.gluonhq.charm.glisten.control.DropdownButton;
 import com.gluonhq.charm.glisten.control.TextField;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
+import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Technician;
@@ -38,8 +39,6 @@ import javafx.stage.Stage;
  * @author Sergio
  */
 public class NewUserController  {
-    
-    private Stage stage;
 
     @FXML
     private View nuevo_usuario;
@@ -56,8 +55,8 @@ public class NewUserController  {
     @FXML
     private CheckBox cbTechnician;
     private User user;
-    private LogicInterface logic = new Logic();
     private List<Department> departments;
+    private LogicInterface logic = TartangaTickets.LOGIC; 
     
     public void initialize() {
         nuevo_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -68,7 +67,11 @@ public class NewUserController  {
             }
         });
                 
-        departments = logic.findAllDepartments();
+        try {
+            departments = logic.findAllDepartments();
+        } catch (Exception ex) {
+            Logger.getLogger(NewUserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         for(Department dpt:departments){
             dbDepartment.getItems().add(new MenuItem(dpt.getName()));
