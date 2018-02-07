@@ -8,11 +8,13 @@ import com.gluonhq.charm.glisten.visual.Swatch;
 import com.tartangatickets.views.ModifyUserView;
 import com.tartangatickets.views.NewUserView;
 import com.tartangatickets.views.UsersView;
+import com.tartangatickets.views.TicketView;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.views.TicketDetailView;
 
 
 public class TartangaTickets extends MobileApplication {
