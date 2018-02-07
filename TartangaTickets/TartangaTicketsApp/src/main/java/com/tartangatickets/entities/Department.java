@@ -25,20 +25,18 @@ import javax.persistence.Table;
 @Table(name="departments", schema="tartanga_ticket_db")
 @NamedQueries({
     @NamedQuery(
-            name="findAllDepartmentsOrderByName",
-            query="SELECT d FROM Department d order by d.name"
+            name="findAllDepartments",
+            query="SELECT d FROM Department d ORDER BY d.name"
     ),
     @NamedQuery(
-            name="findDepartmentsByCodeOrderByName",
-            query="SELECT d FROM Department d where d.code = :code order by d.name"
+            name="findDepartmentsByCode",
+            query="SELECT d FROM Department d where d.code = :code ORDER BY d.name"
     ),
     @NamedQuery(
-            name="findDepartmentsByNameOrderByName",
-            query="SELECT d FROM Department d where d.name = :name order by d.name"
+            name="findDepartmentsByName",
+            query="SELECT d FROM Department d where d.name = :name ORDER BY d.name"
     )
 })
-
-
 
 public class Department implements Serializable {
 

@@ -11,19 +11,19 @@ import javafx.fxml.FXMLLoader;
 
 /**
  *
- * @author ubuntu
+ * @author Sergio
  */
-public class UsuariosView {
+public class NewUserView {
     
     private final String name;
 
-    public UsuariosView(String name) {
+    public NewUserView(String name) {
         this.name = name;
     }
     
     public View getView() {
         try {
-            View view = FXMLLoader.load(UsuariosView.class.getResource("usuarios.fxml"));
+            View view = FXMLLoader.load(NewUserView.class.getResource("nuevo_usuario.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

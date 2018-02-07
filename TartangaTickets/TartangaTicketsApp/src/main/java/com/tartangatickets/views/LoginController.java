@@ -2,7 +2,6 @@ package com.tartangatickets.views;
 
 import java.io.IOException;
 import com.gluonhq.charm.glisten.application.MobileApplication;
-//import com.gluonhq.charm.glisten.control.Alert;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
@@ -20,7 +19,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 
+/**
+ * FXML Controller class
+ *
+ * @author ionut
+ */
 public class LoginController {
     private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
@@ -29,7 +34,7 @@ public class LoginController {
     @FXML
     private TextField tfUser;
     @FXML
-    private TextField pfPass;
+    private PasswordField pfPass;
     @FXML
     private Button btnAccess;
     @FXML
@@ -48,16 +53,15 @@ public class LoginController {
         });
     }
     
-    private void handleButtonAccess(){
+    private void handleButtonAccess() throws Exception{
         
         logger.info("Access Action event.");
         if(this.tfUser.getText().trim().isEmpty() || this.pfPass.getText().trim().isEmpty()){
             Alert alert=new Alert(AlertType.ERROR,"Los campos Usuario y Contraseña no pueden estar vacíos.",ButtonType.OK);
             alert.showAndWait();
         } else {
-            if(logic.authenticate(tfUser.getText(), pfPass.getText()) == true){
-                MobileApplication.getInstance().switchView("MainMenuView");
-            }
+            MobileApplication.getInstance().switchView("MainMenuView");
+            logic.authenticate(tfUser.getText(), pfPass.getText());
         }
         
     }
