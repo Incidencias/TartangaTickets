@@ -5,11 +5,10 @@
  */
 package com.tartangatickets.logic;
 
-
 import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Message;
-import com.tartangatickets.entities.Technician;
+import com.tartangatickets.entities.State;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NotSecureException;
@@ -24,7 +23,6 @@ import java.util.logging.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import java.util.List;
 import java.util.logging.Level;
 import javax.persistence.NoResultException;
 
@@ -36,7 +34,7 @@ public class Logic implements LogicInterface {
     
     private static final Logger LOGGER = Logger.getLogger("com.tartangatickets.logic");
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
-    private Session session = factory.openSession();
+    private final Session session = factory.openSession();
     private Transaction tx = null;
     private HashMap<String, String> sessionContent = new HashMap<>();
     
@@ -85,13 +83,13 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<Ticket> findTicketsByUser(Integer userId) throws Exception {
+    public List<Ticket> findTicketsByUser(String userLogin) throws Exception {
         LOGGER.info("Fetching tickets by user");
         List<Ticket> tickets = null;
         try {
             tx = session.beginTransaction();
             tickets = session.createNamedQuery("findTicketsByUser")
-                    .setParameter("id", userId)
+                    .setParameter("login", userLogin)
                     .getResultList();
             tx.commit();
         } catch (Exception e) {
@@ -202,6 +200,15 @@ public class Logic implements LogicInterface {
         try {
             tx = session.beginTransaction();
             String newPassword = setPassword(user);
+            // TODO this needed
+            /*
+            if (user instanceof Technician) {
+                Technician technician = (Technician) user;
+                session.persist(technician);
+            } else {
+                session.persist(user);
+            }
+            */
             session.persist(user);
             tx.commit();
             LOGGER.info("Sending email");
@@ -282,6 +289,7 @@ public class Logic implements LogicInterface {
             tx = session.beginTransaction();
             session.merge(ticket);
             tx.commit();
+            // TODO send message to user
         } catch (Exception e) {
             tx.rollback();
             LOGGER.log(Level.SEVERE,
@@ -293,36 +301,107 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public User authenticate(String login, Byte[] password) throws Exception {
+    public User authenticate(String login, String password) throws Exception {
+        LOGGER.info("Authenticating user");
         User user = null;
         try {
+            String passwordHash = PasswordHandler.getHash(password, login);
             user = (User) session.createNamedQuery("findUserByLogin")
-                    .setParameter("credential.login", login)
-                    .setParameter("credential.password", password)
+                    .setParameter("login", login)
+                    .setParameter("password", passwordHash)
                     .getSingleResult();
         } catch (Exception e) {
+            LOGGER.log(Level.SEVERE,
+                "Error authenticating user. {0}",
+                e.getMessage());
             throw new Exception();
         }
+        LOGGER.info("Log in successful");
         return user;
     }   
-
+    
+    /*
     @Override
     public void createTechnician(Technician technician) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void deleteTechnician(Technician technician) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void updateTechnician(Technician technician) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    */
 
     @Override
-    public Department findDepartmentByName(String departmentName) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Department> findAllDepartments() throws Exception {
+        LOGGER.info("Fetching department by name");
+        List<Department> departments = null;
+        try {
+            tx = session.beginTransaction();
+            departments = session.createNamedQuery("findAllDepartments")
+                    .getResultList();
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            LOGGER.log(Level.SEVERE,
+                "Error afetching departments. {0}",
+                e.getMessage());
+            throw new Exception();
+        }
+        LOGGER.log(Level.INFO,
+                "{0} deparments found",
+                departments.size());
+        return departments;
+    }
+
+    @Override
+    public List<Ticket> findTicketsByState(State state) throws Exception {
+        LOGGER.info("Fetching tickets by state");
+        List<Ticket> tickets = null;
+        try {
+            tx = session.beginTransaction();
+            tickets = session.createNamedQuery("findTicketsByState")
+                    .setParameter("state", state)
+                    .getResultList();
+            tx.commit();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE,
+                    "Exception finding tickets by state. {0}",
+                    e.getMessage());
+            tx.rollback();
+            throw new Exception();
+        }
+        LOGGER.log(Level.INFO,
+                "{0} tickets found",
+                tickets.size());
+        return tickets;
+    }
+
+    @Override
+    public List<Ticket> findTicketsByTechnician(String login) throws Exception {
+        LOGGER.info("Fetching tickets by technician");
+        List<Ticket> tickets = null;
+        try {
+            tx = session.beginTransaction();
+            tickets = session.createNamedQuery("findTicketsByUser")
+                    .setParameter("login", login)
+                    .getResultList();
+            tx.commit();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE,
+                    "Exception finding tickets by technician. {0}",
+                    e.getMessage());
+            tx.rollback();
+            throw new Exception();
+        }
+        LOGGER.log(Level.INFO,
+                "{0} tickets found",
+                tickets.size());
+        return tickets;
     }
 }
