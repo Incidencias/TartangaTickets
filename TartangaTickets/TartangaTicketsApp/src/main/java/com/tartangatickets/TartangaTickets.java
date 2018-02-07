@@ -9,6 +9,11 @@ import com.tartangatickets.views.ModifyUserView;
 import com.tartangatickets.views.NewUserView;
 import com.tartangatickets.views.UsersView;
 
+
+import com.tartangatickets.logic.Logic;
+import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.views.TicketView;
+
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
@@ -26,6 +31,7 @@ public class TartangaTickets extends MobileApplication {
     public static final String NEWTICKET_VIEW = "NewTicketView";
     public static final String PASSMODIFY_VIEW = "PassModifyView";
     public static final String TICKET_VIEW = "TicketView";
+    public static final LogicInterface LOGIC = new Logic();
     
     @Override
     public void init() {
