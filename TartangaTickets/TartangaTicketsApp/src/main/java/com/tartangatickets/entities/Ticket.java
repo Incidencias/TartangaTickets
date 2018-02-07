@@ -47,12 +47,18 @@ import org.hibernate.annotations.NamedQuery;
     ),
     @NamedQuery(
             name="findTicketsByUser",
-            query="SELECT t FROM Ticket t WHERE t.user.id = :userId "
+            query="SELECT t FROM Ticket t WHERE t.user.credential.login = :login "
                     + "ORDER BY t.createDate"
     ),
     @NamedQuery(
-            name="findTicketByTechnician",
-            query="SELECT t FROM Ticket t WHERE t.technician.id = :technicianId"
+            name="findTicketsByTechnician",
+            query="SELECT t FROM Ticket t WHERE t.technician.credential.login = :login "
+                    + "ORDER BY t.createDate"
+    ),
+    @NamedQuery(
+            name="findTicketsByState",
+            query="SELECT t FROM Ticket t WHERE t.state = :state "
+                    + "ORDER BY t.createDate"
     )
  })
 
