@@ -49,10 +49,7 @@ public class TicketController {
         ver_incidencias.showingProperty().addListener((obs, oldValue, newValue) -> {  
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                
-            }
-        });
-        lvTickets = new ListView<String>();
+                lvTickets = new ListView<String>();
         data = FXCollections.observableArrayList();
         ticketUser = user.getCreatedTickets();
         for(int i=0; i<ticketUser.size(); i++){
@@ -60,7 +57,9 @@ public class TicketController {
         }
         lvTickets.setItems(data);
         lvTickets.getSelectionModel().selectedItemProperty().addListener(
-                /*MobileApplication.getInstance().switchView("TicketDetailView"*/));
-    }    
-    
+                /*MobileApplication.getInstance().switchView("TicketDetailView")*/);
+            }
+        });
+    }
+    //TODO hacer que al seleccionar una incidencia que vaya a los detalles de esa incidencia
 }

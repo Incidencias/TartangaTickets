@@ -6,6 +6,9 @@
 package com.tartangatickets.logic;
 
 import com.tartangatickets.entities.Credential;
+import com.tartangatickets.entities.Ticket;
+import com.tartangatickets.entities.User;
+import java.util.List;
 
 /**
  *

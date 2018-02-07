@@ -5,6 +5,8 @@ import com.tartangatickets.views.RecoverPassView;
 import com.tartangatickets.views.MainMenuView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.visual.Swatch;
+import com.tartangatickets.logic.Logic;
+import com.tartangatickets.logic.LogicInterface;
 import com.tartangatickets.views.Modificar_usuarioView;
 import com.tartangatickets.views.Nuevo_usuarioView;
 import com.tartangatickets.views.TicketView;
@@ -26,6 +28,7 @@ public class TartangaTickets extends MobileApplication {
     public static final String NEWTICKET_VIEW = "NewTicketView";
     public static final String PASSMODIFY_VIEW = "PassModifyView";
     public static final String TICKET_VIEW = "TicketView";
+    public static final LogicInterface LOGIC = new Logic();
     
     @Override
     public void init() {
