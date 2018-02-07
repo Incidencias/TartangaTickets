@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author ubuntu
  */
-public class Modificar_usuarioController  {
+public class ModifyUserController  {
 
     private static final Logger LOGGER= Logger.getLogger("views");
     

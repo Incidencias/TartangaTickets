@@ -10,7 +10,7 @@ import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import static com.tartangatickets.TartangaTickets.USER_VIEW;
+import static com.tartangatickets.TartangaTickets.NEWUSER_VIEW;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.logging.Level;
@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author ubuntu
  */
-public class UsuariosController {
+public class UsersController {
 
     private static final Logger LOGGER= Logger.getLogger("views");
     
@@ -50,13 +50,13 @@ public class UsuariosController {
         try {
             lvUserList.setItems(FXCollections.observableArrayList(logic.findAllUsers()));
         } catch (Exception ex) {
-            Logger.getLogger(UsuariosController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsersController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
     
     private void handleButtonNewUser(){
-        MobileApplication.getInstance().switchView(USER_VIEW);
+        MobileApplication.getInstance().switchView(NEWUSER_VIEW);
         
     }
 }
