@@ -13,17 +13,17 @@ import javafx.fxml.FXMLLoader;
  *
  * @author Sergio
  */
-public class Modificar_usuarioView {
+public class ModifyUserView {
     
     private final String name;
 
-    public Modificar_usuarioView(String name) {
+    public ModifyUserView(String name) {
         this.name = name;
     }
     
     public View getView() {
         try {
-            View view = FXMLLoader.load(Modificar_usuarioView.class.getResource("modificar_usuario.fxml"));
+            View view = FXMLLoader.load(ModifyUserView.class.getResource("modificar_usuario.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

@@ -18,22 +18,26 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
- * @author ubuntu
+ * @author Sergio
  */
-public class Nuevo_usuarioController  {
-
-    private static final Logger LOGGER= Logger.getLogger("views");
+public class NewUserController  {
     
     private Stage stage;
 
@@ -53,6 +57,7 @@ public class Nuevo_usuarioController  {
     private CheckBox cbTechnician;
     private User user;
     private LogicInterface logic = new Logic();
+    private List<Department> departments;
     
     public void initialize() {
         nuevo_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -62,35 +67,44 @@ public class Nuevo_usuarioController  {
                 
             }
         });
+                
+        departments = logic.findAllDepartments();
+        
+        for(Department dpt:departments){
+            dbDepartment.getItems().add(new MenuItem(dpt.getName()));
+        }
     }
     
     private void handleButtonCreateUser(){
         
         Credential credential = new Credential();
         Department department = new Department();
-        department = logic.findDepartmentByName(dbDepartment.getSelectedItem().getText());
-        
-        credential.setLogin(tfEmail.getText());
-        //TODO CREDENTIAL PASSWORD
+
+
+
         if(!tfName.getText().isEmpty()&& !tfLastname1.getText().isEmpty()&&!tfLastname2.getText().isEmpty()){
+            
+            
             if(cbTechnician.isSelected()){
-                Technician technician = new Technician();
+                user = new Technician();
 
-                technician.setName(tfName.getText());
-                technician.setLastName1(tfLastname1.getText());
-                technician.setLastName2(tfLastname2.getText());
-                technician.setDepartment(department);
-
-                logic.createTechnician(user);
-            }{
+            }else{
                 user = new User();
-
-                user.setName(tfName.getText());
-                user.setLastName1(tfLastname1.getText());
-                user.setLastName2(tfLastname2.getText());
-                user.setDepartment(department);
-
-                logic.createUser(user);   
+                 
+            }
+            department=(Department) departments.stream().filter(c -> c.getName().equals(dbDepartment.getSelectedItem().getText()));
+        
+            credential.setLogin(tfEmail.getText());
+            user.setName(tfName.getText());
+            user.setLastName1(tfLastname1.getText());
+            user.setLastName2(tfLastname2.getText());
+            user.setDepartment(department);
+            try {  
+                logic.createUser(user);
+            } catch (Exception ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Datos erroneos");
+                DialogPane dialogPane = alert.getDialogPane();
+                alert.showAndWait();
             }
         }
 
