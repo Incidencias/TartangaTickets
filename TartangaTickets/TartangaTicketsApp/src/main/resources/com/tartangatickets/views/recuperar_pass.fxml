@@ -41,7 +41,7 @@
                         </VBox>
                         <VBox prefHeight="26.0" prefWidth="200.0">
                            <children>
-                              <TextField prefHeight="26.0" prefWidth="204.0" />
+                              <TextField fx:id="tfUser" prefHeight="26.0" prefWidth="204.0" />
                            </children>
                         </VBox>
                      </children>
@@ -50,7 +50,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="105.0" prefWidth="295.0" spacing="20.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="170.0" text="Recuperar Contraseña" />
+                              <Button fx:id="btnRecoverPass" mnemonicParsing="false" onAction="#handleButtonRecoverPass" prefHeight="32.0" prefWidth="170.0" text="Recuperar Contraseña" />
                            </children>
                         </VBox>
                      </children>

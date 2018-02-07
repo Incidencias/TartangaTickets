@@ -10,6 +10,8 @@ import com.tartangatickets.views.Nuevo_usuarioView;
 import com.tartangatickets.views.UsuariosView;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import com.tartangatickets.logic.Logic;
+import com.tartangatickets.logic.LogicInterface;
 
 
 public class TartangaTickets extends MobileApplication {
@@ -25,6 +27,7 @@ public class TartangaTickets extends MobileApplication {
     public static final String NEWTICKET_VIEW = "NewTicketView";
     public static final String PASSMODIFY_VIEW = "PassModifyView";
     public static final String TICKET_VIEW = "TicketView";
+    public static final LogicInterface LOGIC = new Logic();
     
     @Override
     public void init() {

@@ -7,6 +7,8 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
+import com.tartangatickets.entities.User;
+import com.tartangatickets.entities.Credential;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.logging.Level;
@@ -23,7 +25,7 @@ public class LoginController {
     private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
     @FXML
-    private View primary;
+    private View login;
     @FXML
     private TextField tfUser;
     @FXML
@@ -32,12 +34,13 @@ public class LoginController {
     private Button btnAccess;
     @FXML
     private Button btnRecoverpass;
-    private LogicInterface logic = new Logic();
-
+    private User user;
+    private LogicInterface logic = TartangaTickets.LOGIC;
+    
     public void initialize() {
+        //logic.getSessionContent().put('activeId', user);
         
-        
-        primary.showingProperty().addListener((obs, oldValue, newValue) -> {
+        login.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
@@ -46,12 +49,13 @@ public class LoginController {
     }
     
     private void handleButtonAccess(){
+        
         logger.info("Access Action event.");
         if(this.tfUser.getText().trim().isEmpty() || this.pfPass.getText().trim().isEmpty()){
             Alert alert=new Alert(AlertType.ERROR,"Los campos Usuario y Contraseña no pueden estar vacíos.",ButtonType.OK);
             alert.showAndWait();
         } else {
-            if(logic.authenticate(tfUser.getText(), pfPass.getText()) != ){
+            if(logic.authenticate(tfUser.getText(), pfPass.getText()) == true){
                 MobileApplication.getInstance().switchView("MainMenuView");
             }
         }
