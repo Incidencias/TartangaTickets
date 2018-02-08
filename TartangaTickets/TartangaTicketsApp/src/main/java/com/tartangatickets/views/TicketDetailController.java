@@ -91,10 +91,25 @@ public class TicketDetailController {
         detalles_incidencia.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                int i=0;
+                
                 user = (User) sessionContent.get("activeId");
                 ticket = (Ticket) sessionContent.get("ticketId");
                 
+                if(user instanceof Technician){
+                    btnEditState.setVisible(true);
+                    btnEditTechnician.setVisible(true);
+                }
+                else{
+                    btnEditState.setVisible(false);
+                    btnEditTechnician.setVisible(false);
+                }
+                
+                for(int j=0; j<user.getCreatedTickets().size(); j++){
+                    if(user.getCreatedTickets().get(j).getId().equals(ticket.getId())){
+                        i=j;
+                        break;
+                    }
+                }
                 lblIdTicket.setText(ticket.getId().toString());
                 lblUserTicket.setText(ticket.getUser().toString());
                 lblTechnicianTicket.setText(ticket.getTechnician().getName()+" "

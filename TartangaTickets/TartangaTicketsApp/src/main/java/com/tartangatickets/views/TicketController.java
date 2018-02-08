@@ -56,6 +56,7 @@ public class TicketController {
     private ObservableList<Integer> data;
     private ObservableList<State> itemsState;
     private ObservableList<String> itemsTechnicianN;
+    private List<User> allUsers;
     private List<User> allTechnicians; 
     private List<Ticket> ticketsF;
     private int filtro=0;
@@ -94,7 +95,17 @@ public class TicketController {
                     lvLTicket = new ListView<String>();
                     data = FXCollections.observableArrayList();
                     
-                    ticketUser = user.getCreatedTickets();
+                    if(user instanceof Technician){
+                        allUsers = logic.findAllUsers();
+                        for(int g=0; g<allUsers.size(); g++){
+                            ticketUser.add((Ticket) allUsers.get(g).getCreatedTickets());
+                        }
+                    }
+                    else{
+                        ticketUser = user.getCreatedTickets();
+                    }
+                    logger.info("Add all tickets to ticketUser. ");
+                    
                                   
                     if(cbStateLTicket.getSelectionModel().getSelectedIndex()!=-1){
                         ticketsF = ticketUser.stream().filter(p->p.getState().equals(cbStateLTicket.getSelectionModel()))
@@ -115,9 +126,11 @@ public class TicketController {
                     lvLTicket.setItems(data);
                     
                     Ticket tick = (Ticket) lvLTicket.getSelectionModel().getSelectedItems();
-                    sessionContent.put("ticketId", tick);
-                    logger.info("Going to Ticket detail Action event");
-                    MobileApplication.getInstance().switchView("TicketDetailView");
+                    if(lvLTicket.getSelectionModel().isSelected(t)){
+                        logger.info("Going to Ticket detail Action event");  
+                        sessionContent.put("ticketId", tick);
+                        MobileApplication.getInstance().switchView("TicketDetailView");
+                    }                    
                 }catch (Exception ex) {
                     Logger.getLogger(UsersController.class.getName()).log(Level.SEVERE, null, ex);
                 }
