@@ -38,6 +38,7 @@
                         <Insets bottom="20.0" />
                     </VBox.margin>
                 </Button>
+
                 <Button fx:id="btShowUsers" mnemonicParsing="false" prefHeight="74.0" prefWidth="290.0" text="Usuarios" visible="false" onAction="#handleButtonShowUsers">
                     <graphic>
                         <Icon content="PERSON" />
