@@ -11,6 +11,8 @@ import com.gluonhq.charm.glisten.control.TextField;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
+import static com.tartangatickets.TartangaTickets.MAINMENU_VIEW;
+import static com.tartangatickets.TartangaTickets.TICKET_VIEW;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.HashMap;
@@ -57,6 +59,9 @@ public class PassModifyController {
             try {
                 if(logic.authenticate(user.getCredential().getLogin(), user.getCredential().getPassword())!=null){
                     logic.changePassword(user.getCredential(), tfNewPass.getText());
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Contraseña cambiada"); 
+                    alert.showAndWait();              
+                    MobileApplication.getInstance().switchView(MAINMENU_VIEW);
                 }else{
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Contraseña incorrecta"); 
                     alert.showAndWait();

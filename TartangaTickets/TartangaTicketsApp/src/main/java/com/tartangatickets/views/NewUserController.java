@@ -77,7 +77,7 @@ public class NewUserController  {
 
 
 
-        if(!tfName.getText().isEmpty()&& !tfLastname1.getText().isEmpty()&&!tfLastname2.getText().isEmpty()){
+        if(!tfName.getText().isEmpty()&& !tfLastname1.getText().isEmpty()&&!tfLastname2.getText().isEmpty()&&!tfEmail.getText().isEmpty()){
             
             
             if(cbTechnician.isSelected()){
@@ -96,11 +96,17 @@ public class NewUserController  {
             user.setDepartment(department);
             try {  
                 logic.createUser(user);
+                tfName.setText("");
+                tfLastname1.setText("");
+                tfLastname2.setText("");
+                tfEmail.setText("");
             } catch (Exception ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Datos erroneos");
-                DialogPane dialogPane = alert.getDialogPane();
                 alert.showAndWait();
             }
+        }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Rellene los datos");
+                alert.showAndWait();           
         }
 
         

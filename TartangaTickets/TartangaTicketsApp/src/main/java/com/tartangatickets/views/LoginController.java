@@ -1,20 +1,15 @@
 package com.tartangatickets.views;
 
-import java.io.IOException;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.entities.User;
-import com.tartangatickets.entities.Credential;
-import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.HashMap;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -40,8 +35,8 @@ public class LoginController {
     private Button btnAccess;
     @FXML
     private Button btnRecoverpass;
-    private LogicInterface logic = TartangaTickets.LOGIC;
-    private HashMap sessionContent = logic.getSessionContent();
+    private final LogicInterface logic = TartangaTickets.LOGIC;
+    private final HashMap sessionContent = logic.getSessionContent();
     private final String username = tfUser.getText();
     private final String pass = pfPass.getText();
     
