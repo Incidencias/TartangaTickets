@@ -13,6 +13,9 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -70,8 +73,14 @@ public class TicketDetailController {
     @FXML
     private Button btnEditTechnician;
     
+    
     private LogicInterface logic = TartangaTickets.LOGIC; 
+    private HashMap sessionContent = logic.getSessionContent();
     private User user;
+    private Ticket ticket;
+    private Date endDate;
+    private int i = 0; 
+    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
     
     /**
      * Initializes the controller class.
@@ -82,17 +91,35 @@ public class TicketDetailController {
         detalles_incidencia.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                int i=0;
-                Ticket ticket = user.getCreatedTickets().get(i);
+                
+                user = (User) sessionContent.get("activeId");
+                ticket = (Ticket) sessionContent.get("ticketId");
+                
+                if(user instanceof Technician){
+                    btnEditState.setVisible(true);
+                    btnEditTechnician.setVisible(true);
+                }
+                else{
+                    btnEditState.setVisible(false);
+                    btnEditTechnician.setVisible(false);
+                }
+                
+                for(int j=0; j<user.getCreatedTickets().size(); j++){
+                    if(user.getCreatedTickets().get(j).getId().equals(ticket.getId())){
+                        i=j;
+                        break;
+                    }
+                }
                 lblIdTicket.setText(ticket.getId().toString());
                 lblUserTicket.setText(ticket.getUser().toString());
-                lblTechnicianTicket.setText(ticket.getTechnician().toString());
+                lblTechnicianTicket.setText(ticket.getTechnician().getName()+" "
+                    +ticket.getTechnician().getLastName1()+" "+ticket.getTechnician().getLastName2());
                 lblDepartmentTicket.setText(ticket.getDepartment());
                 lblLocationTicket.setText(ticket.getLocation());
                 lblMachineCodeTicket.setText(ticket.getMachineCode());
                 lblStateTicket.setText(ticket.getState().toString());
-                lblCreateDateTicket.setText(ticket.getCreateDate().toString());
-                lblEndDateTicket.setText(ticket.getEndDate().toString());
+                lblCreateDateTicket.setText(formato.format(ticket.getCreateDate()));
+                lblEndDateTicket.setText(formato.format(ticket.getEndDate()));
             }
         });
         
@@ -106,7 +133,7 @@ public class TicketDetailController {
     }
     
     private void handleButtonEditState() throws IOException{
-        int i =0; 
+        
         logger.info("Openning a dialog to change state. ");
         Dialog dialog = new Dialog();
         dialog.setTitle(new Label("Editando el estdo"));
@@ -121,7 +148,14 @@ public class TicketDetailController {
                 alert.showAndWait();
             }
             else{
-                user.getCreatedTickets().get(i).setState(State.OPEN);
+                try {
+                    user.getCreatedTickets().get(i).setState(State.OPEN);
+                    endDate = null;
+                    user.getCreatedTickets().get(i).setEndDate(endDate);
+                    logic.changeState(user.getCreatedTickets().get(i));
+                } catch (Exception ex) {
+                    Logger.getLogger(TicketDetailController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dialog.hide();
             }
             
@@ -132,7 +166,14 @@ public class TicketDetailController {
                 alert.showAndWait();
             }
             else{
-                user.getCreatedTickets().get(i).setState(State.INPROGRESS);
+                try {
+                    user.getCreatedTickets().get(i).setState(State.INPROGRESS);
+                    endDate = null;
+                    user.getCreatedTickets().get(i).setEndDate(endDate);
+                    logic.changeState(user.getCreatedTickets().get(i));
+                } catch (Exception ex) {
+                    Logger.getLogger(TicketDetailController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dialog.hide();
             }
         });
@@ -142,7 +183,14 @@ public class TicketDetailController {
                 alert.showAndWait();
             }
             else{
-                user.getCreatedTickets().get(i).setState(State.BLOQUED);
+                try {
+                    user.getCreatedTickets().get(i).setState(State.BLOQUED);
+                    endDate = null;
+                    user.getCreatedTickets().get(i).setEndDate(endDate);
+                    logic.changeState(user.getCreatedTickets().get(i));
+                } catch (Exception ex) {
+                    Logger.getLogger(TicketDetailController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dialog.hide();
             }
         });
@@ -151,8 +199,15 @@ public class TicketDetailController {
                 Alert alert = new Alert(AlertType.ERROR, "¡Este estado ya estaba seleccionado!");
                 alert.showAndWait();
             }
-            else{
-                user.getCreatedTickets().get(i).setState(State.CLOSED);
+            else{   
+                try {
+                    endDate = new Date();
+                    user.getCreatedTickets().get(i).setState(State.CLOSED);
+                    user.getCreatedTickets().get(i).setEndDate(endDate);
+                    logic.changeState(user.getCreatedTickets().get(i));
+                } catch (Exception ex) {
+                    Logger.getLogger(TicketDetailController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dialog.hide();
             }
         });
@@ -178,8 +233,11 @@ public class TicketDetailController {
         }
         lvTechnician.setItems(data);
         Technician t = (Technician) lvTechnician.getSelectionModel().getSelectedItems();
+        user.getCreatedTickets().get(i).setTechnician(t);
+        logic.assignTicket(user.getCreatedTickets().get(i));
         lblTechnicianTicket.setText(t.getName()+" "+t.getLastName1()+" "+t.getLastName2());
+        
     }
     
-    //TODO saber que tipo de usuarios y segun eso esconder los botones
+    //TODO saber que tipo de usuarios y segun eso esconder los botones, fomato de las fechas
 }
