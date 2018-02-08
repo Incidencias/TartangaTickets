@@ -51,7 +51,7 @@ public class LoginController {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
-                //TODO arrowback buton function
+                //TODO arrowback button function
             }
         });
     }
