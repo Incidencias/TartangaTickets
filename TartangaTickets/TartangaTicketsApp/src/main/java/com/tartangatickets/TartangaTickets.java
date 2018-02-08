@@ -30,6 +30,7 @@ public class TartangaTickets extends MobileApplication {
     public static final String TICKET_VIEW = "TicketView";
     public static final Logic LOGIC = new Logic();
     
+    
     @Override
     public void init() {
         addViewFactory(LOGIN_VIEW, () -> new LoginView(LOGIN_VIEW).getView());
