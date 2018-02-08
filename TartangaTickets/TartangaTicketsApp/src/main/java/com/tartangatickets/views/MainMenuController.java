@@ -18,11 +18,8 @@ import static com.tartangatickets.TartangaTickets.USER_VIEW;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
 /**
@@ -30,7 +27,7 @@ import javafx.scene.control.Button;
  *
  * @author Sergio
  */
-public class MainMenuController implements Initializable {
+public class MainMenuController{
 
     /**
      * Initializes the controller class.
@@ -40,11 +37,10 @@ public class MainMenuController implements Initializable {
     private View menu_principal;
     @FXML
     private Button btShowUsers;
-    private LogicInterface logic = TartangaTickets.LOGIC; 
-    private HashMap sessionContent = logic.getSessionContent();
+    private final LogicInterface logic = TartangaTickets.LOGIC; 
+    private final HashMap sessionContent = logic.getSessionContent();
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize() {
             menu_principal.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();

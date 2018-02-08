@@ -13,10 +13,13 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
 import static com.tartangatickets.TartangaTickets.NEWUSER_VIEW;
 import com.tartangatickets.logic.LogicInterface;
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -44,9 +47,8 @@ public class UsersController {
     @FXML
     private TableColumn tcUser;
     @FXML
-    private TableColumn tcLastName;
-    
-    private LogicInterface logic = TartangaTickets.LOGIC; 
+    private TableColumn tcLastName;  
+    private final LogicInterface logic = TartangaTickets.LOGIC; 
     
     public void initialize() {
         usuarios.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -79,7 +81,8 @@ public class UsersController {
             tableUsers.setItems(FXCollections.observableArrayList(logic.findAllUsers()));
             
         } catch (Exception ex) {
-            Logger.getLogger(UsersController.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error al rellenar la tabla"); 
+            alert.showAndWait();
         }
     }
 }

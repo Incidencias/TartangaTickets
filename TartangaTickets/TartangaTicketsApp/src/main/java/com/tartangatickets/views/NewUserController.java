@@ -16,22 +16,13 @@ import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.User;
-import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.MenuItem;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -56,7 +47,7 @@ public class NewUserController  {
     private CheckBox cbTechnician;
     private User user;
     private List<Department> departments;
-    private LogicInterface logic = TartangaTickets.LOGIC; 
+    private final LogicInterface logic = TartangaTickets.LOGIC; 
     
     public void initialize() {
         nuevo_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -70,7 +61,8 @@ public class NewUserController  {
         try {
             departments = logic.findAllDepartments();
         } catch (Exception ex) {
-            Logger.getLogger(NewUserController.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error en la aplicación"); 
+            alert.showAndWait();
         }
         
         for(Department dpt:departments){
