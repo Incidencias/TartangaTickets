@@ -20,7 +20,6 @@ public class HibernateUtil {
 
     private static SessionFactory buildSessionFactory() {
         try {
-
             Configuration config = new Configuration();
             config.addAnnotatedClass(Credential.class);
             config.addAnnotatedClass(Department.class);
@@ -28,15 +27,12 @@ public class HibernateUtil {
             config.addAnnotatedClass(Technician.class);
             config.addAnnotatedClass(Ticket.class);
             config.addAnnotatedClass(User.class);
-            
 
             // load hibernate.cfg.xml from different directory
             SessionFactory sessionFactory = config.configure(
                     "com/tartangatickets/hibernateconf/hibernate.cfg.xml")
                     .buildSessionFactory();
-
             return sessionFactory;
-
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
             System.err.println("Initial SessionFactory creation failed." + ex);

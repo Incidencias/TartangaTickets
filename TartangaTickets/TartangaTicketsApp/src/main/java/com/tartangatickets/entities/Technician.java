@@ -24,7 +24,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(
             name="findAllTechnician",
-            query="SELECT u FROM Technician u ORDER BY u.id"
+            query="SELECT u FROM Technician u ORDER BY u.lastName1, u.lastName2, u.name"
     )
 })
 public class Technician extends User implements Serializable {
@@ -35,6 +35,25 @@ public class Technician extends User implements Serializable {
     @OneToMany(mappedBy="technician",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ticket> assignedTickets;
 
+    public Technician() {
+        
+    }
+    
+    public Technician(
+            String login,
+            Credential credential, 
+            String name, 
+            String lastName1, 
+            String lastName2, 
+            Department department, 
+            List<Ticket> createdTickets, 
+            List<Ticket> assignedTickets, 
+            Boolean isAdmin) {
+        super(login, credential, name, lastName1, lastName2, department, createdTickets);
+        this.assignedTickets = assignedTickets;
+        this.isAdmin = isAdmin;
+    }
+    
     public Boolean getIsAdmin() {
         return isAdmin;
     }
@@ -50,7 +69,4 @@ public class Technician extends User implements Serializable {
     public void setAssignedTickets(List<Ticket> assignedTickets) {
         this.assignedTickets = assignedTickets;
     }
-    
-    
-    
 }

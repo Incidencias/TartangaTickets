@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,7 +35,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(
             name="findAllUsers",
-            query="SELECT u FROM User u order by u.lastName1, u.lastName2, u.name"
+            query="SELECT u FROM User u ORDER BY u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
             name="findUserById",
@@ -39,50 +43,65 @@ import javax.persistence.Table;
     ),
     @NamedQuery(
             name="findUsersByName",
-            query="SELECT u FROM User u WHERE u.name = :name order by u.lastName1, u.lastName2, u.name"
+            query="SELECT u FROM User u WHERE u.name = :name ORDER BY u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
             name="findUsersByLastName1",
-            query="SELECT u FROM User u WHERE u.lastName1 = :lastName1 order by u.lastName1, u.lastName2, u.name"
+            query="SELECT u FROM User u WHERE u.lastName1 = :lastName1 ORDER BY u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
             name="findUsersByLastName2",
-            query="SELECT u FROM User u WHERE u.lastName2 = :lastName2 order by u.lastName1, u.lastName2, u.name"
+            query="SELECT u FROM User u WHERE u.lastName2 = :lastName2 ORDER BY u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
             name="findUsersByDepartment",
-            query="SELECT u FROM User u WHERE u.department = :department order by u.lastName1, u.lastName2, u.name"
+            query="SELECT u FROM User u WHERE u.department = :department ORDER BY u.lastName1, u.lastName2, u.name"
     ),
     @NamedQuery(
             name="findUserByLogin",
             query="SELECT u FROM User u WHERE u.credential.login = :login AND u.credential.password = :password"
     )
 })
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
+    @Id
+    protected String login;
+    
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
-    private Credential credential;
-    private String name;
-    private String lastName1;
-    private String lastName2;
+    @JoinColumn(name="login")
+    protected Credential credential;
+    protected String name;
+    protected String lastName1;
+    protected String lastName2;
     @ManyToOne
-    private Department department;
+    protected Department department;
     @OneToMany(mappedBy="user",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ticket> createdTickets;
+    protected List<Ticket> createdTickets;
     
     public User(){
         
     }
-    
-    public User(String name, String lastName1, String lastName2, Credential credential, List<Ticket> createdTickets){
+
+    public User(String login, Credential credential, String name, String lastName1, String lastName2, Department department, List<Ticket> createdTickets) {
+        this.login = login;
+        this.credential = credential;
         this.name = name;
         this.lastName1 = lastName1;
         this.lastName2 = lastName2;
-        this.credential = credential;
+        this.department = department;
         this.createdTickets = createdTickets;
+    }
+    
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
     
     public String getName() {
