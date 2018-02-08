@@ -73,17 +73,35 @@ public class Ticket implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date endDate;
     private String machineCode;
-    private String department;
+    @ManyToOne
+    private Department department;
     private String location;
     @Enumerated(ORDINAL)
     private State state;
     @ManyToOne
     private User user;
-    @OneToMany(mappedBy ="id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy ="id", cascade = CascadeType.ALL)
     private List<Message> messages;
     @ManyToOne
     private Technician technician;
 
+    public Ticket() {
+    }
+
+    public Ticket(Date createDate, Date endDate, String machineCode, Department department, String location, State state, User user, List<Message> messages, Technician technician) {
+        this.createDate = createDate;
+        this.endDate = endDate;
+        this.machineCode = machineCode;
+        this.department = department;
+        this.location = location;
+        this.state = state;
+        this.user = user;
+        this.messages = messages;
+        this.technician = technician;
+    }
+
+    
+    
     public Integer getId() {
         return id;
     }
@@ -116,11 +134,11 @@ public class Ticket implements Serializable {
         this.machineCode = machineCode;
     }
 
-    public String getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 

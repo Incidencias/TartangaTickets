@@ -16,6 +16,7 @@ import com.tartangatickets.exceptions.ReadException;
 import com.tartangatickets.utils.EmailSender;
 import com.tartangatickets.utils.HibernateUtil;
 import com.tartangatickets.utils.PasswordHandler;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -67,8 +68,11 @@ public class Logic implements LogicInterface {
         LOGGER.info("Creating ticket message");
         try {
             tx = session.beginTransaction();
-            session.persist(message);
+            //session.persist(message);
             Ticket ticket = message.getTicket();
+            List<Message> messages = new ArrayList<>();
+            messages.add(message);
+            ticket.setMessages(messages);
             session.merge(ticket);
             // TODO send email
             tx.commit();
@@ -129,7 +133,7 @@ public class Logic implements LogicInterface {
 
     @Override
     public void changePassword(Credential credential, String newPassword) throws Exception {
-        LOGGER.info("Changinf user password");
+        LOGGER.info("Changing user password");
         try {
             if (PasswordHandler.checkSecurity(newPassword)) {
                 tx = session.beginTransaction();
@@ -160,7 +164,7 @@ public class Logic implements LogicInterface {
         try {
             tx = session.beginTransaction();
             User user = (User) session.createNamedQuery("findUserById")
-                .setParameter("id", login)
+                .setParameter("login", login)
                 .getSingleResult();
             String newPassword = setPassword(user);
             session.merge(user);
@@ -195,20 +199,11 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public void createUser(User user) throws Exception {
+    public User createUser(User user) throws Exception {
         LOGGER.info("Creating user");
         try {
             tx = session.beginTransaction();
             String newPassword = setPassword(user);
-            // TODO this needed
-            /*
-            if (user instanceof Technician) {
-                Technician technician = (Technician) user;
-                session.persist(technician);
-            } else {
-                session.persist(user);
-            }
-            */
             session.persist(user);
             tx.commit();
             LOGGER.info("Sending email");
@@ -222,6 +217,7 @@ public class Logic implements LogicInterface {
             throw new Exception();
         }
         LOGGER.info("User created");
+        return user;
     }
 
     @Override
@@ -388,7 +384,7 @@ public class Logic implements LogicInterface {
         List<Ticket> tickets = null;
         try {
             tx = session.beginTransaction();
-            tickets = session.createNamedQuery("findTicketsByUser")
+            tickets = session.createNamedQuery("findTicketsByTechnician")
                     .setParameter("login", login)
                     .getResultList();
             tx.commit();
@@ -404,4 +400,5 @@ public class Logic implements LogicInterface {
                 tickets.size());
         return tickets;
     }
+    
 }

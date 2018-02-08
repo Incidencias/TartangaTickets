@@ -45,6 +45,4 @@ public class PasswordHandler {
         return RandomStringUtils.random(8, 0, CHARACTERS.length-1, 
                 false, false, CHARACTERS, new SecureRandom());
     }
-    
-    // TODO Decipher configuration file
 }

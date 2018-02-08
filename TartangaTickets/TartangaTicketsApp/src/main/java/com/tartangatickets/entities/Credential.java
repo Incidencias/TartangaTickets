@@ -2,6 +2,7 @@ package com.tartangatickets.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -31,6 +32,7 @@ public class Credential implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String login;
+    @Column(columnDefinition = "TEXT")
     private String password;
     @Temporal(TemporalType.DATE)
     private Date lastAccess;

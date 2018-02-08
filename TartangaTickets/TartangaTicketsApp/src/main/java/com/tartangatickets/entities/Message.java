@@ -26,6 +26,15 @@ public class Message implements Serializable {
     @ManyToOne
     private User user;
 
+    public Message() {
+    }
+
+    public Message(String body, Ticket ticket, User user) {
+        this.body = body;
+        this.ticket = ticket;
+        this.user = user;
+    }
+    
     public Integer getId() {
         return id;
     }
