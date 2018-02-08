@@ -49,6 +49,7 @@ public class MainMenuController implements Initializable {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
+                //TODO backbutton
             }
         });
             User user =(User) sessionContent.get("activeId");

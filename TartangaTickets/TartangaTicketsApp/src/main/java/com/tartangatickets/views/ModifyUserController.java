@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author ubuntu
+ * @author Sergio
  */
 public class ModifyUserController  {
 
@@ -49,7 +49,8 @@ public class ModifyUserController  {
         modificar_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                
+                                //TODO backbutton
+
             }
         });
     }

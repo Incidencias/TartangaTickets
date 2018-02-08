@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author ubuntu
+ * @author Sergio
  */
 public class UsersController {
 
@@ -53,6 +53,8 @@ public class UsersController {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
+                                //TODO backbutton
+
             }
         });
         
