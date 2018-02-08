@@ -10,6 +10,7 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.entities.Credential;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -39,16 +40,18 @@ public class LoginController {
     private Button btnAccess;
     @FXML
     private Button btnRecoverpass;
-    private User user;
     private LogicInterface logic = TartangaTickets.LOGIC;
+    private HashMap sessionContent = logic.getSessionContent();
+    private final String username = tfUser.getText();
+    private final String pass = pfPass.getText();
     
     public void initialize() {
-        //logic.getSessionContent().put('activeId', user);
         
         login.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
+                //TODO arrowback buton function
             }
         });
     }
@@ -56,12 +59,18 @@ public class LoginController {
     private void handleButtonAccess() throws Exception{
         
         logger.info("Access Action event.");
-        if(this.tfUser.getText().trim().isEmpty() || this.pfPass.getText().trim().isEmpty()){
+        if(this.username.trim().isEmpty() || this.pass.trim().isEmpty()){
             Alert alert=new Alert(AlertType.ERROR,"Los campos Usuario y Contraseña no pueden estar vacíos.",ButtonType.OK);
             alert.showAndWait();
         } else {
-            MobileApplication.getInstance().switchView("MainMenuView");
-            logic.authenticate(tfUser.getText(), pfPass.getText());
+            User user = logic.authenticate(username, pass);
+            if (user != null) {
+                MobileApplication.getInstance().switchView("MainMenuView");
+                sessionContent.put("activeId", user);
+            } else {
+                Alert alert=new Alert(AlertType.ERROR,"Datos incorrectos.",ButtonType.OK);
+                alert.showAndWait();
+            }
         }
         
     }
