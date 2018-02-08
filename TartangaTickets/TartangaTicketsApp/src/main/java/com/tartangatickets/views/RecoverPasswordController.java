@@ -17,8 +17,8 @@ import javafx.scene.control.TextField;
  *
  * @author 2dam
  */
-public class RecoverPassController {
-    private static final Logger logger = Logger.getLogger(RecoverPassController.class.getName());
+public class RecoverPasswordController {
+    private static final Logger logger = Logger.getLogger(RecoverPasswordController.class.getName());
     
     @FXML
     private View recuperar_pass;
