@@ -34,9 +34,7 @@ import javafx.stage.Stage;
  */
 public class TicketController {
     
-    private static final Logger logger= Logger.getLogger("views");
-    
-    private Stage stage;
+    private static final Logger logger= Logger.getLogger("views ticker controller");
     
     @FXML
     private View ver_incidencias;
@@ -69,7 +67,7 @@ public class TicketController {
         ver_incidencias.showingProperty().addListener((obs, oldValue, newValue) -> {  
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
+                logger.info("inizialize ticket controller");
                 user = (User) sessionContent.get("activeId");
                 try{
                     itemsState = FXCollections.observableArrayList();

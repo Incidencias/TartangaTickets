@@ -21,12 +21,16 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.DefaultProperty;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Control;
 
 import javafx.scene.control.TextArea;
+import static javafx.scene.input.KeyCode.T;
 import static sun.security.jgss.GSSUtil.login;
 
 /**
@@ -36,11 +40,12 @@ import static sun.security.jgss.GSSUtil.login;
  */
 public class MessageController {
     
+    private static final Logger logger= Logger.getLogger("views message controller.");
 
     @FXML
     private View mensajes;
     @FXML
-    private CardPane<?> cPMessage;
+    private CardPane<Label> cPMessage;
     @FXML
     private Label lblNewMessage;
     @FXML
@@ -64,6 +69,7 @@ public class MessageController {
         mensajes.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                logger.info("inizialize message controller.");
                 user = (User) sessionContent.get("activeId");
                 ticket = (Ticket) sessionContent.get("ticketId");
                 cPMessage = new CardPane();
@@ -82,6 +88,7 @@ public class MessageController {
     }
     
     private void handleButtonSend() throws IOException{
+        logger.info("Sending message.");
         try {
             message = new Message();
             message.setBody(tANewMessage.toString());

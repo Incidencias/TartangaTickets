@@ -114,7 +114,7 @@ public class TicketDetailController {
                 lblUserTicket.setText(ticket.getUser().toString());
                 lblTechnicianTicket.setText(ticket.getTechnician().getName()+" "
                     +ticket.getTechnician().getLastName1()+" "+ticket.getTechnician().getLastName2());
-                lblDepartmentTicket.setText(ticket.getDepartment());
+                lblDepartmentTicket.setText(ticket.getDepartment().getName());
                 lblLocationTicket.setText(ticket.getLocation());
                 lblMachineCodeTicket.setText(ticket.getMachineCode());
                 lblStateTicket.setText(ticket.getState().toString());
@@ -133,7 +133,6 @@ public class TicketDetailController {
     }
     
     private void handleButtonEditState() throws IOException{
-        
         logger.info("Openning a dialog to change state. ");
         Dialog dialog = new Dialog();
         dialog.setTitle(new Label("Editando el estdo"));
@@ -143,6 +142,7 @@ public class TicketDetailController {
         Button btnBloqued = new Button("Bloqueado");
         Button btnClosed = new Button("Cerrado");
         btnOpen.setOnAction(e -> {
+            logger.info("Dialog Edit state Open");
             if(user.getCreatedTickets().get(i).getState().equals(State.OPEN)){
                 Alert alert = new Alert(AlertType.ERROR, "¡Este estado ya estaba seleccionado!");
                 alert.showAndWait();
@@ -161,6 +161,7 @@ public class TicketDetailController {
             
         });
         btnInProgress.setOnAction(e -> {
+            logger.info("Dialog Edit state In progress");
             if(user.getCreatedTickets().get(i).getState().equals(State.INPROGRESS)){
                 Alert alert = new Alert(AlertType.ERROR, "¡Este estado ya estaba seleccionado!");
                 alert.showAndWait();
@@ -178,6 +179,7 @@ public class TicketDetailController {
             }
         });
         btnBloqued.setOnAction(e -> {
+            logger.info("Dialog Edit state Bloqued");
             if(user.getCreatedTickets().get(i).getState().equals(State.BLOQUED)){
                 Alert alert = new Alert(AlertType.ERROR, "¡Este estado ya estaba seleccionado!");
                 alert.showAndWait();
@@ -195,6 +197,7 @@ public class TicketDetailController {
             }
         });
         btnClosed.setOnAction(e -> {
+            logger.info("Dialog Edit state Close");
             if(user.getCreatedTickets().get(i).getState().equals(State.CLOSED)){
                 Alert alert = new Alert(AlertType.ERROR, "¡Este estado ya estaba seleccionado!");
                 alert.showAndWait();
