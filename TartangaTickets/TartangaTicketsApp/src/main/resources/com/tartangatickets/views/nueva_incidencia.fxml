@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.AppBar?>
-<?import com.gluonhq.charm.glisten.control.Icon?>
 <?import com.gluonhq.charm.glisten.mvc.View?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -22,12 +18,12 @@
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="150.0">
                      <children>
-                        <Label fx:id="lblIdN" style="-fx-font-size: 25;" text="Incidencia:" />
+                        <Label style="-fx-font-size: 25;" text="Incidencia:" />
                      </children>
                   </VBox>
-                  <VBox fx:id="lblIdNTicket" alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
+                  <VBox alignment="CENTER" prefHeight="69.0" prefWidth="180.0">
                      <children>
-                        <Label fx:id="lblIdTicket" />
+                        <Label fx:id="lblTicket" prefHeight="18.0" prefWidth="180.0" />
                      </children>
                   </VBox>
                </children>
@@ -37,26 +33,12 @@
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
                      <children>
-                        <Label fx:id="lblUserN" text="Usuario:" />
+                        <Label text="Usuario:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="180.0">
                      <children>
-                        <Label fx:id="lblUserNTicket" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-               <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
-                     <children>
-                        <Label fx:id="lblDepartmentN" text="Departamento:" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
-                     <children>
-                        <Label fx:id="lblDepartmentNTicket" />
+                        <Label fx:id="lblUser" prefHeight="18.0" prefWidth="156.0" />
                      </children>
                   </VBox>
                </children>
@@ -65,26 +47,12 @@
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
                      <children>
-                        <Label fx:id="lblLocationN" text="Ubicacion:" />
+                        <Label text="Departamento:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="180.0">
                      <children>
-                        <TextField fx:id="txLocationNTicket" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-               <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
-                     <children>
-                        <Label fx:id="lblMachineCodeN" prefHeight="18.0" prefWidth="140.0" text="Codigo maquina:" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
-                     <children>
-                        <TextField fx:id="txMachineCodeNTicket" alignment="TOP_LEFT" />
+                        <Label fx:id="lblDepartment" prefHeight="18.0" prefWidth="155.0" />
                      </children>
                   </VBox>
                </children>
@@ -93,12 +61,40 @@
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
                      <children>
-                        <Label fx:id="lblCreateDateN" text="Fecha creacion:" />
+                        <Label text="Ubicacion:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="150.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="180.0">
                      <children>
-                        <DatePicker fx:id="datePCreateDateNTicket" />
+                        <TextField fx:id="tfLocation" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <Label prefHeight="18.0" prefWidth="140.0" text="Codigo maquina:" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="180.0">
+                     <children>
+                        <TextField fx:id="tfMachineCode" alignment="TOP_LEFT" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <Label text="Fecha creacion:" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="180.0">
+                     <children>
+                        <Label fx:id="lblCreateDate" prefHeight="18.0" prefWidth="180.0" />
                      </children>
                   </VBox>
                </children>
@@ -107,24 +103,19 @@
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
                      <children>
-                        <Label fx:id="lblMessageN" text="Mensaje:" />
+                        <Label text="Mensaje:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="180.0">
                      <children>
-                        <TextField fx:id="txMessageNTicket" />
+                        <TextField fx:id="tfMessage" />
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
-                     <children>
-                        <Button fx:id="btnCreateTicket" mnemonicParsing="false" text="Crear incidencia" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="120.0" />
+                  <Button fx:id="btnCreateTicket" mnemonicParsing="false" text="Crear incidencia" />
                </children>
             </HBox>
          </children>

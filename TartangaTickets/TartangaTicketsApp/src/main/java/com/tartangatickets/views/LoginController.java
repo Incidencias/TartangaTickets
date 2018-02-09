@@ -40,8 +40,8 @@ public class LoginController {
     private Button btnAccess;
     @FXML
     private Button btnRecoverpass;
-    private LogicInterface logic = TartangaTickets.LOGIC;
-    private HashMap sessionContent = logic.getSessionContent();
+    private final LogicInterface logic = TartangaTickets.LOGIC;
+    private final HashMap sessionContent = logic.getSessionContent();
     private final String username = tfUser.getText();
     private final String pass = pfPass.getText();
     

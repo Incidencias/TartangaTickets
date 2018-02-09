@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.views.NewTicketView;
 import com.tartangatickets.views.TicketDetailView;
 
 
