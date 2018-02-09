@@ -42,8 +42,6 @@ public class LoginController {
     private Button btnRecoverpass;
     private final LogicInterface logic = TartangaTickets.LOGIC;
     private final HashMap sessionContent = logic.getSessionContent();
-    private final String username = tfUser.getText();
-    private final String pass = pfPass.getText();
     
     public void initialize() {
         
@@ -59,11 +57,11 @@ public class LoginController {
     private void handleButtonAccess() throws Exception{
         
         logger.info("Access Action event.");
-        if(this.username.trim().isEmpty() || this.pass.trim().isEmpty()){
+        if(this.tfUser.getText().trim().isEmpty() || this.pfPass.getText().trim().isEmpty()){
             Alert alert=new Alert(AlertType.ERROR,"Los campos Usuario y Contraseña no pueden estar vacíos.",ButtonType.OK);
             alert.showAndWait();
         } else {
-            User user = logic.authenticate(username, pass);
+            User user = logic.authenticate(tfUser.getText(), pfPass.getText());
             if (user != null) {
                 MobileApplication.getInstance().switchView("MainMenuView");
                 sessionContent.put("activeId", user);
