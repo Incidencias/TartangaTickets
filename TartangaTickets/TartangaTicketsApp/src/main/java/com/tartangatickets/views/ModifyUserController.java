@@ -54,7 +54,7 @@ public class ModifyUserController  {
             }
         });
     }
-    
+    @FXML
     private void handleButtonModifyUser(){
     }
 }

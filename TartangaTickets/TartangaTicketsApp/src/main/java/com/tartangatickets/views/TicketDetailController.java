@@ -126,12 +126,12 @@ public class TicketDetailController {
         
     }
     
-    
+    @FXML
     private void handleButtonSendMessage() throws IOException{
         logger.info("Going to send Message Action event");
         MobileApplication.getInstance().switchView("MessageView");
     }
-    
+    @FXML
     private void handleButtonEditState() throws IOException{
         logger.info("Openning a dialog to change state. ");
         Dialog dialog = new Dialog();
@@ -217,7 +217,7 @@ public class TicketDetailController {
         dialog.getButtons().addAll(btnOpen, btnInProgress, btnBloqued, btnClosed);
         dialog.showAndWait();
     }
-    
+    @FXML
     private void handleButtonEditTechnician() throws IOException, Exception{
         logger.info("Openning a dialog to change technician. ");
         ListView lvTechnician = new ListView<User>();

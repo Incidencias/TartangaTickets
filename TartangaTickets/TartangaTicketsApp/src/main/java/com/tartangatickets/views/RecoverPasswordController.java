@@ -35,7 +35,7 @@ public class RecoverPasswordController {
             }
         });
     }
-    
+    @FXML
     private void handleButtonRecoverpass() throws Exception{
         
         logger.info("Recover Password Action event.");

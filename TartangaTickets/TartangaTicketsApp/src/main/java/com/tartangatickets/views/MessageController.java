@@ -86,7 +86,7 @@ public class MessageController {
         label.setStyle("-fx-padding:10;");
         return label;
     }
-    
+    @FXML
     private void handleButtonSend() throws IOException{
         logger.info("Sending message.");
         try {

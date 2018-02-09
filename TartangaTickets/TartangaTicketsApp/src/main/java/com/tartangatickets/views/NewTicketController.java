@@ -79,7 +79,7 @@ public class NewTicketController {
         
         
     }     
-    
+    @FXML
     private void handleButtonCreateTicket() throws Exception {
         logger.info("Create Ticket Action event.");
         if(tfMachineCode.getText().trim().isEmpty() && tfLocation.getText().trim().isEmpty() && tfMessage.getText().trim().isEmpty()){

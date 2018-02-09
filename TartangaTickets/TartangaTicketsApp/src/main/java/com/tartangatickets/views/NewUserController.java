@@ -70,7 +70,7 @@ public class NewUserController  {
             dbDepartment.getItems().add(new MenuItem(dpt.getName()));
         }
     }
-    
+    @FXML
     private void handleButtonCreateUser(){
         
         Credential credential = new Credential();

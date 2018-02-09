@@ -14,7 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import com.gluonhq.charm.glisten.control.TextField;
 import javafx.scene.control.PasswordField;
 
 /**
@@ -49,6 +49,7 @@ public class LoginController {
         });
     }
     
+    @FXML
     private void handleButtonAccess() throws Exception{
         
         logger.info("Access Action event.");
@@ -67,7 +68,7 @@ public class LoginController {
         }
         
     }
-    
+    @FXML
     private void handleButtonRecoverpass(){
         logger.info("Recover Password Action event.");
         MobileApplication.getInstance().switchView("RecoverPassView");
