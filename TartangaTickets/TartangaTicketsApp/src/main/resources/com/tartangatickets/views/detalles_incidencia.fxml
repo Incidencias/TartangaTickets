@@ -144,17 +144,17 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnEditTechnician" mnemonicParsing="false" prefWidth="98.0" text="Editar tecnico" />
+                        <Button fx:id="btnEditTechnician" mnemonicParsing="false" prefWidth="98.0" text="Editar tecnico" onAction="#handleButtonEditTechnician" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnSendMessage" mnemonicParsing="false" prefHeight="32.0" prefWidth="94.0" text="Mensajes" />
+                        <Button fx:id="btnSendMessage" mnemonicParsing="false" prefHeight="32.0" prefWidth="94.0" text="Mensajes" onAction="#handleButtonSendMessage" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnEditState" mnemonicParsing="false" text="Editar estado" />
+                        <Button fx:id="btnEditState" mnemonicParsing="false" text="Editar estado" onAction="#handleButtonEditState" />
                      </children>
                   </VBox>
                </children>
