@@ -5,7 +5,6 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
-import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -15,7 +14,7 @@ import javafx.scene.control.TextField;
 
 /**
  *
- * @author 2dam
+ * @author ionut
  */
 public class RecoverPasswordController {
     private static final Logger logger = Logger.getLogger(RecoverPasswordController.class.getName());
@@ -24,7 +23,7 @@ public class RecoverPasswordController {
     private View recuperar_pass;
     @FXML
     private TextField tfUser;
-    private LogicInterface logic = TartangaTickets.LOGIC;
+    private final LogicInterface logic = TartangaTickets.LOGIC;
     private final String username = tfUser.getText();
     
     public void initialize() {
