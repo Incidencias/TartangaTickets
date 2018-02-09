@@ -16,6 +16,8 @@ import static com.tartangatickets.TartangaTickets.TICKET_VIEW;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -26,7 +28,9 @@ import javafx.scene.control.Button;
  * @author Sergio
  */
 public class PassModifyController {
-
+    
+    private static final Logger logger = Logger.getLogger("Window PassModifyController");
+    
     @FXML
     private View modificar_pass;
     @FXML
@@ -47,6 +51,7 @@ public class PassModifyController {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
                 //TODO backbutton
+                logger.info(user.getCredential().getLogin()+" "+user.getCredential().getPassword());
 
             }
         });
@@ -55,6 +60,12 @@ public class PassModifyController {
     @FXML
     private void handleButtonModify(){
         if(!tfOldPass.getText().isEmpty()&&!tfNewPass.getText().isEmpty()&&!tfNewPass.getText().isEmpty()){
+            try {
+                User userp= logic.authenticate(user.getCredential().getLogin(), user.getCredential().getPassword());
+                logger.info(userp.getLogin());
+            } catch (Exception ex) {
+                Logger.getLogger(PassModifyController.class.getName()).log(Level.SEVERE, null, ex);
+            }
            
             try {
                 if(logic.authenticate(user.getCredential().getLogin(), user.getCredential().getPassword())!=null){

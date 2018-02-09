@@ -37,131 +37,133 @@ public class TestClass {
         Logger.getLogger(TestClass.class.getName()).log(Level.SEVERE, null, ex);
         }
         */
-        //createUser();
+        
+//        createUser();
 
-        //deleteUser();
-
-        //createTechnician();
-
-        //createAdmin();
-
-        //createTicket();
-
-        //sendMessage();
-        
-        /*
-        try {   
-            List<Ticket> tickets = logic.findTicketsByUser("jzaballazarzosa@gmail.com");
-            System.out.print(tickets.size());
-        } catch (Exception ex) {
-            Logger.getLogger(TestClass.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-        
-        /*
-        List<Ticket> tickets = null;
-        try {
-            tickets = logic.findAllTickets();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        Ticket ticket = null;
-        
-        if (tickets != null) 
-            ticket = tickets.get(0);
-        
-        ticket.setState(State.CLOSED);
-        
-        try {
-            logic.changeState(ticket);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-        /*
-        Technician technician = (Technician) createTechnician();
-        
-        ticket.setTechnician(technician);
-        
-        try {
-            logic.assignTicket(ticket);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-        /*
-        try {
-            logic.findTicketsByUser("catxser@gmail.com");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-        /*
-        User user = null;
-        try {
-            user = logic.authenticate("catxser@gmail.com", "A1a+bbbb");
-            System.out.print(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-        /*
-        try {
-            logic.changePassword(user.getCredential(), "A1a+bbbb");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-        /*
-        try {
-            logic.recoverPassword("catxser@gmail.com");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-        /*
-        try {
-            List<User> users = logic.findAllUsers();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-        /*
-        try {
-            logic.findAllDepartments();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-        /*
-        try {
-            logic.findTicketsByState(State.OPEN);
-            logic.findTicketsByState(State.CLOSED);
-            logic.findTicketsByState(State.BLOQUED);
-            logic.findTicketsByState(State.INPROGRESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        */
-        
-        try {
-            logic.findTicketsByTechnician("ikerjon.m.a@gmail.com");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        deleteUser();
+//
+//        createTechnician();
+//
+//        createAdmin();
+//
+        createTicket();
+//
+//        sendMessage();
+//        
+//        
+//        try {   
+//            List<Ticket> tickets = logic.findTicketsByUser("jzaballazarzosa@gmail.com");
+//            System.out.print(tickets.size());
+//        } catch (Exception ex) {
+//            Logger.getLogger(TestClass.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//        
+//        
+//        List<Ticket> tickets = null;
+//        try {
+//            tickets = logic.findAllTickets();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        Ticket ticket = null;
+//        
+//        if (tickets != null) 
+//            ticket = tickets.get(0);
+//        
+//        ticket.setState(State.CLOSED);
+//        
+//        try {
+//            logic.changeState(ticket);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        
+//        Technician technician = (Technician) createTechnician();
+//        
+//        ticket.setTechnician(technician);
+//        
+//        try {
+//            logic.assignTicket(ticket);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        
+//        try {
+//            logic.findTicketsByUser("catxser@gmail.com");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        
+//        User user = null;
+//        try {
+//            user = logic.authenticate("catxser@gmail.com", "A1a+bbbb");
+//            System.out.print(user);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        
+//        try {
+//            logic.changePassword(user.getCredential(), "A1a+bbbb");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        
+//        try {
+//            logic.recoverPassword("catxser@gmail.com");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        
+//        try {
+//            List<User> users = logic.findAllUsers();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        
+//        try {
+//            logic.findAllDepartments();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        
+//        try {
+//            logic.findTicketsByState(State.OPEN);
+//            logic.findTicketsByState(State.CLOSED);
+//            logic.findTicketsByState(State.BLOQUED);
+//            logic.findTicketsByState(State.INPROGRESS);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//        
+//        try {
+//            logic.findTicketsByTechnician("ikerjon.m.a@gmail.com");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         
         System.exit(0);
     }
-
+   
+    
     private static void createUser() {
         Credential credential = new Credential();
         //credential.setLogin("jzaballazarzosa@gmail.com");
@@ -229,13 +231,13 @@ public class TestClass {
         Credential credential = new Credential();
         //credential.setLogin("jzaballazarzosa@gmail.com");
         //credential.setPassword("Jon1#Jon");
-        credential.setLogin("ana.leiba@tartanga.eus");
+        credential.setLogin("ionut177xd@gmail.com");
         User user = new Technician(
                 credential.getLogin(),
                 credential,
-                "Jon",
-                "Zaballa",
-                "Zarzosa",
+                "Ionut",
+                "Savin",
+                null,
                 new Department("INF", "Informática"),
                 null,
                 null,

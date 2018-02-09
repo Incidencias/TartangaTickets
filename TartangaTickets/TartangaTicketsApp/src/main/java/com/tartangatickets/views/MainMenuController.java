@@ -46,6 +46,7 @@ public class MainMenuController{
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
                 //TODO backbutton
+                
             }
         });
             User user =(User) sessionContent.get("activeId");

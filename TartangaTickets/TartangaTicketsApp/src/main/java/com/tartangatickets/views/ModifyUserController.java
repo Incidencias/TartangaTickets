@@ -10,6 +10,7 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.DropdownButton;
 import com.gluonhq.charm.glisten.control.TextField;
 import com.gluonhq.charm.glisten.mvc.View;
+import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -49,6 +50,7 @@ public class ModifyUserController  {
         modificar_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
                                 //TODO backbutton
 
             }

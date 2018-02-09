@@ -50,7 +50,7 @@ public class TicketController {
     private HashMap sessionContent = logic.getSessionContent();
     private User user;
     private State state;
-    private  List<Ticket> ticketUser;
+    private List<Ticket> ticketUser;
     private ObservableList<Integer> data;
     private ObservableList<State> itemsState;
     private ObservableList<String> itemsTechnicianN;
@@ -67,6 +67,7 @@ public class TicketController {
         ver_incidencias.showingProperty().addListener((obs, oldValue, newValue) -> {  
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
                 logger.info("inizialize ticket controller");
                 user = (User) sessionContent.get("activeId");
                 try{

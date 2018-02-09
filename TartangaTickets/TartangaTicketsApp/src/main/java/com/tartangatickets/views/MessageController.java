@@ -9,6 +9,7 @@ import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.CardPane;
 import com.gluonhq.charm.glisten.mvc.View;
+import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.sun.mail.handlers.message_rfc822;
 import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.entities.Message;
@@ -69,6 +70,7 @@ public class MessageController {
         mensajes.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
                 logger.info("inizialize message controller.");
                 user = (User) sessionContent.get("activeId");
                 ticket = (Ticket) sessionContent.get("ticketId");
