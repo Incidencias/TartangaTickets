@@ -24,6 +24,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.MenuItem;
 
+
 /**
  * FXML Controller class
  *
@@ -57,7 +58,7 @@ public class NewUserController  {
                 
             }
         });
-                
+                 
         try {
             departments = logic.findAllDepartments();
         } catch (Exception ex) {
