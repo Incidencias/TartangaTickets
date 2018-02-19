@@ -13,11 +13,13 @@ import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoDepartmentException;
 import com.tartangatickets.exceptions.NoTicketException;
+import com.tartangatickets.exceptions.NoUserException;
+import com.tartangatickets.exceptions.UserLoginException;
 import com.tartangatickets.utils.exceptions.NotSecureException;
-import com.tartangatickets.exceptions.ReadException;
 import com.tartangatickets.utils.EmailSender;
 import com.tartangatickets.utils.HibernateUtil;
 import com.tartangatickets.utils.PasswordHandler;
+import com.tartangatickets.utils.exceptions.EncrypterException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +30,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import java.util.logging.Level;
-import javax.persistence.NoResultException;
+import org.apache.commons.mail.EmailException;
 
 /**
  *
@@ -124,14 +126,17 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public void recoverPassword(String login) throws NoSuchAlgorithmException {
+    public void recoverPassword(String login) throws NoSuchAlgorithmException, 
+            EncrypterException, EmailException, NoUserException {
         LOGGER.info("Recovering user password");
         tx = session.beginTransaction();
-        User user = (User) session.createNamedQuery("findUserById")
+        List<User> users = session.createNamedQuery("findUserById")
             .setParameter("login", login)
-            .getSingleResult();
-        String newPassword = setPassword(user);
-        session.merge(user);
+            .getResultList();
+        if (users == null || users.isEmpty())
+            throw new NoUserException("El usuario no existe");
+        String newPassword = setPassword(users.get(0));
+        session.merge(users.get(0));
         tx.commit();
         LOGGER.info("Sending email");
         EmailSender.sendEmail(login, newPassword);
@@ -150,14 +155,15 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public User createUser(User user) throws NoSuchAlgorithmException {
+    public User createUser(User user) 
+            throws NoSuchAlgorithmException, EncrypterException, EmailException {
         LOGGER.info("Creating user");
         tx = session.beginTransaction();
         String newPassword = setPassword(user);
         session.persist(user);
-        tx.commit();
         LOGGER.info("Sending email");
         EmailSender.sendEmail(user.getCredential().getLogin(), newPassword);
+        tx.commit();
         LOGGER.info("User created");
         return user;
     }
@@ -172,12 +178,14 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<User> findAllUsers() {
+    public List<User> findAllUsers() throws NoUserException {
         LOGGER.info("Fetching all users");
         List<User> users = null;
         tx = session.beginTransaction();
         users = session.createNamedQuery("findAllUsers")
                 .getResultList();
+        if (users == null || users.isEmpty())
+            throw new NoUserException("No users found");
         tx.commit();
         LOGGER.log(Level.INFO,
                 "{0} users found",
@@ -208,16 +216,18 @@ public class Logic implements LogicInterface {
 
     @Override
     public User authenticate(String login, String password) throws 
-            NoSuchAlgorithmException {
+            NoSuchAlgorithmException, UserLoginException {
         LOGGER.info("Authenticating user");
-        User user = null;
+        List<User> users = null;
         String passwordHash = PasswordHandler.getHash(password, login);
-        user = (User) session.createNamedQuery("findUserByLogin")
+        users = session.createNamedQuery("findUserByLogin")
                 .setParameter("login", login)
                 .setParameter("password", passwordHash)
-                .getSingleResult();
+                .getResultList();
+        if (users == null || users.isEmpty())
+            throw new UserLoginException("Usuario o contraseña invalidos");
         LOGGER.info("Log in successful");
-        return user;
+        return users.get(0);
     }
 
     @Override
@@ -271,5 +281,4 @@ public class Logic implements LogicInterface {
                 tickets.size());
         return tickets;
     }
-    
 }
