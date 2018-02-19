@@ -19,13 +19,13 @@
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="250.0">
                      <children>
                         <Label fx:id="lblStateLTicket" text="Estado:" />
-                        <ComboBox fx:id="cbStateLTicket" prefWidth="150.0" />
+                        <ComboBox fx:id="cbStateLTicket" onAction="#handleFilterState" prefWidth="150.0" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="94.0" prefWidth="239.0">
                      <children>
                         <Label fx:id="lblTechnicianLTicket" text="Tecnico:" />
-                        <ComboBox fx:id="cbTechnicianLTicket" prefWidth="150.0" />
+                        <ComboBox fx:id="cbTechnicianLTicket" onAction="#handleFilterTechnician" prefWidth="150.0" />
                      </children>
                   </VBox>
                </children>

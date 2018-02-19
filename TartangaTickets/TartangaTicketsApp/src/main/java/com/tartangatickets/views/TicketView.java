@@ -4,6 +4,11 @@ import com.gluonhq.charm.glisten.mvc.View;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 
+/**
+ * 
+ * @author Iker
+ */
+
 public class TicketView {
 
     private final String name;

@@ -66,7 +66,7 @@ public class MessageController {
      * Initializes the controller class.
      */
     
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(/*URL url, ResourceBundle rb*/) {
         mensajes.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();

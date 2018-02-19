@@ -182,6 +182,9 @@ public class Ticket implements Serializable {
         this.technician = technician;
     }
 
+    public String toString(){
+        return id.toString();
+    }
 
     
 
