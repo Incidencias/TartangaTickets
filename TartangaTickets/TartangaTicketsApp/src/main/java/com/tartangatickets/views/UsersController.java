@@ -89,6 +89,7 @@ public class UsersController {
         });  
         
         try {
+            LOGGER.info("users "+logic.findAllUsers().size());
             tableUsers.setItems(FXCollections.observableArrayList(logic.findAllUsers()));
             
         } catch (Exception ex) {
