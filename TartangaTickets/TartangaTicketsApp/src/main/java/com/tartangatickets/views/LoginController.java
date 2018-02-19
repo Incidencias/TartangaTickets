@@ -66,7 +66,6 @@ public class LoginController {
                 user = logic.authenticate(tfUser.getText(), pfPass.getText());
                 sessionContent.put("activeId", user);
                 MobileApplication.getInstance().switchView("MainMenuView");
-                
             } catch (UserLoginException ex) {
                 Alert alert=new Alert(
                     AlertType.ERROR,
@@ -82,8 +81,6 @@ public class LoginController {
                 );
                 alert.showAndWait();
             }
-        
-            
         }
     }
     @FXML

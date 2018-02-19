@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Table(name="technicians", schema="tartanga_ticket_db")
 @NamedQueries({
     @NamedQuery(
-            name="findAllTechnician",
+            name="findAllTechnicians",
             query="SELECT u FROM Technician u ORDER BY u.lastName1, u.lastName2, u.name"
     )
 })

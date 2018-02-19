@@ -54,15 +54,11 @@ public class MainMenuController{
                 
             }
         });
-            
-            User user =(User) sessionContent.get("activeId");
-                
-            if(user instanceof Technician && ((Technician)user).getIsAdmin()){
-                btShowUsers.setVisible(true);
-            }
-           // LOGGER.info("tech is admin "+((Technician)user).getIsAdmin());
-            
-        
+        User user =(User) sessionContent.get("activeId");
+        if(user instanceof Technician && ((Technician)user).getIsAdmin()){
+            btShowUsers.setVisible(true);
+        }
+       // LOGGER.info("tech is admin "+((Technician)user).getIsAdmin());
     }
 
     @FXML

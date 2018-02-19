@@ -9,6 +9,7 @@ import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Message;
 import com.tartangatickets.entities.State;
+import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoDepartmentException;
@@ -20,6 +21,7 @@ import com.tartangatickets.utils.EmailSender;
 import com.tartangatickets.utils.HibernateUtil;
 import com.tartangatickets.utils.PasswordHandler;
 import com.tartangatickets.utils.exceptions.EncrypterException;
+import com.tartangatickets.utils.exceptions.NoTechnicianException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -106,6 +108,21 @@ public class Logic implements LogicInterface {
                 "{0} tickets found",
                 tickets.size());
         return tickets;
+    }
+    
+    public List<Technician> findAllTechnicians() throws NoTechnicianException {
+        LOGGER.info("Fetching all technicians");
+        List<Technician> technicians = null;
+        tx = session.beginTransaction();
+        technicians = session.createNamedQuery("findAllTechnicians")
+                .getResultList();
+        tx.commit();
+        if (technicians == null || technicians.isEmpty())
+           throw new NoTechnicianException("No se encontraron técnicos");
+        LOGGER.log(Level.INFO,
+                "{0} tickets found",
+                technicians.size());
+        return technicians;
     }
 
     @Override

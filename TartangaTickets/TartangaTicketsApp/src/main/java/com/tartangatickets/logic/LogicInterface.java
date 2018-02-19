@@ -4,8 +4,10 @@ import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Message;
 import com.tartangatickets.entities.State;
+import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
+import com.tartangatickets.utils.exceptions.NoTechnicianException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,4 +33,5 @@ public interface LogicInterface {
     public List<Department> findAllDepartments() throws Exception; //Check
     public List<Ticket> findTicketsByState(State state) throws Exception; //Check
     public List<Ticket> findTicketsByTechnician(String technicianLogin) throws Exception;
+     public List<Technician> findAllTechnicians() throws NoTechnicianException;
 }
