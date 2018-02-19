@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import com.gluonhq.charm.glisten.control.TextField;
+import com.tartangatickets.entities.User;
 
 /**
  *
@@ -23,6 +24,7 @@ public class RecoverPasswordController {
     private View recuperar_pass;
     @FXML
     private TextField tfUser;
+    private User user;
     private final LogicInterface logic = TartangaTickets.LOGIC;
     
     public void initialize() {
@@ -36,17 +38,20 @@ public class RecoverPasswordController {
     }
     @FXML
     private void handleButtonRecoverpass() throws Exception{
-        
         logger.info("Recover Password Action event.");
-        if(this.tfUser.getText().trim().isEmpty()){
-            Alert alert=new Alert(Alert.AlertType.ERROR,"El campo Usuario no puede estar vacío.",ButtonType.OK);
+        if(!user.getName().equals(tfUser.getText())){
+            Alert alert=new Alert(Alert.AlertType.ERROR,"El Usuario indicado no existe.",ButtonType.OK);
             alert.showAndWait();
-            MobileApplication.getInstance().switchView("HOME_VIEW");
-        } else {
-            logic.recoverPassword(tfUser.getText());
-            Alert alert=new Alert(Alert.AlertType.INFORMATION,"Se ha enviado la nueva contraseña a su correo.",ButtonType.OK);
-            alert.showAndWait();
+        }else{
+            if(this.tfUser.getText().trim().isEmpty()){
+                Alert alert=new Alert(Alert.AlertType.ERROR,"El campo Usuario no puede estar vacío.",ButtonType.OK);
+                alert.showAndWait();
+            } else {
+                logic.recoverPassword(tfUser.getText());
+                Alert alert=new Alert(Alert.AlertType.INFORMATION,"Se ha enviado la nueva contraseña a su correo.",ButtonType.OK);
+                alert.showAndWait();
+                MobileApplication.getInstance().switchView("HOME_VIEW");
+            }
         }
-        
     }
 }

@@ -51,18 +51,25 @@ public class LoginController {
     
     @FXML
     private void handleButtonAccess() throws Exception{
-        
         logger.info("Access Action event.");
+        
         if(this.tfUser.getText().trim().isEmpty() || this.pfPass.getText().trim().isEmpty()){
             Alert alert=new Alert(AlertType.ERROR,"Los campos Usuario y Contraseña no pueden estar vacíos.",ButtonType.OK);
             alert.showAndWait();
         } else {
             User user = logic.authenticate(tfUser.getText(), pfPass.getText());
-            if (user != null) {
-                MobileApplication.getInstance().switchView("MainMenuView");
-                sessionContent.put("activeId", user);
-            } else {
-                Alert alert=new Alert(AlertType.ERROR,"Datos incorrectos.",ButtonType.OK);
+            if(user.getName().equals(tfUser.getText())){
+                if (user != null) {
+                    MobileApplication.getInstance().switchView("MainMenuView");
+                    tfUser.setText("");
+                    pfPass.setText("");
+                    sessionContent.put("activeId", user);
+                } else {
+                    Alert alert=new Alert(AlertType.ERROR,"Datos incorrectos.",ButtonType.OK);
+                    alert.showAndWait();
+                }
+            }else{
+                Alert alert=new Alert(AlertType.ERROR,"El Usuario indicado no existe.",ButtonType.OK);
                 alert.showAndWait();
             }
         }

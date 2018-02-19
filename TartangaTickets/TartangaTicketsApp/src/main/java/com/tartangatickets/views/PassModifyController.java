@@ -34,11 +34,11 @@ public class PassModifyController {
     @FXML
     private View modificar_pass;
     @FXML
-    private TextField tfOldPass;
+    private TextField pfOldPass;
     @FXML
-    private TextField tfNewPass;
+    private TextField pfNewPass;
     @FXML
-    private TextField tfNewPassBis;
+    private TextField pfRepeatPass;
     @FXML
     private Button btModify;
     private final LogicInterface logic = TartangaTickets.LOGIC;
@@ -59,7 +59,7 @@ public class PassModifyController {
     
     @FXML
     private void handleButtonModify(){
-        if(!tfOldPass.getText().isEmpty()&&!tfNewPass.getText().isEmpty()&&!tfNewPass.getText().isEmpty()){
+        if(!pfOldPass.getText().isEmpty()&&!pfNewPass.getText().isEmpty()&&!pfNewPass.getText().isEmpty()){
             try {
                 User userp= logic.authenticate(user.getCredential().getLogin(), user.getCredential().getPassword());
                 logger.info(userp.getLogin());
@@ -69,7 +69,7 @@ public class PassModifyController {
            
             try {
                 if(logic.authenticate(user.getCredential().getLogin(), user.getCredential().getPassword())!=null){
-                    logic.changePassword(user.getCredential(), tfNewPass.getText());
+                    logic.changePassword(user.getCredential(), pfNewPass.getText());
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Contraseña cambiada"); 
                     alert.showAndWait();              
                     MobileApplication.getInstance().switchView(MAINMENU_VIEW);
