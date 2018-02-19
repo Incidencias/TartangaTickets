@@ -11,13 +11,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import com.gluonhq.charm.glisten.control.TextField;
+import com.tartangatickets.exceptions.NoUserException;
+import com.tartangatickets.utils.exceptions.EncrypterException;
+import java.security.NoSuchAlgorithmException;
+import org.apache.commons.mail.EmailException;
 
 /**
  *
  * @author ionut
  */
 public class RecoverPasswordController {
-    private static final Logger logger = Logger.getLogger(RecoverPasswordController.class.getName());
+    
+    private static final String EMAIL_ERROR = "Error al enviar email al usuario.";
+    private static final String GENERAL_ERROR = "Error inesperado.";
     
     @FXML
     private View recuperar_pass;
@@ -34,19 +40,29 @@ public class RecoverPasswordController {
             }
         });
     }
+    
     @FXML
-    private void handleButtonRecoverpass() throws Exception{
+    private void handleButtonRecoverpass() {
         
-        logger.info("Recover Password Action event.");
         if(this.tfUser.getText().trim().isEmpty()){
             Alert alert=new Alert(Alert.AlertType.ERROR,"El campo Usuario no puede estar vacío.",ButtonType.OK);
             alert.showAndWait();
-            MobileApplication.getInstance().switchView("HOME_VIEW");
         } else {
-            logic.recoverPassword(tfUser.getText());
-            Alert alert=new Alert(Alert.AlertType.INFORMATION,"Se ha enviado la nueva contraseña a su correo.",ButtonType.OK);
-            alert.showAndWait();
+            try {
+                logic.recoverPassword(tfUser.getText());
+                Alert alert=new Alert(Alert.AlertType.INFORMATION,"Se ha enviado la nueva contraseña a su correo.",ButtonType.OK);
+                alert.showAndWait();
+                MobileApplication.getInstance().switchView("HOME_VIEW");
+            } catch (NoUserException ex) {
+                Alert alert=new Alert(Alert.AlertType.ERROR,ex.getMessage(),ButtonType.OK);
+                alert.showAndWait();
+            } catch (EmailException ex) {
+                Alert alert=new Alert(Alert.AlertType.ERROR,EMAIL_ERROR,ButtonType.OK);
+                alert.showAndWait();
+            } catch (Exception ex) {
+                Alert alert=new Alert(Alert.AlertType.ERROR,GENERAL_ERROR,ButtonType.OK);
+                alert.showAndWait();
+            }
         }
-        
     }
 }

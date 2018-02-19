@@ -138,9 +138,9 @@ public class Logic implements LogicInterface {
             throw new NoUserException("El usuario no existe");
         String newPassword = setPassword(users.get(0));
         session.merge(users.get(0));
-        tx.commit();
         LOGGER.info("Sending email");
         EmailSender.sendEmail(login, newPassword);
+        tx.commit();
         LOGGER.info("Password recovery successful");
     }
     

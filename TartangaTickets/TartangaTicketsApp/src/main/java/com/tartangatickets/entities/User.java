@@ -153,6 +153,10 @@ public class User implements Serializable {
         this.createdTickets = createdTickets;
     }
     
+    public String getFullName() {
+        return name + " " + lastName1;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
