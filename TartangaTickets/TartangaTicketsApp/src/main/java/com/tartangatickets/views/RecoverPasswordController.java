@@ -18,7 +18,7 @@ import com.tartangatickets.entities.User;
  * @author ionut
  */
 public class RecoverPasswordController {
-    private static final Logger logger = Logger.getLogger(RecoverPasswordController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RecoverPasswordController.class.getName());
     
     @FXML
     private View recuperar_pass;
@@ -37,21 +37,25 @@ public class RecoverPasswordController {
         });
     }
     @FXML
-    private void handleButtonRecoverpass() throws Exception{
-        logger.info("Recover Password Action event.");
-        if(!user.getName().equals(tfUser.getText())){
-            Alert alert=new Alert(Alert.AlertType.ERROR,"El Usuario indicado no existe.",ButtonType.OK);
-            alert.showAndWait();
-        }else{
-            if(this.tfUser.getText().trim().isEmpty()){
-                Alert alert=new Alert(Alert.AlertType.ERROR,"El campo Usuario no puede estar vacío.",ButtonType.OK);
+    private void handleButtonRecoverpass(){
+        LOGGER.info("Recover Password Action event.");
+        try{
+            if(!user.getName().equals(tfUser.getText())){
+                Alert alert=new Alert(Alert.AlertType.ERROR,"El Usuario indicado no existe.",ButtonType.OK);
                 alert.showAndWait();
-            } else {
-                logic.recoverPassword(tfUser.getText());
-                Alert alert=new Alert(Alert.AlertType.INFORMATION,"Se ha enviado la nueva contraseña a su correo.",ButtonType.OK);
-                alert.showAndWait();
-                MobileApplication.getInstance().switchView("HOME_VIEW");
+            }else{
+                if(this.tfUser.getText().trim().isEmpty()){
+                    Alert alert=new Alert(Alert.AlertType.ERROR,"El campo Usuario no puede estar vacío.",ButtonType.OK);
+                    alert.showAndWait();
+                } else {
+                    logic.recoverPassword(tfUser.getText());
+                    Alert alert=new Alert(Alert.AlertType.INFORMATION,"Se ha enviado la nueva contraseña a su correo.",ButtonType.OK);
+                    alert.showAndWait();
+                    MobileApplication.getInstance().switchView("HOME_VIEW");
+                }
             }
+        }catch(Exception ex){
+            LOGGER.info("Aplication error.");
         }
     }
 }

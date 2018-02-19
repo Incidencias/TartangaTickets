@@ -23,7 +23,7 @@ import javafx.scene.control.PasswordField;
  * @author ionut
  */
 public class LoginController {
-    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
 
     @FXML
     private View login;
@@ -50,34 +50,37 @@ public class LoginController {
     }
     
     @FXML
-    private void handleButtonAccess() throws Exception{
-        logger.info("Access Action event.");
-        
-        if(this.tfUser.getText().trim().isEmpty() || this.pfPass.getText().trim().isEmpty()){
-            Alert alert=new Alert(AlertType.ERROR,"Los campos Usuario y Contraseña no pueden estar vacíos.",ButtonType.OK);
-            alert.showAndWait();
-        } else {
-            User user = logic.authenticate(tfUser.getText(), pfPass.getText());
-            if(user.getName().equals(tfUser.getText())){
-                if (user != null) {
-                    MobileApplication.getInstance().switchView("MainMenuView");
-                    tfUser.setText("");
-                    pfPass.setText("");
-                    sessionContent.put("activeId", user);
-                } else {
-                    Alert alert=new Alert(AlertType.ERROR,"Datos incorrectos.",ButtonType.OK);
+    private void handleButtonAccess(){
+        LOGGER.info("Access Action event.");
+        try{
+            if(this.tfUser.getText().trim().isEmpty() || this.pfPass.getText().trim().isEmpty()){
+                Alert alert=new Alert(AlertType.ERROR,"Los campos Usuario y Contraseña no pueden estar vacíos.",ButtonType.OK);
+                alert.showAndWait();
+            } else {
+                User user = logic.authenticate(tfUser.getText(), pfPass.getText());
+                if(user.getName().equals(tfUser.getText())){
+                    if (user != null) {
+                        MobileApplication.getInstance().switchView("MainMenuView");
+                        tfUser.setText("");
+                        pfPass.setText("");
+                        sessionContent.put("activeId", user);
+                    } else {
+                        Alert alert=new Alert(AlertType.ERROR,"Datos incorrectos.",ButtonType.OK);
+                        alert.showAndWait();
+                    }
+                }else{
+                    Alert alert=new Alert(AlertType.ERROR,"El Usuario indicado no existe.",ButtonType.OK);
                     alert.showAndWait();
                 }
-            }else{
-                Alert alert=new Alert(AlertType.ERROR,"El Usuario indicado no existe.",ButtonType.OK);
-                alert.showAndWait();
             }
+        }catch(Exception ex){
+            LOGGER.info("Aplication error.");
         }
         
     }
     @FXML
     private void handleButtonRecoverpass(){
-        logger.info("Recover Password Action event.");
+        LOGGER.info("Recover Password Action event.");
         MobileApplication.getInstance().switchView("RecoverPassView");
     }
 }
