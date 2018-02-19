@@ -15,6 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import com.gluonhq.charm.glisten.control.TextField;
+import java.util.logging.Level;
 import javafx.scene.control.PasswordField;
 
 /**
@@ -50,14 +51,21 @@ public class LoginController {
     }
     
     @FXML
-    private void handleButtonAccess() throws Exception{
+    private void handleButtonAccess() {
         
         logger.info("Access Action event.");
         if(this.tfUser.getText().trim().isEmpty() || this.pfPass.getText().trim().isEmpty()){
             Alert alert=new Alert(AlertType.ERROR,"Los campos Usuario y Contraseña no pueden estar vacíos.",ButtonType.OK);
             alert.showAndWait();
         } else {
-            User user = logic.authenticate(tfUser.getText(), pfPass.getText());
+            User user = null;
+            
+            try {
+                user = logic.authenticate(tfUser.getText(), pfPass.getText());
+                System.out.println(user == null ? "Vacio" : "Lleno");
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
             if (user != null) {
                 MobileApplication.getInstance().switchView("MainMenuView");
                 sessionContent.put("activeId", user);
