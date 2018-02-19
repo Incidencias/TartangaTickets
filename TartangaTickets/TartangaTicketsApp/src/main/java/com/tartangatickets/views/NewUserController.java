@@ -19,7 +19,9 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoDepartmentException;
 import com.tartangatickets.logic.LogicInterface;
 import com.tartangatickets.utils.Reader;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -94,14 +96,15 @@ public class NewUserController  {
         Credential credential = new Credential();
         Department department = new Department();
 
-        if(!tfName.getText().isEmpty()&& !tfLastname1.getText().isEmpty()&&!tfLastname2.getText().isEmpty()&&!tfEmail.getText().isEmpty()){
+        if(!tfName.getText().trim().isEmpty()&& !tfLastname1.getText().trim().isEmpty()&&!tfEmail.getText().trim().isEmpty()){
             if(cbTechnician.isSelected()){
                 user = new Technician();
             }else{
                 user = new User();
             }
-            department=(Department) departments.stream().filter(c -> c.getName().equals(dbDepartment.getSelectedItem().getText()));
+            departments=  departments.stream().filter(c -> c.getName().equals(dbDepartment.getSelectedItem().getText())).collect(Collectors.toList());
         
+            department = departments.get(0);
             if (!Reader.checkValidEmail(tfEmail.getText())) {
                 Alert alert = new Alert(
                         Alert.AlertType.ERROR,
@@ -117,6 +120,7 @@ public class NewUserController  {
             user.setLastName1(tfLastname1.getText());
             user.setLastName2(tfLastname2.getText());
             user.setDepartment(department);
+            user.setCredential(credential);
             try {  
                 logic.createUser(user);
                 tfName.setText("");
@@ -131,6 +135,7 @@ public class NewUserController  {
                 );
                 alert.showAndWait();
             } catch (Exception ex) {
+                ex.printStackTrace();
                 Alert alert = new Alert(
                         Alert.AlertType.ERROR,
                         GENERAL_ERROR,

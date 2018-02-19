@@ -24,11 +24,6 @@ public interface LogicInterface {
     public void recoverPassword(String login) throws Exception; //Check
     public User createUser(User user) throws Exception; //Check
     public void deleteUser(User user) throws Exception; //Check
-    /*
-    public void createTechnician(Technician technician) throws Exception;
-    public void deleteTechnician(Technician technician) throws Exception;
-    public void updateTechnician(Technician technician) throws Exception;
-    */
     public List<User> findAllUsers() throws Exception; //Check
     public void assignTicket(Ticket ticket) throws Exception; //Check
     public void changeState(Ticket ticket) throws Exception; //Check

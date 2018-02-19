@@ -42,8 +42,10 @@ public class MainMenuController{
     
     private final LogicInterface logic = TartangaTickets.LOGIC; 
     private final HashMap sessionContent = logic.getSessionContent();
+   
     
     public void initialize() {
+            //btShowUsers.setVisible(false);
             menu_principal.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
@@ -52,10 +54,15 @@ public class MainMenuController{
                 
             }
         });
-            User user =(User) sessionContent.get("activeId");
-            if(user instanceof Technician && ((Technician)user).getIsAdmin()){
-                btShowUsers.setVisible(true);
-            }
+          //  User user =(User) sessionContent.get("activeId");
+ //           if(user instanceof Technician)
+//                  
+//            
+          // if(((Technician)user).getIsAdmin())
+//                
+//            if(user instanceof Technician && ((Technician)user).getIsAdmin()){
+//                btShowUsers.setVisible(true);
+//            }
            // LOGGER.info("tech is admin "+((Technician)user).getIsAdmin());
             
         
