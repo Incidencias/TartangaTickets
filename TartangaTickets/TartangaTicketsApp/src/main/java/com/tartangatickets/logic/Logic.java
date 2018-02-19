@@ -121,7 +121,8 @@ public class Logic implements LogicInterface {
             tx.commit();
         } else {
             LOGGER.warning("Password not secure");
-            throw new NotSecureException("Password not secure");
+            throw new NotSecureException("Contraseña debe tener mayúscula, "
+                    + "minúscula, carácter especial y dígito");
         }
     }
 
@@ -218,6 +219,7 @@ public class Logic implements LogicInterface {
     public User authenticate(String login, String password) throws 
             NoSuchAlgorithmException, UserLoginException {
         LOGGER.info("Authenticating user");
+        tx = session.beginTransaction();
         List<User> users = null;
         String passwordHash = PasswordHandler.getHash(password, login);
         users = session.createNamedQuery("findUserByLogin")
@@ -226,8 +228,14 @@ public class Logic implements LogicInterface {
                 .getResultList();
         if (users == null || users.isEmpty())
             throw new UserLoginException("Usuario o contraseña invalidos");
+        User user = users.get(0);
+        user.getCredential().setLastAccess(new Date());
+        session.merge(user);
+        session.flush();
+        session.refresh(user);
+        tx.commit();
         LOGGER.info("Log in successful");
-        return users.get(0);
+        return user;
     }
 
     @Override

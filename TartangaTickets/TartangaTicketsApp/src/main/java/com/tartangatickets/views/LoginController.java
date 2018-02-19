@@ -8,14 +8,13 @@ import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import com.gluonhq.charm.glisten.control.TextField;
-import java.util.logging.Level;
+import com.tartangatickets.exceptions.UserLoginException;
 import javafx.scene.control.PasswordField;
 
 /**
@@ -24,7 +23,8 @@ import javafx.scene.control.PasswordField;
  * @author ionut
  */
 public class LoginController {
-    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
+    
+    private static final String GENERAL_ERROR = "Error inesperado.";
 
     @FXML
     private View login;
@@ -52,33 +52,40 @@ public class LoginController {
     
     @FXML
     private void handleButtonAccess() {
-        
-        logger.info("Access Action event.");
-        if(this.tfUser.getText().trim().isEmpty() || this.pfPass.getText().trim().isEmpty()){
-            Alert alert=new Alert(AlertType.ERROR,"Los campos Usuario y Contraseña no pueden estar vacíos.",ButtonType.OK);
+        if(this.tfUser.getText().trim().isEmpty() || 
+                this.pfPass.getText().trim().isEmpty()){
+            Alert alert=new Alert(
+                    AlertType.ERROR,
+                    "Introduzca usuario y contraseña.",
+                    ButtonType.OK
+            );
             alert.showAndWait();
         } else {
             User user = null;
-            
             try {
                 user = logic.authenticate(tfUser.getText(), pfPass.getText());
-                System.out.println(user == null ? "Vacio" : "Lleno");
+            } catch (UserLoginException ex) {
+                Alert alert=new Alert(
+                    AlertType.ERROR,
+                    ex.getMessage(),
+                    ButtonType.OK
+                );
+                alert.showAndWait();
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
-            if (user != null) {
-                MobileApplication.getInstance().switchView("MainMenuView");
-                sessionContent.put("activeId", user);
-            } else {
-                Alert alert=new Alert(AlertType.ERROR,"Datos incorrectos.",ButtonType.OK);
+                Alert alert=new Alert(
+                    AlertType.ERROR,
+                    GENERAL_ERROR,
+                    ButtonType.OK
+                );
                 alert.showAndWait();
             }
-        }
         
+            MobileApplication.getInstance().switchView("MainMenuView");
+            sessionContent.put("activeId", user);
+        }
     }
     @FXML
     private void handleButtonRecoverpass(){
-        logger.info("Recover Password Action event.");
         MobileApplication.getInstance().switchView("RecoverPassView");
     }
 }

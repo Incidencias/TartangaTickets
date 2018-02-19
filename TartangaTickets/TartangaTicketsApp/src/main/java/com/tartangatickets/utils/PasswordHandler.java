@@ -36,9 +36,9 @@ public class PasswordHandler {
         return Arrays.toString(Hex.encodeHex(md.digest(passwordBytes)));
     }
     
-    public static boolean checkSecurity(String passwrod) {
+    public static boolean checkSecurity(String password) {
         Pattern pattern = Pattern.compile(PASSWORD_REGEX);
-        Matcher matcher = pattern.matcher(passwrod);
+        Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
     
