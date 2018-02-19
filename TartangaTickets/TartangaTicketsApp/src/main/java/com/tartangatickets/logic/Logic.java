@@ -42,7 +42,7 @@ public class Logic implements LogicInterface {
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
     private final Session session = factory.openSession();
     private Transaction tx = null;
-    private final HashMap sessionContent = new HashMap<>();
+    private static HashMap sessionContent = new HashMap<>();
     
     @Override
     public HashMap getSessionContent() {
