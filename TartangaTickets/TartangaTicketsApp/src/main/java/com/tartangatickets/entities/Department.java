@@ -6,6 +6,8 @@
 package com.tartangatickets.entities;
 
 import java.io.Serializable;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -52,6 +54,11 @@ public class Department implements Serializable {
     public Department(String code, String name){
         this.code = code;
         this.name = name;
+    }
+    
+    public StringProperty codeProperty(){
+        StringProperty cod = new SimpleStringProperty(code);
+        return cod;
     }
     
     public String getCode() {

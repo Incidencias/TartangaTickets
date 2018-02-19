@@ -24,9 +24,11 @@ public class PasswordHandler {
     private static final String PASSWORD_REGEX = 
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
     private static final char[] CHARACTERS = 
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&+=".toCharArray();
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&+="
+                    .toCharArray();
     
-    public static String getHash(String password, String salt) throws NoSuchAlgorithmException {
+    public static String getHash(String password, String salt) 
+            throws NoSuchAlgorithmException {
         MessageDigest md;
         String saltedPassword = salt + password;
         byte[] passwordBytes = saltedPassword.getBytes();
@@ -34,12 +36,11 @@ public class PasswordHandler {
         return Arrays.toString(Hex.encodeHex(md.digest(passwordBytes)));
     }
     
-    public static boolean checkSecurity(String passwrod) {
+    public static boolean checkSecurity(String password) {
         Pattern pattern = Pattern.compile(PASSWORD_REGEX);
-        Matcher matcher = pattern.matcher(passwrod);
+        Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
-    
     
     public static String generatePassword() {
         return RandomStringUtils.random(8, 0, CHARACTERS.length-1, 

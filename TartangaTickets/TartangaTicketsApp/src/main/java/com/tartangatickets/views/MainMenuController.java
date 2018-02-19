@@ -19,6 +19,7 @@ import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.HashMap;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -32,11 +33,13 @@ public class MainMenuController{
     /**
      * Initializes the controller class.
      */
+   // private static final Logger LOGGER= Logger.getLogger("views");
     
     @FXML
     private View menu_principal;
     @FXML
     private Button btShowUsers;
+    
     private final LogicInterface logic = TartangaTickets.LOGIC; 
     private final HashMap sessionContent = logic.getSessionContent();
     
@@ -53,6 +56,8 @@ public class MainMenuController{
             if(user instanceof Technician && ((Technician)user).getIsAdmin()){
                 btShowUsers.setVisible(true);
             }
+           // LOGGER.info("tech is admin "+((Technician)user).getIsAdmin());
+            
         
     }
 

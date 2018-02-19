@@ -128,6 +128,7 @@ public class User implements Serializable {
         this.lastName2 = lastName2;
     }
 
+    
     public Department getDepartment() {
         return department;
     }
@@ -150,6 +151,10 @@ public class User implements Serializable {
 
     public void setCreatedTickets(List<Ticket> createdTickets) {
         this.createdTickets = createdTickets;
+    }
+    
+    public String getFullName() {
+        return name + " " + lastName1;
     }
     
     @Override

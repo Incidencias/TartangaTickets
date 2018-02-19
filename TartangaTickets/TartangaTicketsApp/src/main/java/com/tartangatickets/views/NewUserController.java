@@ -16,13 +16,16 @@ import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.User;
+import com.tartangatickets.exceptions.NoDepartmentException;
 import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.utils.Reader;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.MenuItem;
+import org.apache.commons.mail.EmailException;
 
 
 /**
@@ -31,6 +34,10 @@ import javafx.scene.control.MenuItem;
  * @author Sergio
  */
 public class NewUserController  {
+    
+    private static final String GENERAL_ERROR = "Error inesperado.";
+    private static final String EMAIL_ERROR = "Error al enviar email al usuario.";
+    private static final String EMAIL_VALID_ERROR = "Error en el formato de email.";
 
     @FXML
     private View nuevo_usuario;
@@ -61,36 +68,51 @@ public class NewUserController  {
                  
         try {
             departments = logic.findAllDepartments();
+        } catch (NoDepartmentException ex) {
+            Alert alert = new Alert(
+                    Alert.AlertType.ERROR, 
+                    ex.getMessage(),
+                    ButtonType.OK
+            ); 
+            alert.showAndWait();
         } catch (Exception ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Error en la aplicación"); 
+            Alert alert = new Alert(
+                    Alert.AlertType.ERROR, 
+                    GENERAL_ERROR,
+                    ButtonType.OK
+            ); 
             alert.showAndWait();
         }
         
-        for(Department dpt:departments){
-            dbDepartment.getItems().add(new MenuItem(dpt.getName()));
+        for (Department department : departments){
+            dbDepartment.getItems().add(new MenuItem(department.getName()));
         }
     }
+    
     @FXML
     private void handleButtonCreateUser(){
-        
         Credential credential = new Credential();
         Department department = new Department();
 
-
-
         if(!tfName.getText().isEmpty()&& !tfLastname1.getText().isEmpty()&&!tfLastname2.getText().isEmpty()&&!tfEmail.getText().isEmpty()){
-            
-            
             if(cbTechnician.isSelected()){
                 user = new Technician();
-
             }else{
                 user = new User();
-                 
             }
             department=(Department) departments.stream().filter(c -> c.getName().equals(dbDepartment.getSelectedItem().getText()));
         
+            if (!Reader.checkValidEmail(tfEmail.getText())) {
+                Alert alert = new Alert(
+                        Alert.AlertType.ERROR,
+                        EMAIL_VALID_ERROR,
+                        ButtonType.OK
+                );
+                alert.showAndWait();
+                return;
+            }
             credential.setLogin(tfEmail.getText());
+            
             user.setName(tfName.getText());
             user.setLastName1(tfLastname1.getText());
             user.setLastName2(tfLastname2.getText());
@@ -101,16 +123,28 @@ public class NewUserController  {
                 tfLastname1.setText("");
                 tfLastname2.setText("");
                 tfEmail.setText("");
+            } catch (EmailException ex) {
+                Alert alert = new Alert(
+                        Alert.AlertType.ERROR,
+                        EMAIL_ERROR,
+                        ButtonType.OK
+                );
+                alert.showAndWait();
             } catch (Exception ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Datos erroneos");
+                Alert alert = new Alert(
+                        Alert.AlertType.ERROR,
+                        GENERAL_ERROR,
+                        ButtonType.OK
+                );
                 alert.showAndWait();
             }
         }else{
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Rellene los datos");
-                alert.showAndWait();           
+            Alert alert = new Alert(
+                    Alert.AlertType.ERROR, 
+                    "Rellene los campos",
+                    ButtonType.OK
+            );
+            alert.showAndWait();           
         }
-
-        
     }
-    
 }

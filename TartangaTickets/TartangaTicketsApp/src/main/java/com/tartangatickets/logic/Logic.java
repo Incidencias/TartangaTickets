@@ -11,11 +11,16 @@ import com.tartangatickets.entities.Message;
 import com.tartangatickets.entities.State;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
-import com.tartangatickets.exceptions.NotSecureException;
-import com.tartangatickets.exceptions.ReadException;
+import com.tartangatickets.exceptions.NoDepartmentException;
+import com.tartangatickets.exceptions.NoTicketException;
+import com.tartangatickets.exceptions.NoUserException;
+import com.tartangatickets.exceptions.UserLoginException;
+import com.tartangatickets.utils.exceptions.NotSecureException;
 import com.tartangatickets.utils.EmailSender;
 import com.tartangatickets.utils.HibernateUtil;
 import com.tartangatickets.utils.PasswordHandler;
+import com.tartangatickets.utils.exceptions.EncrypterException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,7 +30,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import java.util.logging.Level;
-import javax.persistence.NoResultException;
+import org.apache.commons.mail.EmailException;
 
 /**
  *
@@ -45,64 +50,42 @@ public class Logic implements LogicInterface {
     }
     
     @Override
-    public void createTicket(Ticket ticket) throws Exception {
+    public void createTicket(Ticket ticket) {
         LOGGER.info("Creating ticket");
-        try {
-            tx = session.beginTransaction();
-            ticket.setCreateDate(new Date());
-            session.persist(ticket);
-            tx.commit();
-            // TODO Send email
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                    "Exception creating ticket. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        ticket.setCreateDate(new Date());
+        session.persist(ticket);
+        tx.commit();
+        // TODO Send email
         LOGGER.info("Ticket created");
     }
 
     @Override
-    public void sendMessage(Message message) throws Exception {
+    public void sendMessage(Message message) {
         LOGGER.info("Creating ticket message");
-        try {
-            tx = session.beginTransaction();
-            //session.persist(message);
-            Ticket ticket = message.getTicket();
-            List<Message> messages = new ArrayList<>();
-            messages.add(message);
-            ticket.setMessages(messages);
-            session.merge(ticket);
-            // TODO send email
-            tx.commit();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                    "Exception creating ticket message. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        //session.persist(message);
+        Ticket ticket = message.getTicket();
+        List<Message> messages = new ArrayList<>();
+        messages.add(message);
+        ticket.setMessages(messages);
+        session.merge(ticket);
+        // TODO send email
         LOGGER.info("Ticket message created");
     }
 
     @Override
-    public List<Ticket> findTicketsByUser(String userLogin) throws Exception {
+    public List<Ticket> findTicketsByUser(String userLogin) 
+            throws NoTicketException {
         LOGGER.info("Fetching tickets by user");
         List<Ticket> tickets = null;
-        try {
-            tx = session.beginTransaction();
-            tickets = session.createNamedQuery("findTicketsByUser")
-                    .setParameter("login", userLogin)
-                    .getResultList();
-            tx.commit();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                    "Exception finding tickets by user. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        tickets = session.createNamedQuery("findTicketsByUser")
+                .setParameter("login", userLogin)
+                .getResultList();
+        tx.commit();
+        if (tickets == null || tickets.isEmpty())
+            throw new NoTicketException("No se encontraron tickets");
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
                 tickets.size());
@@ -110,21 +93,15 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<Ticket> findAllTickets() throws Exception {
+    public List<Ticket> findAllTickets() throws NoTicketException {
         LOGGER.info("Fetching all tickets");
         List<Ticket> tickets = null;
-        try {
-            tx = session.beginTransaction();
-            tickets = session.createNamedQuery("findAllTickets")
-                    .getResultList();
-            tx.commit();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                    "Exception finding tickets. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        tickets = session.createNamedQuery("findAllTickets")
+                .getResultList();
+        tx.commit();
+        if (tickets == null || tickets.isEmpty())
+           throw new NoTicketException("No se encontraron tickets");
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
                 tickets.size());
@@ -132,62 +109,42 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public void changePassword(Credential credential, String newPassword) throws Exception {
+    public void changePassword(Credential credential, String newPassword) 
+            throws NotSecureException, NoSuchAlgorithmException {
         LOGGER.info("Changing user password");
-        try {
-            if (PasswordHandler.checkSecurity(newPassword)) {
-                tx = session.beginTransaction();
-                String passwordHash = PasswordHandler
-                        .getHash(newPassword, credential.getLogin());
-                credential.setPassword(passwordHash);
-                session.merge(credential);
-                tx.commit();
-            } else {
-                LOGGER.warning("Password not secure");
-                throw new NotSecureException("Password not secure");
-            } 
-        } catch (NotSecureException e) {
-            LOGGER.warning(e.getMessage());
-            throw new NotSecureException();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                    "Exception changinf password. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
+        if (PasswordHandler.checkSecurity(newPassword)) {
+            tx = session.beginTransaction();
+            String passwordHash = PasswordHandler
+                    .getHash(newPassword, credential.getLogin());
+            credential.setPassword(passwordHash);
+            session.merge(credential);
+            tx.commit();
+        } else {
+            LOGGER.warning("Password not secure");
+            throw new NotSecureException("Contraseña debe tener mayúscula, "
+                    + "minúscula, carácter especial y dígito");
         }
     }
 
     @Override
-    public void recoverPassword(String login) throws Exception {
+    public void recoverPassword(String login) throws NoSuchAlgorithmException, 
+            EncrypterException, EmailException, NoUserException {
         LOGGER.info("Recovering user password");
-        try {
-            tx = session.beginTransaction();
-            User user = (User) session.createNamedQuery("findUserById")
-                .setParameter("login", login)
-                .getSingleResult();
-            String newPassword = setPassword(user);
-            session.merge(user);
-            tx.commit();
-            LOGGER.info("Sending email");
-            EmailSender.sendEmail(login, newPassword);
-        } catch (NoResultException e) {
-            LOGGER.log(Level.WARNING,
-                    "No user with login {0}",
-                    login);
-            tx.rollback();
-            throw new ReadException();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                    "Error finding user. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        List<User> users = session.createNamedQuery("findUserById")
+            .setParameter("login", login)
+            .getResultList();
+        if (users == null || users.isEmpty())
+            throw new NoUserException("El usuario no existe");
+        String newPassword = setPassword(users.get(0));
+        session.merge(users.get(0));
+        LOGGER.info("Sending email");
+        EmailSender.sendEmail(login, newPassword);
+        tx.commit();
         LOGGER.info("Password recovery successful");
     }
     
-    private String setPassword(User user) throws Exception {
+    private String setPassword(User user) throws NoSuchAlgorithmException  {
         LOGGER.info("Setting new password");
         String login = user.getCredential().getLogin();
         String newPassword = PasswordHandler.generatePassword();
@@ -199,60 +156,38 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public User createUser(User user) throws Exception {
+    public User createUser(User user) 
+            throws NoSuchAlgorithmException, EncrypterException, EmailException {
         LOGGER.info("Creating user");
-        try {
-            tx = session.beginTransaction();
-            String newPassword = setPassword(user);
-            session.persist(user);
-            tx.commit();
-            LOGGER.info("Sending email");
-            EmailSender.sendEmail(user.getCredential().getLogin(), newPassword);
-        } catch (Exception e) {
-            tx.rollback();
-            LOGGER.log(Level.SEVERE,
-                    "Error creating user. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        String newPassword = setPassword(user);
+        session.persist(user);
+        LOGGER.info("Sending email");
+        EmailSender.sendEmail(user.getCredential().getLogin(), newPassword);
+        tx.commit();
         LOGGER.info("User created");
         return user;
     }
 
     @Override
-    public void deleteUser(User user) throws Exception {
+    public void deleteUser(User user) {
         LOGGER.info("Deleting user");
-        try {
-            tx = session.beginTransaction();
-            session.remove(user);
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            LOGGER.log(Level.SEVERE,
-                    "Error deleting user. {0}",
-                    e.getMessage());
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        session.remove(user);
+        tx.commit();
         LOGGER.info("User deleted");
     }
 
     @Override
-    public List<User> findAllUsers() throws Exception {
+    public List<User> findAllUsers() throws NoUserException {
         LOGGER.info("Fetching all users");
         List<User> users = null;
-        try {
-            tx = session.beginTransaction();
-            users = session.createNamedQuery("findAllUsers")
-                    .getResultList();
-            tx.commit();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                    "Error fetching users. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        users = session.createNamedQuery("findAllUsers")
+                .getResultList();
+        if (users == null || users.isEmpty())
+            throw new NoUserException("No users found");
+        tx.commit();
         LOGGER.log(Level.INFO,
                 "{0} users found",
                 users.size());
@@ -260,94 +195,59 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public void assignTicket(Ticket ticket) throws Exception {
+    public void assignTicket(Ticket ticket) {
         LOGGER.info("Assigning ticket");
-        try {
-            tx = session.beginTransaction();
-            session.merge(ticket);
-            User technician = ticket.getTechnician();
-            session.merge(technician);
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            LOGGER.log(Level.SEVERE,
-                "Error assigning ticket. {0}",
-                e.getMessage());
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        session.merge(ticket);
+        User technician = ticket.getTechnician();
+        session.merge(technician);
+        tx.commit();
         LOGGER.info("Ticket assigned");
     }
 
     @Override
-    public void changeState(Ticket ticket) throws Exception {
+    public void changeState(Ticket ticket) {
         LOGGER.info("Changing ticket state");
-        try {
-            tx = session.beginTransaction();
-            session.merge(ticket);
-            tx.commit();
-            // TODO send message to user
-        } catch (Exception e) {
-            tx.rollback();
-            LOGGER.log(Level.SEVERE,
-                "Error changign ticket state. {0}",
-                e.getMessage());
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        session.merge(ticket);
+        tx.commit();
+        // TODO send message to user
         LOGGER.info("Ticket state changed");
     }
 
     @Override
-    public User authenticate(String login, String password) throws Exception {
+    public User authenticate(String login, String password) throws 
+            NoSuchAlgorithmException, UserLoginException {
         LOGGER.info("Authenticating user");
-        User user = null;
-        try {
-            String passwordHash = PasswordHandler.getHash(password, login);
-            user = (User) session.createNamedQuery("findUserByLogin")
-                    .setParameter("login", login)
-                    .setParameter("password", passwordHash)
-                    .getSingleResult();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                "Error authenticating user. {0}",
-                e.getMessage());
-            throw new Exception();
-        }
+        tx = session.beginTransaction();
+        List<User> users = null;
+        String passwordHash = PasswordHandler.getHash(password, login);
+        users = session.createNamedQuery("findUserByLogin")
+                .setParameter("login", login)
+                .setParameter("password", passwordHash)
+                .getResultList();
+        if (users == null || users.isEmpty())
+            throw new UserLoginException("Usuario o contraseña invalidos");
+        User user = users.get(0);
+        user.getCredential().setLastAccess(new Date());
+        session.merge(user);
+        session.flush();
+        session.refresh(user);
+        tx.commit();
         LOGGER.info("Log in successful");
         return user;
-    }   
-    
-    /*
-    @Override
-    public void createTechnician(Technician technician) throws Exception {
-        
     }
 
     @Override
-    public void deleteTechnician(Technician technician) throws Exception {
-        
-    }
-
-    @Override
-    public void updateTechnician(Technician technician) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    */
-
-    @Override
-    public List<Department> findAllDepartments() throws Exception {
+    public List<Department> findAllDepartments() throws NoDepartmentException {
         LOGGER.info("Fetching department by name");
         List<Department> departments = null;
-        try {
-            tx = session.beginTransaction();
-            departments = session.createNamedQuery("findAllDepartments")
-                    .getResultList();
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            LOGGER.log(Level.SEVERE,
-                "Error afetching departments. {0}",
-                e.getMessage());
-            throw new Exception();
+        tx = session.beginTransaction();
+        departments = session.createNamedQuery("findAllDepartments")
+                .getResultList();
+        tx.commit();
+        if (departments == null || departments.isEmpty()) {
+            throw new NoDepartmentException("No se encontraron departamentos.");
         }
         LOGGER.log(Level.INFO,
                 "{0} deparments found",
@@ -356,21 +256,16 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<Ticket> findTicketsByState(State state) throws Exception {
+    public List<Ticket> findTicketsByState(State state) throws NoTicketException {
         LOGGER.info("Fetching tickets by state");
         List<Ticket> tickets = null;
-        try {
-            tx = session.beginTransaction();
-            tickets = session.createNamedQuery("findTicketsByState")
-                    .setParameter("state", state)
-                    .getResultList();
-            tx.commit();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                    "Exception finding tickets by state. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
+        tx = session.beginTransaction();
+        tickets = session.createNamedQuery("findTicketsByState")
+                .setParameter("state", state)
+                .getResultList();
+        tx.commit();
+        if (tickets == null || tickets.isEmpty()) {
+            throw new NoTicketException("No se encontraron tickets.");
         }
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
@@ -379,26 +274,19 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<Ticket> findTicketsByTechnician(String login) throws Exception {
+    public List<Ticket> findTicketsByTechnician(String login) throws NoTicketException {
         LOGGER.info("Fetching tickets by technician");
         List<Ticket> tickets = null;
-        try {
-            tx = session.beginTransaction();
-            tickets = session.createNamedQuery("findTicketsByTechnician")
-                    .setParameter("login", login)
-                    .getResultList();
-            tx.commit();
-        } catch (Exception e) {
-            LOGGER.log(Level.SEVERE,
-                    "Exception finding tickets by technician. {0}",
-                    e.getMessage());
-            tx.rollback();
-            throw new Exception();
+        tx = session.beginTransaction();
+        tickets = session.createNamedQuery("findTicketsByTechnician")
+                .setParameter("login", login)
+                .getResultList();
+        if (tickets == null || tickets.isEmpty()) {
+            throw new NoTicketException("El técnico no tiene tickets asignados");
         }
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
                 tickets.size());
         return tickets;
     }
-    
 }

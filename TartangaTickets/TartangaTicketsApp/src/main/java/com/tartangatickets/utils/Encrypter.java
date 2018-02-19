@@ -133,6 +133,7 @@ public class Encrypter {
         return emailCredentials;
     }
 
+    /*
     private static void storeSalt(byte[] salt) throws EncrypterException {
         try (FileOutputStream out = new FileOutputStream(FILE_SALT)) {
             out.write(salt);
@@ -142,6 +143,7 @@ public class Encrypter {
             throw new EncrypterException("Error encrypting file", e);
         }
     }
+    */
     
     private static byte[] getSalt() throws EncrypterException {
         byte [] salt;
