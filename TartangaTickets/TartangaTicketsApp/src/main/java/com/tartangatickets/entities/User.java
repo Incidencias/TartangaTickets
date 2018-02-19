@@ -128,6 +128,7 @@ public class User implements Serializable {
         this.lastName2 = lastName2;
     }
 
+    
     public Department getDepartment() {
         return department;
     }

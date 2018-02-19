@@ -12,19 +12,23 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
 import static com.tartangatickets.TartangaTickets.NEWUSER_VIEW;
+import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -76,6 +80,13 @@ public class UsersController {
        // tcDepartment.setCellValueFactory(new PropertyValueFactory<>("nSeguimiento"));       
         tcUser.setCellValueFactory(new PropertyValueFactory<>("name"));
         tcLastName.setCellValueFactory(new PropertyValueFactory<>("lastName1"));
+        tcDepartment.setCellValueFactory(new Callback<CellDataFeatures<User, String>, 
+                                                         ObservableValue<String>>() {  
+        @Override  
+          public ObservableValue<String> call(CellDataFeatures<User, String> data){  
+         return data.getValue().getDepartment().codeProperty();  
+         }  
+        });  
         
         try {
             tableUsers.setItems(FXCollections.observableArrayList(logic.findAllUsers()));
