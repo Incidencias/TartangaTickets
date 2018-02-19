@@ -64,8 +64,9 @@ public class LoginController {
             User user = null;
             try {
                 user = logic.authenticate(tfUser.getText(), pfPass.getText());
-                MobileApplication.getInstance().switchView("MainMenuView");
                 sessionContent.put("activeId", user);
+                MobileApplication.getInstance().switchView("MainMenuView");
+                
             } catch (UserLoginException ex) {
                 Alert alert=new Alert(
                     AlertType.ERROR,
