@@ -70,13 +70,12 @@ public class TicketController {
                 appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
                 logger.info("inizialize ticket controller");
                 user = (User) sessionContent.get("activeId");
+                itemsState = FXCollections.observableArrayList();
+                itemsTechnicianN = FXCollections.observableArrayList();
+                itemsState.addAll(state.OPEN, state.INPROGRESS, state.BLOQUED, state.CLOSED);          
+
+                logger.info("tamaño del itemsState: "+itemsState.size());
                 try{
-                    itemsState = FXCollections.observableArrayList();
-                    itemsTechnicianN = FXCollections.observableArrayList();
-                    itemsState.addAll(state.OPEN, state.INPROGRESS, state.BLOQUED, state.CLOSED);          
-                    
-                    logger.info("tamaño del itemsState: "+itemsState.size());
-                    
                     for(User tech : logic.findAllUsers()){
                         if(tech instanceof Technician){                           
                             allTechnicians.add(tech);
