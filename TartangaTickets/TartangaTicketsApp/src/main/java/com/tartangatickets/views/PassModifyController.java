@@ -64,18 +64,18 @@ public class PassModifyController {
     private void handleButtonModify(){
         if(!pfOldPass.getText().trim().isEmpty()&&!pfNewPass.getText().trim().isEmpty()&&!pfRepeatPass.getText().trim().isEmpty()){
             try {
-                logic.authenticate(user.getCredential().getLogin(), pfOldPass.getText());
+                logic.authenticate(user.getLogin(), pfOldPass.getText());
                 if(pfNewPass.getText().equals(pfRepeatPass.getText())) {
                     logic.changePassword(user.getCredential(), pfNewPass.getText());
-                    DialogHelper.newInstance("ERROR", "Contraseña cambiada");
+                    DialogHelper.newInstance("INFO", "Contraseña cambiada");
                     MobileApplication.getInstance().switchView(MAINMENU_VIEW);
                 } else {
-                    DialogHelper.newInstance("ERROR", NEW_PASSWORD_ERROR);
+                    DialogHelper.newInstance("WARNING", NEW_PASSWORD_ERROR);
                 }
             } catch (UserLoginException ex) {
                 DialogHelper.newInstance("ERROR", ex.getMessage());
             } catch (NotSecureException ex){
-                DialogHelper.newInstance("ERROR", ex.getMessage());
+                DialogHelper.newInstance("WARNING", ex.getMessage());
             } catch (Exception ex) {
                 DialogHelper.newInstance("ERROR", GENERAL_ERROR);
             }
