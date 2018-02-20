@@ -15,6 +15,7 @@ import static com.tartangatickets.TartangaTickets.MAINMENU_VIEW;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.UserLoginException;
 import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.utils.DialogHelper;
 import com.tartangatickets.utils.exceptions.NotSecureException;
 import java.util.HashMap;
 import javafx.fxml.FXML;
@@ -64,42 +65,20 @@ public class PassModifyController {
                 logic.authenticate(user.getCredential().getLogin(), pfOldPass.getText());
                 if(pfNewPass.getText().equals(pfRepeatPass.getText())) {
                     logic.changePassword(user.getCredential(), pfNewPass.getText());
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Contraseña cambiada",ButtonType.OK); 
-                    alert.showAndWait();              
+                    DialogHelper.newInstance("ERROR", "Contraseña cambiada");
                     MobileApplication.getInstance().switchView(MAINMENU_VIEW);
                 } else {
-                    Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    NEW_PASSWORD_ERROR,
-                    ButtonType.OK);       
-                    alert.showAndWait();
+                    DialogHelper.newInstance("ERROR", NEW_PASSWORD_ERROR);
                 }
-                
             } catch (UserLoginException ex) {
-                Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    ex.getMessage(),
-                    ButtonType.OK);       
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR", ex.getMessage());
             } catch (NotSecureException ex){
-                Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    ex.getMessage(),
-                    ButtonType.OK);       
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR", ex.getMessage());
             } catch (Exception ex) {
-                Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    GENERAL_ERROR,
-                    ButtonType.OK);       
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR", GENERAL_ERROR);
             }
         }else{
-            Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    "Rellene todos los campos",
-                    ButtonType.OK);       
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR", "Rellene todos los campos");
         }
     }
 }

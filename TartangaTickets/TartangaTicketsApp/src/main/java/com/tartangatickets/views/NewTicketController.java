@@ -11,6 +11,8 @@ import com.tartangatickets.entities.Message;
 import com.tartangatickets.entities.State;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.Date;
+import com.tartangatickets.utils.DialogHelper;
+import java.net.URL;
 import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -71,12 +73,9 @@ public class NewTicketController {
     private void handleButtonCreateTicket() {
         Ticket ticket = null;
         if(tfMachineCode.getText().trim().isEmpty() && tfLocation.getText().trim().isEmpty()){
-            Alert alert=new Alert(
-                    Alert.AlertType.ERROR,
-                    "Los datos no pueden estar vacíos.",
-                    ButtonType.OK
-            );
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR",
+                    "Los datos no pueden estar vacíos.");
+
         }else{
             ticket = new Ticket();
             ticket.setLocation(tfLocation.getText());
@@ -102,12 +101,8 @@ public class NewTicketController {
             alert.showAndWait();
             MobileApplication.getInstance().switchView("TicketView");
         } catch (Exception ex) {
-            Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    GENERAL_ERROR,
-                    ButtonType.OK
-            );
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR",
+                    "Datos erroneos.");
         }
     } 
 }

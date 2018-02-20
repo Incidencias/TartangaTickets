@@ -15,6 +15,7 @@ import static com.tartangatickets.TartangaTickets.NEWUSER_VIEW;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoUserException;
 import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.utils.DialogHelper;
 import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -66,7 +67,6 @@ public class UsersController {
         tcUser.setCellValueFactory(new PropertyValueFactory<>("name"));
         tcLastName.setCellValueFactory(new PropertyValueFactory<>("lastName1"));
        
-        
         tcDepartment.setCellValueFactory(
                 new Callback<CellDataFeatures<User, String>, ObservableValue<String>>() {  
         @Override  
@@ -89,20 +89,9 @@ public class UsersController {
             List <User> users = logic.findAllUsers();
             tableUsers.setItems(FXCollections.observableArrayList(users));
         } catch (NoUserException ex) {
-            Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    ex.getMessage(),
-                    ButtonType.OK
-            ); 
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR", ex.getMessage());
         } catch (Exception ex) {
-            
-            Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    GENERAL_ERROR,
-                    ButtonType.OK
-            ); 
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR", GENERAL_ERROR);
         }
     }
 }

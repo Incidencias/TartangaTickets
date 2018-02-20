@@ -6,15 +6,12 @@ import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.logic.LogicInterface;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import com.gluonhq.charm.glisten.control.TextField;
 import com.tartangatickets.exceptions.NoUserException;
-import com.tartangatickets.utils.exceptions.EncrypterException;
-import java.security.NoSuchAlgorithmException;
 import org.apache.commons.mail.EmailException;
+import com.tartangatickets.utils.DialogHelper;
+
 
 /**
  *
@@ -45,24 +42,25 @@ public class RecoverPasswordController {
     private void handleButtonRecoverpass() {
         
         if(this.tfUser.getText().trim().isEmpty()){
-            Alert alert=new Alert(Alert.AlertType.ERROR,"El campo Usuario no puede estar vacío.",ButtonType.OK);
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR",
+                    "El campo Usuario no puede estar vacío.");
         } else {
             try {
                 logic.recoverPassword(tfUser.getText());
-                Alert alert=new Alert(Alert.AlertType.INFORMATION,"Se ha enviado la nueva contraseña a su correo.",ButtonType.OK);
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR",
+                    "Se ha enviado la nueva contraseña a su correo.");
                 MobileApplication.getInstance().switchView("HOME_VIEW");
             } catch (NoUserException ex) {
-                Alert alert=new Alert(Alert.AlertType.ERROR,ex.getMessage(),ButtonType.OK);
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR",
+                    ex.getMessage());
             } catch (EmailException ex) {
-                Alert alert=new Alert(Alert.AlertType.ERROR,EMAIL_ERROR,ButtonType.OK);
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR",
+                    EMAIL_ERROR);
             } catch (Exception ex) {
-                Alert alert=new Alert(Alert.AlertType.ERROR,GENERAL_ERROR,ButtonType.OK);
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR",
+                    GENERAL_ERROR);
             }
+
         }
     }
 }

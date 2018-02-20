@@ -18,6 +18,7 @@ import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoDepartmentException;
 import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.utils.DialogHelper;
 import com.tartangatickets.utils.Reader;
 import java.util.Collection;
 import java.util.List;
@@ -71,19 +72,9 @@ public class NewUserController  {
         try {
             departments = logic.findAllDepartments();
         } catch (NoDepartmentException ex) {
-            Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    ex.getMessage(),
-                    ButtonType.OK
-            ); 
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR", ex.getMessage());
         } catch (Exception ex) {
-            Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    GENERAL_ERROR,
-                    ButtonType.OK
-            ); 
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR", GENERAL_ERROR);
         }
         
         for (Department department : departments){
@@ -106,12 +97,7 @@ public class NewUserController  {
         
             department = departments.get(0);
             if (!Reader.checkValidEmail(tfEmail.getText())) {
-                Alert alert = new Alert(
-                        Alert.AlertType.ERROR,
-                        EMAIL_VALID_ERROR,
-                        ButtonType.OK
-                );
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR", EMAIL_VALID_ERROR);
                 return;
             }
             credential.setLogin(tfEmail.getText());
@@ -128,28 +114,12 @@ public class NewUserController  {
                 tfLastname2.setText("");
                 tfEmail.setText("");
             } catch (EmailException ex) {
-                Alert alert = new Alert(
-                        Alert.AlertType.ERROR,
-                        EMAIL_ERROR,
-                        ButtonType.OK
-                );
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR", EMAIL_ERROR);
             } catch (Exception ex) {
-                ex.printStackTrace();
-                Alert alert = new Alert(
-                        Alert.AlertType.ERROR,
-                        GENERAL_ERROR,
-                        ButtonType.OK
-                );
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR", GENERAL_ERROR);
             }
         }else{
-            Alert alert = new Alert(
-                    Alert.AlertType.ERROR, 
-                    "Rellene los campos",
-                    ButtonType.OK
-            );
-            alert.showAndWait();           
+            DialogHelper.newInstance("ERROR", "Rellene los campos");
         }
     }
 }

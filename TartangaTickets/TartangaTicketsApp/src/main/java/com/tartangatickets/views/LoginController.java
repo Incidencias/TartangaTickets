@@ -16,6 +16,7 @@ import javafx.scene.control.ButtonType;
 import com.gluonhq.charm.glisten.control.TextField;
 import com.tartangatickets.exceptions.UserLoginException;
 import javafx.scene.control.PasswordField;
+import com.tartangatickets.utils.DialogHelper;
 
 /**
  * FXML Controller class
@@ -39,6 +40,7 @@ public class LoginController {
     private final LogicInterface logic = TartangaTickets.LOGIC;
     private final HashMap sessionContent = logic.getSessionContent();
     
+    
     public void initialize() {
         
         login.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -54,12 +56,7 @@ public class LoginController {
     private void handleButtonAccess() {
         if(this.tfUser.getText().trim().isEmpty() || 
                 this.pfPass.getText().trim().isEmpty()){
-            Alert alert=new Alert(
-                    AlertType.ERROR,
-                    "Introduzca usuario y contraseña.",
-                    ButtonType.OK
-            );
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR","Introduzca usuario y contraseña.");
         } else {
             User user = null;
             try {
@@ -68,20 +65,11 @@ public class LoginController {
                 sessionContent.put("activeId", user);
                 MobileApplication.getInstance().switchView("MainMenuView");
             } catch (UserLoginException ex) {
-                Alert alert=new Alert(
-                    AlertType.ERROR,
-                    ex.getMessage(),
-                    ButtonType.OK
-                );
-                alert.showAndWait();
+                DialogHelper.newInstance("ERROR",ex.getMessage() );
             } catch (Exception ex) {
-                Alert alert=new Alert(
-                    AlertType.ERROR,
-                    GENERAL_ERROR,
-                    ButtonType.OK
-                );
-                alert.showAndWait();
-            }
+                DialogHelper.newInstance("ERROR",GENERAL_ERROR );
+            }        
+
         }
     }
     @FXML
