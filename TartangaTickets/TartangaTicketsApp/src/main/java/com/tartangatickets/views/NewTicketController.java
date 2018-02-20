@@ -1,5 +1,6 @@
 package com.tartangatickets.views;
 
+import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -55,6 +56,7 @@ public class NewTicketController {
      * Initializes the controller class.
      */
     public void initialize() {
+        nueva_incidencia.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         nueva_incidencia.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();

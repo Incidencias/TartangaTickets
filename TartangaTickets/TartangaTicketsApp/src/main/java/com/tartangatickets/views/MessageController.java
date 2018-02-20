@@ -5,6 +5,7 @@
  */
 package com.tartangatickets.views;
 
+import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.CardPane;
@@ -57,6 +58,7 @@ public class MessageController {
      */
     
     public void initialize(/*URL url, ResourceBundle rb*/) {
+        mensajes.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         mensajes.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
