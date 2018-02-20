@@ -1,5 +1,6 @@
 package com.tartangatickets.views;
 
+import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -8,9 +9,11 @@ import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.logic.LogicInterface;
 import javafx.fxml.FXML;
 import com.gluonhq.charm.glisten.control.TextField;
+import com.gluonhq.charm.glisten.visual.Swatch;
 import com.tartangatickets.exceptions.NoUserException;
 import org.apache.commons.mail.EmailException;
 import com.tartangatickets.utils.DialogHelper;
+import javafx.scene.control.Button;
 
 
 /**
@@ -29,14 +32,21 @@ public class RecoverPasswordController {
     private final LogicInterface logic = TartangaTickets.LOGIC;
     
     public void initialize() {
+        recuperar_pass.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
+        
         recuperar_pass.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
-                //TODO arrowback button function
+                Button back = MaterialDesignIcon.ARROW_BACK.button();
+                back.setOnAction(event -> 
+                    MobileApplication.getInstance().switchToPreviousView()
+                );
+                appBar.setNavIcon(back);
+                Swatch.AMBER.assignTo(recuperar_pass.getScene());
             }
         });
     }
+    
     
     @FXML
     private void handleButtonRecoverpass() {

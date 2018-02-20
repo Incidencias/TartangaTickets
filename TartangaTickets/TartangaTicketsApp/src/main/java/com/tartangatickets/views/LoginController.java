@@ -11,6 +11,7 @@ import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import com.gluonhq.charm.glisten.control.TextField;
+import com.gluonhq.charm.glisten.visual.Swatch;
 import com.tartangatickets.exceptions.UserLoginException;
 import javafx.scene.control.PasswordField;
 import com.tartangatickets.utils.DialogHelper;
@@ -44,8 +45,11 @@ public class LoginController {
         login.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
-                //TODO arrowback button function
+                Button back = MaterialDesignIcon.ARROW_BACK.button();
+                back.setOnAction(event -> 
+                    MobileApplication.getInstance().switchToPreviousView()
+                );
+                appBar.setNavIcon(back);
             }
         });
 

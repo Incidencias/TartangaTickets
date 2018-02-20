@@ -7,7 +7,6 @@ package com.tartangatickets.views;
 
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
-import com.gluonhq.charm.glisten.control.TextField;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
@@ -19,9 +18,7 @@ import com.tartangatickets.utils.DialogHelper;
 import com.tartangatickets.utils.exceptions.NotSecureException;
 import java.util.HashMap;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 
 /**
@@ -52,8 +49,11 @@ public class PassModifyController {
         modificar_pass.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
-                //TODO backbutton
+                Button back = MaterialDesignIcon.ARROW_BACK.button();
+                back.setOnAction(event -> 
+                    MobileApplication.getInstance().switchToPreviousView()
+                );
+                appBar.setNavIcon(back);
             }
         });
     }

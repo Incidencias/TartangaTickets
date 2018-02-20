@@ -61,8 +61,11 @@ public class NewTicketController {
         nueva_incidencia.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
-                //TODO arrowback button function
+                Button back = MaterialDesignIcon.ARROW_BACK.button();
+                back.setOnAction(event -> 
+                    MobileApplication.getInstance().switchToPreviousView()
+                );
+                appBar.setNavIcon(back);
             }
         });
         lblUser.setText(user.getFullName());

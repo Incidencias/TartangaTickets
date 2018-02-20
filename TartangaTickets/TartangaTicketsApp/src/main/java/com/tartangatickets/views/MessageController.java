@@ -70,7 +70,11 @@ public class MessageController {
         mensajes.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
+                Button back = MaterialDesignIcon.ARROW_BACK.button();
+                back.setOnAction(event -> 
+                    MobileApplication.getInstance().switchToPreviousView()
+                );
+                appBar.setNavIcon(back);
                 logger.info("inizialize message controller.");
                 user = (User) sessionContent.get("activeId");
                 ticket = (Ticket) sessionContent.get("ticketId");

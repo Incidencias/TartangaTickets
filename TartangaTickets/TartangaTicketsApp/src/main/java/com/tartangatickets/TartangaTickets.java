@@ -5,15 +5,10 @@ import com.tartangatickets.views.RecoverPassView;
 import com.tartangatickets.views.MainMenuView;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.visual.Swatch;
-import com.tartangatickets.logic.Logic;
-import com.tartangatickets.logic.LogicInterface;
-import com.tartangatickets.views.ModifyUserView;
 import com.tartangatickets.views.NewUserView;
-import com.tartangatickets.views.TicketDetailView;
 import com.tartangatickets.views.TicketView;
 import com.tartangatickets.views.UsersView;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import com.tartangatickets.logic.Logic;
 import com.tartangatickets.logic.LogicInterface;
 import com.tartangatickets.views.MessageView;
@@ -28,7 +23,6 @@ public class TartangaTickets extends MobileApplication {
     public static final String RECOVERPASS_VIEW = "RecoverPassView";
     public static final String MAINMENU_VIEW = "MainMenuView";
     public static final String USER_VIEW = "UserView";
-    public static final String USERMODIFY_VIEW = "UserModifyView";
     public static final String NEWUSER_VIEW = "NewUserView";
     public static final String MESSAGE_VIEW = "MessageView";
     public static final String TICKETDETAIL_VIEW = "TicketDetailView";
@@ -44,7 +38,6 @@ public class TartangaTickets extends MobileApplication {
         addViewFactory(RECOVERPASS_VIEW, () -> new RecoverPassView(RECOVERPASS_VIEW).getView());
         addViewFactory(MAINMENU_VIEW, () -> new MainMenuView(MAINMENU_VIEW).getView());
         addViewFactory(USER_VIEW, () -> new UsersView(USER_VIEW).getView());
-        addViewFactory(USERMODIFY_VIEW, () -> new ModifyUserView(USERMODIFY_VIEW).getView());
         addViewFactory(NEWUSER_VIEW, () -> new NewUserView(NEWUSER_VIEW).getView());
         addViewFactory(MESSAGE_VIEW, () -> new MessageView(MESSAGE_VIEW).getView());
         addViewFactory(TICKETDETAIL_VIEW, () -> new TicketDetailView(TICKETDETAIL_VIEW).getView());
@@ -55,9 +48,8 @@ public class TartangaTickets extends MobileApplication {
 
     @Override
     public void postInit(Scene scene) {
-        Swatch.BLUE.assignTo(scene);
+        Swatch.AMBER.assignTo(scene);
 
         scene.getStylesheets().add(TartangaTickets.class.getResource("style.css").toExternalForm());
-
     }
 }

@@ -23,6 +23,7 @@ import com.tartangatickets.utils.Reader;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuItem;
 import org.apache.commons.mail.EmailException;
@@ -60,8 +61,11 @@ public class NewUserController  {
         nuevo_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
-                
+                Button back = MaterialDesignIcon.ARROW_BACK.button();
+                back.setOnAction(event -> 
+                    MobileApplication.getInstance().switchToPreviousView()
+                );
+                appBar.setNavIcon(back);
             }
         });
                  
