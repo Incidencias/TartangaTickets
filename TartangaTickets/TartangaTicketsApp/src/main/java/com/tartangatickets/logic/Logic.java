@@ -9,9 +9,11 @@ import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Message;
 import com.tartangatickets.entities.State;
+import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoDepartmentException;
+import com.tartangatickets.exceptions.NoTechnicianException;
 import com.tartangatickets.exceptions.NoTicketException;
 import com.tartangatickets.exceptions.NoUserException;
 import com.tartangatickets.exceptions.UserLoginException;
@@ -42,7 +44,7 @@ public class Logic implements LogicInterface {
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
     private final Session session = factory.openSession();
     private Transaction tx = null;
-    private final HashMap sessionContent = new HashMap<>();
+    private static HashMap sessionContent = new HashMap<>();
     
     @Override
     public HashMap getSessionContent() {
@@ -192,6 +194,21 @@ public class Logic implements LogicInterface {
                 "{0} users found",
                 users.size());
         return users;
+    }
+    
+    public List<Technician> findAllTechnicians() throws NoTechnicianException {
+        LOGGER.info("Fetching all technicians");
+        List<Technician> technicians = null;
+        tx = session.beginTransaction();
+        technicians = session.createNamedQuery("findAllTechnicians")
+                .getResultList();
+        tx.commit();
+        if (technicians == null || technicians.isEmpty())
+           throw new NoTechnicianException("No se encontraron técnicos");
+        LOGGER.log(Level.INFO,
+                "{0} tickets found",
+                technicians.size());
+        return technicians;
     }
 
     @Override
