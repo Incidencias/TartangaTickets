@@ -87,6 +87,12 @@ public class TicketController {
     }
     
     @FXML
+    private void handleFilterReset(){
+        cbStateLTicket.setValue("");
+        cbTechnicianLTicket.setValue("");
+    }
+    
+    @FXML
     private void handleFilterState() {
         if (cbStateLTicket.getSelectionModel().getSelectedIndex() != -1) {
             visibleTickets = visibleTickets
