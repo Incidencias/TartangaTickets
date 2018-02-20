@@ -139,7 +139,7 @@
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblStateTicket1" prefHeight="18.0" prefWidth="190.0" />
+                        <Label fx:id="lblCreateDateTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -156,7 +156,7 @@
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblStateTicket2" prefHeight="18.0" prefWidth="190.0" />
+                        <Label fx:id="lblEndDateTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>

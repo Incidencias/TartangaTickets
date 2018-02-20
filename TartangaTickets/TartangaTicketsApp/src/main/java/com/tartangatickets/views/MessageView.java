@@ -23,7 +23,7 @@ public class MessageView {
     
     public View getView() {
         try {
-            View view = FXMLLoader.load(MessageView.class.getResource("mensaje.fxml"));
+            View view = FXMLLoader.load(MessageView.class.getResource("mensajes.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {
