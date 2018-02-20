@@ -121,7 +121,7 @@
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblStateTicket1" prefHeight="18.0" prefWidth="190.0" />
+                        <Label fx:id="lblCreateDateTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -135,7 +135,7 @@
                   </VBox>
                   <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="190.0">
                      <children>
-                        <Label fx:id="lblStateTicket2" prefHeight="18.0" prefWidth="190.0" />
+                        <Label fx:id="lblEndDateTicket" prefHeight="18.0" prefWidth="190.0" />
                      </children>
                   </VBox>
                </children>
@@ -144,17 +144,17 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnEditTechnician" mnemonicParsing="false" prefWidth="98.0" text="Editar tecnico" onAction="#handleButtonEditTechnician" />
+                        <Button fx:id="btnEditTechnician" mnemonicParsing="false" onAction="#handleButtonEditTechnician" prefWidth="98.0" text="Editar tecnico" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnSendMessage" mnemonicParsing="false" prefHeight="32.0" prefWidth="94.0" text="Mensajes" onAction="#handleButtonSendMessage" />
+                        <Button fx:id="btnSendMessage" mnemonicParsing="false" onAction="#handleButtonSendMessage" prefHeight="32.0" prefWidth="94.0" text="Mensajes" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnEditState" mnemonicParsing="false" text="Editar estado" onAction="#handleButtonEditState" />
+                        <Button fx:id="btnEditState" mnemonicParsing="false" onAction="#handleButtonEditState" text="Editar estado" />
                      </children>
                   </VBox>
                </children>
