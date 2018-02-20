@@ -5,6 +5,7 @@
  */
 package com.tartangatickets.views;
 
+import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.DropdownButton;
@@ -59,6 +60,7 @@ public class NewUserController  {
     private final LogicInterface logic = TartangaTickets.LOGIC; 
     
     public void initialize() {
+        nuevo_usuario.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         nuevo_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();

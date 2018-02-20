@@ -1,5 +1,6 @@
 package com.tartangatickets.views;
 
+import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -56,6 +57,7 @@ public class TicketController {
      */
      
     public void initialize() {
+        ver_incidencias.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         ver_incidencias.showingProperty().addListener((obs, oldValue, newValue) -> {  
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
@@ -84,6 +86,12 @@ public class TicketController {
             sessionContent.put("ticketId", Integer.parseInt(newValue));
             MobileApplication.getInstance().switchView("TicketDetailView");
         }
+    }
+    
+    @FXML
+    private void handleFilterReset(){
+        cbStateLTicket.setValue("");
+        cbTechnicianLTicket.setValue("");
     }
     
     @FXML

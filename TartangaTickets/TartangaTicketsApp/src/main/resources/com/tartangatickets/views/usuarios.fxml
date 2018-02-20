@@ -28,7 +28,7 @@
                   <Label alignment="CENTER" style="-fx-font-size: 15;" text="Lista usuarios:" />
                </children>
             </HBox>
-            <TableView fx:id="tableUsers" prefHeight="438.0" prefWidth="295.0">
+            <TableView fx:id="tableUsers" prefHeight="360.0" prefWidth="295.0">
               <columns>
                 <TableColumn fx:id="tcDepartment" prefWidth="101.0" text="Departamento" />
                 <TableColumn fx:id="tcUser" prefWidth="105.0" text="Usuario" />

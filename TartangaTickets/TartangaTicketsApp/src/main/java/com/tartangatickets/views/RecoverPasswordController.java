@@ -33,7 +33,6 @@ public class RecoverPasswordController {
     
     public void initialize() {
         recuperar_pass.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
-        
         recuperar_pass.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
