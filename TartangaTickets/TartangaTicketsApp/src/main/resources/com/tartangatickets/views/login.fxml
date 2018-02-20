@@ -74,7 +74,7 @@
             </VBox>
             <HBox alignment="CENTER" prefHeight="150.0" prefWidth="295.0">
                <children>
-                  <ImageView fx:id="ivImagenInicio" fitHeight="150.0" fitWidth="295.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ivImagenInicio" fitHeight="150.0" fitWidth="295.0" pickOnBounds="true" preserveRatio="true" styleClass="crossRotate">
                      <image>
                         <Image url="@../drawable/llave.png" />
                      </image>
