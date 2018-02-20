@@ -9,6 +9,7 @@ import com.tartangatickets.entities.State;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
+import com.tartangatickets.exceptions.NoUserException;
 import com.tartangatickets.logic.LogicInterface;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,10 +20,13 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -36,11 +40,12 @@ import javafx.stage.Stage;
 public class TicketController {
     
     private static final Logger logger= Logger.getLogger("views ticker controller");
+    private static final String GENERAL_ERROR = "Error inesperado.";
     
     @FXML
     private View ver_incidencias;    
     @FXML
-    private ListView lvLTicket = new ListView<String>();
+    private ListView<String> lvLTicket ;
     @FXML
     private ComboBox cbStateLTicket;
     @FXML
@@ -50,7 +55,7 @@ public class TicketController {
     private HashMap sessionContent = logic.getSessionContent();
     private User user;
     private State state;
-    private List<Ticket> ticketUser = new ArrayList<Ticket>();
+    private List<Ticket> tickets = new ArrayList<Ticket>();
     private ObservableList<String> data;
     private ObservableList<State> itemsState;
     private ObservableList<String> itemsTechnicianN;
@@ -68,87 +73,43 @@ public class TicketController {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
                 appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
-                logger.info("inizialize ticket controller");
                 user = (User) sessionContent.get("activeId");
-                itemsState = FXCollections.observableArrayList();
-                itemsTechnicianN = FXCollections.observableArrayList();
-                itemsState.addAll(state.OPEN, state.INPROGRESS, state.BLOQUED, state.CLOSED);          
+                
+                fillStateCombo();
+                fillTechniciansCombo();
+                fillTicketList();    
+                /*
+                int t = cbTechnicianLTicket.getSelectionModel().getSelectedIndex();
+                techSelec = (Technician) allTechnicians.get(t);
+                */
 
-                logger.info("tamaño del itemsState: "+itemsState.size());
-                try{
-                    for(User tech : logic.findAllUsers()){
-                        if(tech instanceof Technician){                           
-                            allTechnicians.add(tech);
-                        }
-                    }
-                    
-                    
-                    for(int i = 0; i<allTechnicians.size(); i++){                 
-                        itemsTechnicianN.add(allTechnicians.get(i).getName()+" "+
-                        allTechnicians.get(i).getLastName1()+" "+
-                        allTechnicians.get(i).getLastName2());                       
-                    }
-                    
-                    
-                    
-                    logger.info("tamaño del itemsState: "+itemsState.size());
-                    logger.info("tamaño del itemsTechnicianN: "+itemsTechnicianN.size());
-                    
-                    cbStateLTicket.getItems().addAll(itemsState);
-                    cbTechnicianLTicket.getItems().addAll(itemsTechnicianN);
-                    
-                   
-                    /*
-                    int t = cbTechnicianLTicket.getSelectionModel().getSelectedIndex();
-                    techSelec = (Technician) allTechnicians.get(t);
-                    */
-                    
-                    
-                    //lvLTicket = new ListView<String>();
-                    data = FXCollections.observableArrayList();
-                    
-                    if(user instanceof Technician){
-                        allUsers = logic.findAllUsers();
-                        for(int g=0; g<allUsers.size(); g++){
-                            for(int s=0; s<allUsers.get(g).getCreatedTickets().size(); s++){
-                                logger.info(allUsers.get(g).getCreatedTickets().get(s).toString());
-                                ticketUser.add(allUsers.get(g).getCreatedTickets().get(s));
-                            }
-                        }
-                    }
-                    else{
-                        ticketUser.addAll(user.getCreatedTickets());
-                    }
-                   
-                    
-                    logger.info("Add all tickets to ticketUser. ");
-                    /*
-                    if(cbStateLTicket.getSelectionModel().getSelectedIndex()!=-1){
-                        ticketsF = ticketUser.stream().filter(p->p.getState().equals(cbStateLTicket.getSelectionModel()))
-                                               .collect(Collectors.toList());
-                    }
-                    else{
-                        ticketsF = ticketUser;
-                    }
-                    */
-                    /*
-                    if(cbTechnicianLTicket.getSelectionModel().getSelectedIndex()!=-1){
-                        ticketsF = ticketsF.stream().filter(p->p.getTechnician().equals(techSelec))
-                                               .collect(Collectors.toList());
-                    }
-                    */
-                    //add ticket Id to ObservableList<Integer>
-                    ticketsF.addAll(ticketUser);
-                    for(int i=0; i<ticketsF.size(); i++){
-                        data.add(ticketsF.get(i).toString());
-                    }
-                    logger.info("tamaño del data"+data.size());
-                    lvLTicket.setItems(data);
-                    
-                    Ticket tick = (Ticket) lvLTicket.getSelectionModel().getSelectedItems();
-                    sessionContent.put("ticketId", tick);
-                    lvLTicket.getSelectionModel().selectedItemProperty().addListener(
-                        MobileApplication.getInstance().switchView("TicketDetailView"));
+                //lvLTicket = new ListView<String>();
+                
+                //ticketsF.addAll(tickets);
+                /*
+                if(cbStateLTicket.getSelectionModel().getSelectedIndex()!=-1){
+                    ticketsF = ticketUser.stream().filter(p->p.getState().equals(cbStateLTicket.getSelectionModel()))
+                                           .collect(Collectors.toList());
+                }
+                else{
+                    ticketsF = ticketUser;
+                }
+                */
+                /*
+                if(cbTechnicianLTicket.getSelectionModel().getSelectedIndex()!=-1){
+                    ticketsF = ticketsF.stream().filter(p->p.getTechnician().equals(techSelec))
+                                           .collect(Collectors.toList());
+                }
+                */
+                //add ticket Id to ObservableList<Integer>
+                /*
+                Ticket tick = (Ticket) lvLTicket.getSelectionModel().getSelectedItems();
+                int t = lvLTicket.getSelectionModel().getSelectedIndex();
+                
+                sessionContent.put("ticketId", tick);
+                */
+                lvLTicket.getSelectionModel().selectedItemProperty().addListener(this::handleTicketListSelectionChanged);
+                
                     
                     /*
                     if(lvLTicket.getSelectionModel().isSelected(t)){
@@ -157,42 +118,104 @@ public class TicketController {
                         MobileApplication.getInstance().switchView("TicketDetailView");
                     }           
                     */
-                }catch (Exception ex) {
-                    Logger.getLogger(UsersController.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
         });
+    }
+    
+    private void handleTicketListSelectionChanged(ObservableValue observable, String oldValue,String newValue) {
+                if(newValue!=null){
+                                sessionContent.put("ticketId", newValue);
+                                MobileApplication.getInstance().switchView("TicketDetailView");
+                                
+                }
     }
     
     @FXML
     private void handleFilterState() {
         
         if(cbStateLTicket.getSelectionModel().getSelectedIndex()!=-1){
-                        ticketsF.addAll(ticketsF.stream().filter(p->p.getState().equals(cbStateLTicket.getSelectionModel()))
-                                               .collect(Collectors.toList()));
+            tickets.addAll(tickets.stream().filter(p->p.getState().equals(cbStateLTicket.getSelectionModel()))
+                    .collect(Collectors.toList()));
         }
-        for(int i=0; i<ticketsF.size(); i++){
-            data.add(ticketsF.get(i).toString());
-        }
-        lvLTicket = new ListView<String>();        
-        lvLTicket.setItems(data);
+        updateTicketList();
     }
+    
     
     @FXML
     private void handleFilterTechnician() {
-        
-        int t = cbTechnicianLTicket.getSelectionModel().getSelectedIndex();
-        techSelec = (Technician) allTechnicians.get(t);
         if(cbTechnicianLTicket.getSelectionModel().getSelectedIndex()!=-1){
-                        ticketsF.addAll(ticketsF.stream().filter(p->p.getTechnician().equals(techSelec))
-                                               .collect(Collectors.toList()));
+            int t = cbTechnicianLTicket.getSelectionModel().getSelectedIndex();
+            techSelec = (Technician) allTechnicians.get(t);
+        
+        tickets.addAll(tickets.stream().filter(p->p.getTechnician().equals(techSelec))
+                .collect(Collectors.toList()));
         }
         
-        for(int i=0; i<ticketsF.size(); i++){
-            data.add(ticketsF.get(i).toString());
-        }
-        lvLTicket = new ListView<String>();
-        lvLTicket.setItems(data);
+        updateTicketList();
     }
     //TODO hacer que al seleccionar una incidencia que vaya a los detalles de esa incidencia
+    
+    private void fillStateCombo() {
+        itemsState = FXCollections.observableArrayList();
+        itemsState.addAll(state.OPEN, state.INPROGRESS, state.BLOQUED, state.CLOSED);          
+        cbStateLTicket.getItems().addAll(itemsState);
+    }
+
+    private void fillTechniciansCombo() {
+        itemsTechnicianN = FXCollections.observableArrayList();
+                
+        try{
+            for(User tech : logic.findAllUsers()){
+                if(tech instanceof Technician){                           
+                    allTechnicians.add(tech);
+                }
+            }
+
+            for(int i = 0; i<allTechnicians.size(); i++){                 
+                itemsTechnicianN.add(allTechnicians.get(i).getFullName());                       
+            }
+            cbTechnicianLTicket.getItems().addAll(itemsTechnicianN);
+        } catch (NoUserException ex) {
+            Alert alert=new Alert(
+                Alert.AlertType.ERROR,
+                ex.getMessage(),
+                ButtonType.OK
+            );
+            alert.showAndWait();
+        } catch (Exception ex) {
+            Alert alert=new Alert(
+                Alert.AlertType.ERROR,
+                GENERAL_ERROR,
+                ButtonType.OK
+            );
+            alert.showAndWait();
+        }
+    }
+    
+    private void fillTicketList() {
+        data = FXCollections.observableArrayList();
+
+        if (user instanceof Technician) {
+            try {
+                tickets = logic.findAllTickets();
+            } catch (Exception ex) {
+                Logger.getLogger(TicketController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else {
+            tickets.addAll(user.getCreatedTickets());
+        }
+
+        for (int i=0; i<tickets.size(); i++) {
+            data.add(tickets.get(i).toString());
+        }
+        lvLTicket.setItems(data);
+    }
+    
+    private void updateTicketList() {
+        for(int i=0; i<tickets.size(); i++){
+            data.add(tickets.get(i).toString());
+        }       
+        lvLTicket.setItems(data);
+    }
 }

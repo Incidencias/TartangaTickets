@@ -69,4 +69,17 @@ public class Technician extends User implements Serializable {
     public void setAssignedTickets(List<Ticket> assignedTickets) {
         this.assignedTickets = assignedTickets;
     }
+    
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Technician)) {
+            return false;
+        }
+        Technician other = (Technician) object;
+        if ((this.login == null && other.login != null) || (this.login != null && !this.login.equals(other.login))) {
+            return false;
+        }
+        return true;
+    } 
 }
