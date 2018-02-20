@@ -13,7 +13,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="100.0" prefWidth="295.0" spacing="20.0">
+            <HBox prefHeight="40.0" prefWidth="295.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="150.0">
                      <children>
@@ -28,7 +28,7 @@
                </children>
             </HBox>
             <Separator prefWidth="200.0" />
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="150.0">
                      <children>
@@ -41,8 +41,11 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="150.0">
                      <children>
@@ -55,8 +58,11 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
                      <children>
@@ -69,8 +75,11 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
                      <children>
@@ -83,8 +92,11 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="150.0">
                      <children>
@@ -97,8 +109,11 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
                      <children>
@@ -111,8 +126,11 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
                      <children>
@@ -125,8 +143,11 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+            <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
                      <children>
@@ -139,25 +160,31 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnEditTechnician" mnemonicParsing="false" prefWidth="98.0" text="Editar tecnico" onAction="#handleButtonEditTechnician" />
+                        <Button fx:id="btnEditTechnician" mnemonicParsing="false" onAction="#handleButtonEditTechnician" prefWidth="98.0" text="Editar tecnico" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnSendMessage" mnemonicParsing="false" prefHeight="32.0" prefWidth="94.0" text="Mensajes" onAction="#handleButtonSendMessage" />
+                        <Button fx:id="btnSendMessage" mnemonicParsing="false" onAction="#handleButtonSendMessage" prefHeight="32.0" prefWidth="94.0" text="Mensajes" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnEditState" mnemonicParsing="false" text="Editar estado" onAction="#handleButtonEditState" />
+                        <Button fx:id="btnEditState" mnemonicParsing="false" onAction="#handleButtonEditState" text="Editar estado" />
                      </children>
                   </VBox>
                </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </HBox>
          </children>
          <padding>
