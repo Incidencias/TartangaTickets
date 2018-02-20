@@ -20,20 +20,16 @@ import com.tartangatickets.exceptions.NoDepartmentException;
 import com.tartangatickets.logic.LogicInterface;
 import com.tartangatickets.utils.DialogHelper;
 import com.tartangatickets.utils.Reader;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuItem;
 import org.apache.commons.mail.EmailException;
 
 
 /**
- * FXML Controller class
- *
+ * Creates a new user on the application with the inserted data
  * @author Sergio
  */
 public class NewUserController  {
@@ -87,6 +83,7 @@ public class NewUserController  {
         Credential credential = new Credential();
         Department department = new Department();
 
+        //fields not empty
         if(!tfName.getText().trim().isEmpty()&& !tfLastname1.getText().trim().isEmpty()&&!tfEmail.getText().trim().isEmpty()){
             if(cbTechnician.isSelected()){
                 user = new Technician();
@@ -96,6 +93,7 @@ public class NewUserController  {
             departments=  departments.stream().filter(c -> c.getName().equals(dbDepartment.getSelectedItem().getText())).collect(Collectors.toList());
         
             department = departments.get(0);
+            //email  
             if (!Reader.checkValidEmail(tfEmail.getText())) {
                 DialogHelper.newInstance("ERROR", EMAIL_VALID_ERROR);
                 return;

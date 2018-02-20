@@ -9,14 +9,12 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.HashMap;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import com.gluonhq.charm.glisten.control.TextField;
 import com.tartangatickets.exceptions.UserLoginException;
 import javafx.scene.control.PasswordField;
 import com.tartangatickets.utils.DialogHelper;
+
 
 /**
  * FXML Controller class
@@ -50,6 +48,7 @@ public class LoginController {
                 //TODO arrowback button function
             }
         });
+
     }
     
     @FXML

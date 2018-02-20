@@ -20,26 +20,22 @@ import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
- * FXML Controller class
- *
- * @author Sergio
+ * Shows a list of users registered in the application and shows a option to 
+ * create new users
+ * @author ubuntu
  */
 public class UsersController {
     
     private static final String GENERAL_ERROR = "Error inesperado.";
 
-    private Stage stage;
     @FXML
     private Button newUser;
     @FXML
@@ -84,6 +80,9 @@ public class UsersController {
         
     }
 
+    /**
+     * fills the table with data of users 'name, last name and department code
+     */
     private void fillTable() {
         try {
             List <User> users = logic.findAllUsers();
