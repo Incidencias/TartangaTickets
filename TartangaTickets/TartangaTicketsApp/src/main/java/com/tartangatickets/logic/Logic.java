@@ -303,4 +303,18 @@ public class Logic implements LogicInterface {
                 tickets.size());
         return tickets;
     }
+
+    @Override
+    public List<User> findUserByLogin(String login) throws Exception {
+        LOGGER.info("Fetching users by login");
+        List<User> users = null;
+        tx = session.beginTransaction();
+        users = session.createNamedQuery("findUserById")
+                .setParameter("login", login)
+                .getResultList();
+        LOGGER.log(Level.INFO,
+                "{0} tickets found",
+                users.size());
+        return users;
+    }
 }

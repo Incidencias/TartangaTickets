@@ -49,6 +49,7 @@ public class UsersController {
     @FXML
     private TableColumn tcLastName;  
     private final LogicInterface logic = TartangaTickets.LOGIC; 
+    private List <User> users;
     
     public void initialize() {
         usuarios.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -59,6 +60,7 @@ public class UsersController {
                     MobileApplication.getInstance().switchToPreviousView()
                 );
                 appBar.setNavIcon(back);
+                fillTable();
             }
         });
         
@@ -71,9 +73,7 @@ public class UsersController {
             public ObservableValue<String> call(CellDataFeatures<User, String> data){  
                 return data.getValue().getDepartment().codeProperty();  
             }  
-        });  
-        
-        fillTable();
+        });
     }
     
     @FXML
@@ -86,7 +86,7 @@ public class UsersController {
      */
     private void fillTable() {
         try {
-            List <User> users = logic.findAllUsers();
+            users = logic.findAllUsers();
             tableUsers.setItems(FXCollections.observableArrayList(users));
         } catch (NoUserException ex) {
             DialogHelper.newInstance("ERROR", ex.getMessage());

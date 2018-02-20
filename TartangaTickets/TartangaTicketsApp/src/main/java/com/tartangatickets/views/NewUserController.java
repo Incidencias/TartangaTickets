@@ -38,7 +38,8 @@ public class NewUserController  {
     private static final String GENERAL_ERROR = "Error inesperado.";
     private static final String EMAIL_ERROR = "Error al enviar email al usuario.";
     private static final String EMAIL_VALID_ERROR = "Error en el formato de email.";
-
+    private static final String EMAIL_REPEATED_ERROR = "Ya existe un usuario con ese email.";
+    
     @FXML
     private View nuevo_usuario;
     @FXML
@@ -98,11 +99,16 @@ public class NewUserController  {
         
             department = departments.get(0);
             //email  
-            if (!Reader.checkValidEmail(tfEmail.getText())) {
+            String email = tfEmail.getText();
+            if (!Reader.checkValidEmail(email)) {
                 DialogHelper.newInstance("ERROR", EMAIL_VALID_ERROR);
                 return;
             }
-            credential.setLogin(tfEmail.getText());
+            if (!emailExists(email)) {
+                DialogHelper.newInstance("ERROR", EMAIL_REPEATED_ERROR);
+                return;
+            }
+            credential.setLogin(email);
             
             user.setName(tfName.getText());
             user.setLastName1(tfLastname1.getText());
@@ -115,6 +121,8 @@ public class NewUserController  {
                 tfLastname1.setText("");
                 tfLastname2.setText("");
                 tfEmail.setText("");
+                cbTechnician.setSelected(false);
+                
             } catch (EmailException ex) {
                 DialogHelper.newInstance("ERROR", EMAIL_ERROR);
             } catch (Exception ex) {
@@ -123,5 +131,15 @@ public class NewUserController  {
         }else{
             DialogHelper.newInstance("ERROR", "Rellene los campos");
         }
+    }
+    
+    private boolean emailExists(String email) {
+        boolean exists = false;
+        try {
+            exists = logic.findUserByLogin(email).size() < 0;
+        } catch (Exception e) {
+            DialogHelper.newInstance("ERROR", GENERAL_ERROR);
+        }
+        return exists;
     }
 }
