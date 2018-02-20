@@ -12,6 +12,7 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoTechnicianException;
 import com.tartangatickets.exceptions.NoTicketException;
 import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.utils.DialogHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SkinBase;
 
 /**
  * FXML Controller class
@@ -175,9 +177,9 @@ public class TicketController {
         try {
             tickets = logic.findAllTickets();
         } catch (NoTicketException ex) {
-        
+            DialogHelper.newInstance("INFO", ex.getMessage());
         } catch (Exception ex) {
-            
+            DialogHelper.newInstance("ERROR", GENERAL_ERROR);
         }
         return tickets;
     }
@@ -187,9 +189,9 @@ public class TicketController {
         try {
             technicians = logic.findAllTechnicians();
         } catch (NoTechnicianException ex) {
-        
+            cbTechnicianLTicket.setDisable(true);
         } catch (Exception ex) {
-            
+            DialogHelper.newInstance("ERROR", GENERAL_ERROR);
         }
         return technicians;
     }
