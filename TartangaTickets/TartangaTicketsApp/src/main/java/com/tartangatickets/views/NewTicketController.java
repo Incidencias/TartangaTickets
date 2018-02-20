@@ -10,6 +10,7 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.Message;
 import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.utils.DialogHelper;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -83,8 +84,8 @@ public class NewTicketController {
     private void handleButtonCreateTicket() throws Exception {
         logger.info("Create Ticket Action event.");
         if(tfMachineCode.getText().trim().isEmpty() && tfLocation.getText().trim().isEmpty() && tfMessage.getText().trim().isEmpty()){
-            Alert alert=new Alert(Alert.AlertType.ERROR,"Los datos no pueden estar vacíos.",ButtonType.OK);
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR",
+                    "Los datos no pueden estar vacíos.");
         }else{
             lblTicket.setText(ticket.getId().toString());
             lblUser.setText(user.getName());
@@ -101,8 +102,8 @@ public class NewTicketController {
             logic.createTicket(ticket);
             MobileApplication.getInstance().switchView("TicketView");
         } catch (Exception ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Datos erroneos");
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR",
+                    "Datos erroneos.");
         }
     } 
 }

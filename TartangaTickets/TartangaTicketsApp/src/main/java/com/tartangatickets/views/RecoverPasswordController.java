@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import com.gluonhq.charm.glisten.control.TextField;
+import com.tartangatickets.utils.DialogHelper;
 
 /**
  *
@@ -39,13 +40,13 @@ public class RecoverPasswordController {
         
         logger.info("Recover Password Action event.");
         if(this.tfUser.getText().trim().isEmpty()){
-            Alert alert=new Alert(Alert.AlertType.ERROR,"El campo Usuario no puede estar vacío.",ButtonType.OK);
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR",
+                    "El campo Usuario no puede estar vacío.");
             MobileApplication.getInstance().switchView("HOME_VIEW");
         } else {
             logic.recoverPassword(tfUser.getText());
-            Alert alert=new Alert(Alert.AlertType.INFORMATION,"Se ha enviado la nueva contraseña a su correo.",ButtonType.OK);
-            alert.showAndWait();
+            DialogHelper.newInstance("ERROR",
+                    "Se ha enviado la nueva contraseña a su correo.");
         }
         
     }
