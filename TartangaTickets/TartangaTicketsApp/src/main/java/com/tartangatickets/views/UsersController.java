@@ -15,6 +15,7 @@ import static com.tartangatickets.TartangaTickets.NEWUSER_VIEW;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoUserException;
 import com.tartangatickets.logic.LogicInterface;
+import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -62,9 +63,19 @@ public class UsersController {
             }
         });
         
-        fillTable();
-
+        tcUser.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tcLastName.setCellValueFactory(new PropertyValueFactory<>("lastName1"));
+       
         
+        tcDepartment.setCellValueFactory(
+                new Callback<CellDataFeatures<User, String>, ObservableValue<String>>() {  
+        @Override  
+            public ObservableValue<String> call(CellDataFeatures<User, String> data){  
+                return data.getValue().getDepartment().codeProperty();  
+            }  
+        });  
+        
+        fillTable();
     }
     
     @FXML
@@ -74,18 +85,9 @@ public class UsersController {
     }
 
     private void fillTable() {
-        tcUser.setCellValueFactory(new PropertyValueFactory<>("name"));
-        tcLastName.setCellValueFactory(new PropertyValueFactory<>("lastName1"));
-        tcDepartment.setCellValueFactory(
-                new Callback<CellDataFeatures<User, String>, ObservableValue<String>>() {  
-        @Override  
-            public ObservableValue<String> call(CellDataFeatures<User, String> data){  
-                return data.getValue().getDepartment().codeProperty();  
-            }  
-        });  
-        
         try {
-            tableUsers.setItems(FXCollections.observableArrayList(logic.findAllUsers()));
+            List <User> users = logic.findAllUsers();
+            tableUsers.setItems(FXCollections.observableArrayList(users));
         } catch (NoUserException ex) {
             Alert alert = new Alert(
                     Alert.AlertType.ERROR, 
@@ -94,6 +96,7 @@ public class UsersController {
             ); 
             alert.showAndWait();
         } catch (Exception ex) {
+            
             Alert alert = new Alert(
                     Alert.AlertType.ERROR, 
                     GENERAL_ERROR,
