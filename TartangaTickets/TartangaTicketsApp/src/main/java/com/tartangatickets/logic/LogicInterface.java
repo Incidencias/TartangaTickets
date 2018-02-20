@@ -7,7 +7,6 @@ import com.tartangatickets.entities.State;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
-import com.tartangatickets.exceptions.NoTechnicianException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,20 +17,20 @@ import java.util.List;
 public interface LogicInterface {
     
     public HashMap<String, String> getSessionContent();
-    public void createTicket(Ticket ticket) throws Exception; //Check
-    public void sendMessage(Message message) throws Exception; //Check
-    public List<Ticket> findTicketsByUser(String userLogin) throws Exception; //Check
-    public List<Ticket> findAllTickets() throws Exception; //Check
-    public void changePassword(Credential credential, String newPassword) throws Exception; //Check
-    public void recoverPassword(String login) throws Exception; //Check
-    public User createUser(User user) throws Exception; //Check
-    public void deleteUser(User user) throws Exception; //Check
-    public List<User> findAllUsers() throws Exception; //Check
-    public void assignTicket(Ticket ticket) throws Exception; //Check
-    public void changeState(Ticket ticket) throws Exception; //Check
-    public User authenticate(String login, String password) throws Exception; //Check
-    public List<Department> findAllDepartments() throws Exception; //Check
-    public List<Ticket> findTicketsByState(State state) throws Exception; //Check
+    public void createTicket(Ticket ticket) throws Exception; 
+    public void sendMessage(Message message) throws Exception; 
+    public List<Ticket> findTicketsByUser(String userLogin) throws Exception; 
+    public List<Ticket> findAllTickets() throws Exception; 
+    public void changePassword(Credential credential, String newPassword) throws Exception; 
+    public void recoverPassword(String login) throws Exception; 
+    public User createUser(User user) throws Exception; 
+    public void deleteUser(User user) throws Exception; 
+    public List<User> findAllUsers() throws Exception; 
+    public void assignTicket(Ticket ticket) throws Exception; 
+    public void changeState(Ticket ticket) throws Exception; 
+    public User authenticate(String login, String password) throws Exception; 
+    public List<Department> findAllDepartments() throws Exception; 
+    public List<Ticket> findTicketsByState(State state) throws Exception; 
     public List<Ticket> findTicketsByTechnician(String technicianLogin) throws Exception;
-    public List<Technician> findAllTechnicians() throws NoTechnicianException;
+    public List<Technician> findAllTechnicians() throws Exception;
 }

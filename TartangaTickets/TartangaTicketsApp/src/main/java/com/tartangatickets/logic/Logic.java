@@ -95,7 +95,7 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<Ticket> findAllTickets() throws NoTicketException {
+    public List<Ticket> findAllTickets() throws Exception {
         LOGGER.info("Fetching all tickets");
         List<Ticket> tickets = null;
         tx = session.beginTransaction();
@@ -112,7 +112,7 @@ public class Logic implements LogicInterface {
 
     @Override
     public void changePassword(Credential credential, String newPassword) 
-            throws NotSecureException, NoSuchAlgorithmException {
+            throws Exception {
         LOGGER.info("Changing user password");
         if (PasswordHandler.checkSecurity(newPassword)) {
             tx = session.beginTransaction();
@@ -129,8 +129,7 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public void recoverPassword(String login) throws NoSuchAlgorithmException, 
-            EncrypterException, EmailException, NoUserException {
+    public void recoverPassword(String login) throws Exception {
         LOGGER.info("Recovering user password");
         tx = session.beginTransaction();
         List<User> users = session.createNamedQuery("findUserById")
@@ -146,7 +145,7 @@ public class Logic implements LogicInterface {
         LOGGER.info("Password recovery successful");
     }
     
-    private String setPassword(User user) throws NoSuchAlgorithmException  {
+    private String setPassword(User user) throws Exception  {
         LOGGER.info("Setting new password");
         String login = user.getCredential().getLogin();
         String newPassword = PasswordHandler.generatePassword();
@@ -158,8 +157,7 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public User createUser(User user) 
-            throws NoSuchAlgorithmException, EncrypterException, EmailException {
+    public User createUser(User user) throws Exception {
         LOGGER.info("Creating user");
         tx = session.beginTransaction();
         String newPassword = setPassword(user);
@@ -181,7 +179,7 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<User> findAllUsers() throws NoUserException {
+    public List<User> findAllUsers() throws Exception {
         LOGGER.info("Fetching all users");
         List<User> users = null;
         tx = session.beginTransaction();
@@ -196,7 +194,7 @@ public class Logic implements LogicInterface {
         return users;
     }
     
-    public List<Technician> findAllTechnicians() throws NoTechnicianException {
+    public List<Technician> findAllTechnicians() throws Exception {
         LOGGER.info("Fetching all technicians");
         List<Technician> technicians = null;
         tx = session.beginTransaction();
@@ -233,8 +231,7 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public User authenticate(String login, String password) throws 
-            NoSuchAlgorithmException, UserLoginException {
+    public User authenticate(String login, String password) throws Exception {
         LOGGER.info("Authenticating user");
         tx = session.beginTransaction();
         List<User> users = null;
@@ -256,7 +253,7 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<Department> findAllDepartments() throws NoDepartmentException {
+    public List<Department> findAllDepartments() throws Exception {
         LOGGER.info("Fetching department by name");
         List<Department> departments = null;
         tx = session.beginTransaction();
@@ -273,7 +270,7 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<Ticket> findTicketsByState(State state) throws NoTicketException {
+    public List<Ticket> findTicketsByState(State state) throws Exception {
         LOGGER.info("Fetching tickets by state");
         List<Ticket> tickets = null;
         tx = session.beginTransaction();
@@ -291,7 +288,7 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<Ticket> findTicketsByTechnician(String login) throws NoTicketException {
+    public List<Ticket> findTicketsByTechnician(String login) throws Exception {
         LOGGER.info("Fetching tickets by technician");
         List<Ticket> tickets = null;
         tx = session.beginTransaction();
