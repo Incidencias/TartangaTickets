@@ -115,7 +115,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnCreateTicket" mnemonicParsing="false" text="Crear incidencia" />
+                  <Button fx:id="btnCreateTicket" mnemonicParsing="false" onAction="#handleButtonCreateTicket" text="Crear incidencia" />
                </children>
             </HBox>
          </children>
