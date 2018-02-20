@@ -10,29 +10,19 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.CardPane;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
-import com.sun.mail.handlers.message_rfc822;
 import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.entities.Message;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.DefaultProperty;
-
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Control;
-
 import javafx.scene.control.TextArea;
-import static javafx.scene.input.KeyCode.T;
-import static sun.security.jgss.GSSUtil.login;
 
 /**
  * FXML Controller class

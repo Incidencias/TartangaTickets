@@ -79,7 +79,6 @@ public class UsersController {
     @FXML
     private void handleButtonNewUser(){
         MobileApplication.getInstance().switchView(NEWUSER_VIEW);
-        
     }
 
     /**

@@ -12,13 +12,10 @@ import com.tartangatickets.entities.State;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.Date;
 import com.tartangatickets.utils.DialogHelper;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 

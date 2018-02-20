@@ -21,6 +21,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 
@@ -58,7 +59,11 @@ public class TicketController {
         ver_incidencias.showingProperty().addListener((obs, oldValue, newValue) -> {  
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                appBar.setNavIcon(MaterialDesignIcon.ARROW_BACK.button());
+                Button back = MaterialDesignIcon.ARROW_BACK.button();
+                back.setOnAction(event -> 
+                    MobileApplication.getInstance().switchToPreviousView()
+                );
+                appBar.setNavIcon(back);
                 user = (User) sessionContent.get("activeId");
                 if (!(user instanceof Technician)) {
                     cbTechnicianLTicket.setVisible(false);

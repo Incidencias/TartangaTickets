@@ -19,7 +19,6 @@ import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -49,11 +48,6 @@ public class MainMenuController{
             menu_principal.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                Button back = MaterialDesignIcon.ARROW_BACK.button();
-                back.setOnAction(event -> 
-                    MobileApplication.getInstance().switchToPreviousView()
-                );
-                appBar.setNavIcon(back);
             }
         });
             
@@ -94,7 +88,5 @@ public class MainMenuController{
     @FXML
     private void handleButtonLogOut() {
         MobileApplication.getInstance().switchView(LOGIN_VIEW);
-
     }
-
 }

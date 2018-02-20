@@ -11,7 +11,6 @@ import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import com.gluonhq.charm.glisten.control.TextField;
-import com.gluonhq.charm.glisten.visual.Swatch;
 import com.tartangatickets.exceptions.UserLoginException;
 import javafx.scene.control.PasswordField;
 import com.tartangatickets.utils.DialogHelper;
@@ -45,11 +44,6 @@ public class LoginController {
         login.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
-                Button back = MaterialDesignIcon.ARROW_BACK.button();
-                back.setOnAction(event -> 
-                    MobileApplication.getInstance().switchToPreviousView()
-                );
-                appBar.setNavIcon(back);
             }
         });
 
@@ -66,6 +60,7 @@ public class LoginController {
                 user = logic.authenticate(tfUser.getText(), pfPass.getText());
 
                 sessionContent.put("activeId", user);
+                pfPass.clear();
                 MobileApplication.getInstance().switchView("MainMenuView");
             } catch (UserLoginException ex) {
                 DialogHelper.newInstance("ERROR",ex.getMessage() );
