@@ -21,8 +21,6 @@ import com.tartangatickets.utils.exceptions.NotSecureException;
 import com.tartangatickets.utils.EmailSender;
 import com.tartangatickets.utils.HibernateUtil;
 import com.tartangatickets.utils.PasswordHandler;
-import com.tartangatickets.utils.exceptions.EncrypterException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,12 +30,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import java.util.logging.Level;
-import org.apache.commons.mail.EmailException;
+import javax.transaction.Transactional;
 
 /**
  *
  * @author ubuntu
  */
+
+@Transactional(rollbackOn = Exception.class)
 public class Logic implements LogicInterface {
     
     private static final Logger LOGGER = Logger.getLogger("com.tartangatickets.logic");
@@ -85,12 +85,16 @@ public class Logic implements LogicInterface {
         tickets = session.createNamedQuery("findTicketsByUser")
                 .setParameter("login", userLogin)
                 .getResultList();
-        tx.commit();
-        if (tickets == null || tickets.isEmpty())
+        
+        if (tickets == null || tickets.isEmpty()){
+            tx.rollback();
             throw new NoTicketException("No se encontraron tickets");
+        }
+            
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
                 tickets.size());
+        tx.commit();
         return tickets;
     }
 
@@ -101,12 +105,16 @@ public class Logic implements LogicInterface {
         tx = session.beginTransaction();
         tickets = session.createNamedQuery("findAllTickets")
                 .getResultList();
-        tx.commit();
-        if (tickets == null || tickets.isEmpty())
+        
+        if (tickets == null || tickets.isEmpty()){
+           tx.rollback();
            throw new NoTicketException("No se encontraron tickets");
+        }
+          
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
                 tickets.size());
+        tx.commit();
         return tickets;
     }
 
@@ -120,12 +128,14 @@ public class Logic implements LogicInterface {
                     .getHash(newPassword, credential.getLogin());
             credential.setPassword(passwordHash);
             session.merge(credential);
-            tx.commit();
+            
         } else {
+            tx.rollback();
             LOGGER.warning("Password not secure");
             throw new NotSecureException("Contraseña debe tener mayúscula, "
                     + "minúscula, carácter especial y dígito");
         }
+        tx.commit();
     }
 
     @Override
@@ -135,8 +145,11 @@ public class Logic implements LogicInterface {
         List<User> users = session.createNamedQuery("findUserById")
             .setParameter("login", login)
             .getResultList();
-        if (users == null || users.isEmpty())
+        if (users == null || users.isEmpty()){
+            tx.rollback();
             throw new NoUserException("El usuario no existe");
+        }
+            
         String newPassword = setPassword(users.get(0));
         session.merge(users.get(0));
         LOGGER.info("Sending email");
@@ -185,8 +198,11 @@ public class Logic implements LogicInterface {
         tx = session.beginTransaction();
         users = session.createNamedQuery("findAllUsers")
                 .getResultList();
-        if (users == null || users.isEmpty())
+        if (users == null || users.isEmpty()){
+            tx.rollback();
             throw new NoUserException("No users found");
+        }
+            
         tx.commit();
         LOGGER.log(Level.INFO,
                 "{0} users found",
@@ -200,12 +216,16 @@ public class Logic implements LogicInterface {
         tx = session.beginTransaction();
         technicians = session.createNamedQuery("findAllTechnicians")
                 .getResultList();
-        tx.commit();
-        if (technicians == null || technicians.isEmpty())
-           throw new NoTechnicianException("No se encontraron técnicos");
+        
+        if (technicians == null || technicians.isEmpty()){
+            tx.rollback();
+            throw new NoTechnicianException("No se encontraron técnicos");
+        }
+           
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
                 technicians.size());
+        tx.commit();
         return technicians;
     }
 
@@ -240,8 +260,11 @@ public class Logic implements LogicInterface {
                 .setParameter("login", login)
                 .setParameter("password", passwordHash)
                 .getResultList();
-        if (users == null || users.isEmpty())
+        if (users == null || users.isEmpty()){
+            tx.rollback();
             throw new UserLoginException("Usuario o contraseña invalidos");
+        }
+            
         User user = users.get(0);
         user.getCredential().setLastAccess(new Date());
         session.merge(user);
@@ -259,13 +282,15 @@ public class Logic implements LogicInterface {
         tx = session.beginTransaction();
         departments = session.createNamedQuery("findAllDepartments")
                 .getResultList();
-        tx.commit();
+        
         if (departments == null || departments.isEmpty()) {
+            tx.rollback();
             throw new NoDepartmentException("No se encontraron departamentos.");
         }
         LOGGER.log(Level.INFO,
                 "{0} deparments found",
                 departments.size());
+        tx.commit();
         return departments;
     }
 
@@ -277,13 +302,15 @@ public class Logic implements LogicInterface {
         tickets = session.createNamedQuery("findTicketsByState")
                 .setParameter("state", state)
                 .getResultList();
-        tx.commit();
+        
         if (tickets == null || tickets.isEmpty()) {
+            tx.rollback();
             throw new NoTicketException("No se encontraron tickets.");
         }
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
                 tickets.size());
+        tx.commit();
         return tickets;
     }
 
@@ -296,6 +323,7 @@ public class Logic implements LogicInterface {
                 .setParameter("login", login)
                 .getResultList();
         if (tickets == null || tickets.isEmpty()) {
+            tx.rollback();
             throw new NoTicketException("El técnico no tiene tickets asignados");
         }
         LOGGER.log(Level.INFO,
