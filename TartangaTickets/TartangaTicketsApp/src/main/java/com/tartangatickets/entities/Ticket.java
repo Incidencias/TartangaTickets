@@ -85,7 +85,6 @@ public class Ticket implements Serializable {
     private List<Message> messages;
     @ManyToOne
     private Technician technician;
-    private String title;
 
     public Ticket() {
     }
@@ -194,14 +193,6 @@ public class Ticket implements Serializable {
     @Override
     public String toString(){
         return id.toString();
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     @Override
