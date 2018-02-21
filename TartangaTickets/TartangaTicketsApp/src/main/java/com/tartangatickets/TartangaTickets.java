@@ -15,6 +15,7 @@ import com.tartangatickets.views.MessageView;
 import com.tartangatickets.views.NewTicketView;
 import com.tartangatickets.views.PassModifyView;
 import com.tartangatickets.views.TicketDetailView;
+import com.tartangatickets.views.UsersListView;
 
 
 public class TartangaTickets extends MobileApplication {
@@ -29,6 +30,7 @@ public class TartangaTickets extends MobileApplication {
     public static final String NEWTICKET_VIEW = "NewTicketView";
     public static final String PASSMODIFY_VIEW = "PassModifyView";
     public static final String TICKET_VIEW = "TicketView";
+    public static final String USER_LIST_VIEW = "UsersListView";
     public static final LogicInterface LOGIC = new Logic();
 
     
@@ -44,6 +46,7 @@ public class TartangaTickets extends MobileApplication {
         addViewFactory(NEWTICKET_VIEW, () -> new NewTicketView(NEWTICKET_VIEW).getView());
         addViewFactory(PASSMODIFY_VIEW, () -> new PassModifyView(PASSMODIFY_VIEW).getView());
         addViewFactory(TICKET_VIEW, () -> new TicketView(TICKET_VIEW).getView());
+        addViewFactory(USER_LIST_VIEW, () -> new UsersListView(USER_LIST_VIEW).getView());
     }
 
     @Override

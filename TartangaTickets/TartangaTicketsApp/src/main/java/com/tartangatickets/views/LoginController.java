@@ -76,5 +76,6 @@ public class LoginController {
     @FXML
     private void handleButtonRecoverpass(){
         MobileApplication.getInstance().switchView("RecoverPassView");
+        pfPass.clear();
     }
 }

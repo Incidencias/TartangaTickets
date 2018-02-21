@@ -17,7 +17,10 @@ import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.io.IOException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -37,7 +40,7 @@ public class MessageController {
     @FXML
     private View mensajes;
     @FXML
-    private CardPane<Label> cPMessage;
+    private CardPane<Label> cPMessage = new CardPane();
     @FXML
     private Label lblNewMessage;
     @FXML
@@ -48,9 +51,11 @@ public class MessageController {
     private LogicInterface logic = TartangaTickets.LOGIC; 
     private HashMap sessionContent = logic.getSessionContent();
     
+    private List<Ticket> tickets =  new ArrayList<Ticket>();
     private User user;
     private Ticket ticket;
     private Message message;
+    private Integer ticketId;
     private int i=0;
     
     /**
@@ -69,10 +74,12 @@ public class MessageController {
                 appBar.setNavIcon(back);
                 logger.info("inizialize message controller.");
                 user = (User) sessionContent.get("activeId");
-                ticket = (Ticket) sessionContent.get("ticketId");
-                cPMessage = new CardPane();
+                ticketId = (Integer) sessionContent.get("ticketId");
+                
+                findTicket();
+                
                 for(i=0; i<ticket.getMessages().size(); i++){
-                    String m = ticket.getMessages().get(i).getUser().getName()+": "+ticket.getMessages().get(i).getBody();
+                    String m = ticket.getMessages().get(i).getUser().getFullName()+": "+ticket.getMessages().get(i).getBody();
                     cPMessage.getItems().add(label(m));
                 }
             }
@@ -89,14 +96,30 @@ public class MessageController {
         logger.info("Sending message.");
         try {
             message = new Message();
-            message.setBody(tANewMessage.toString());
+            message.setBody(tANewMessage.getText());
             message.setTicket(ticket);
             message.setUser(user);
             logic.sendMessage(message);
-            String m = user.getName()+": "+message.getBody();
+            String m = user.getName()+": "+message.getBody().toString();
             cPMessage.getItems().add(label(m));
+            tANewMessage.setText("");
         } catch (Exception ex) {
             Logger.getLogger(MessageController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void findTicket() {
+        try {
+            tickets = logic.findAllTickets();
+            for(int i=0; i<tickets.size(); i++){
+                if(tickets.get(i).getId().equals(ticketId)){
+                    ticket = tickets.get(i);
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(TicketDetailController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+    }
+    
 }

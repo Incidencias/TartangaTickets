@@ -9,13 +9,11 @@ import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
-import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
 import static com.tartangatickets.TartangaTickets.LOGIN_VIEW;
 import static com.tartangatickets.TartangaTickets.NEWTICKET_VIEW;
 import static com.tartangatickets.TartangaTickets.PASSMODIFY_VIEW;
 import static com.tartangatickets.TartangaTickets.TICKET_VIEW;
-import static com.tartangatickets.TartangaTickets.USER_VIEW;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
@@ -58,9 +56,6 @@ public class MainMenuController{
             if(user instanceof Technician && ((Technician)user).getIsAdmin()){
                 btShowUsers.setVisible(true);
             }
-           // LOGGER.info("tech is admin "+((Technician)user).getIsAdmin());
-            
-        
     }
 
     @FXML
@@ -83,7 +78,7 @@ public class MainMenuController{
 
     @FXML
     private void handleButtonShowUsers() {
-        MobileApplication.getInstance().switchView(USER_VIEW);
+        MobileApplication.getInstance().switchView(TartangaTickets.USER_LIST_VIEW);
 
     }
 
