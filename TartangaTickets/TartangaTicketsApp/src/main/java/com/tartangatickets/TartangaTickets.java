@@ -31,6 +31,7 @@ public class TartangaTickets extends MobileApplication {
     public static final String PASSMODIFY_VIEW = "PassModifyView";
     public static final String TICKET_VIEW = "TicketView";
     public static final String USER_LIST_VIEW = "UsersListView";
+    public static final String TICKET_LIST_VIEW = "TicketListView";
     public static final LogicInterface LOGIC = new Logic();
 
     
@@ -47,6 +48,7 @@ public class TartangaTickets extends MobileApplication {
         addViewFactory(PASSMODIFY_VIEW, () -> new PassModifyView(PASSMODIFY_VIEW).getView());
         addViewFactory(TICKET_VIEW, () -> new TicketView(TICKET_VIEW).getView());
         addViewFactory(USER_LIST_VIEW, () -> new UsersListView(USER_LIST_VIEW).getView());
+        addViewFactory(TICKET_LIST_VIEW, () -> new UsersListView(TICKET_LIST_VIEW).getView());
     }
 
     @Override

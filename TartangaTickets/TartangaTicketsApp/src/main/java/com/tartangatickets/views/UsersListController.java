@@ -43,7 +43,7 @@ public class UsersListController {
     
     public void initialize() {
         usuarios_charmlist.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
-        
+        charmUsuarios.setCellFactory(p -> new UserCell());
         usuarios_charmlist.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
@@ -52,7 +52,6 @@ public class UsersListController {
                     MobileApplication.getInstance().switchToPreviousView()
                 );
                 appBar.setNavIcon(back);
-                charmUsuarios.setCellFactory(p -> new UserCell());
                 fillList();
             }
         });

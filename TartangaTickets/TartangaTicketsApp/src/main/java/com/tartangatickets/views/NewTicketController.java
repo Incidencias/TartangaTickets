@@ -9,7 +9,7 @@ import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.Message;
-import com.tartangatickets.entities.State;
+import com.tartangatickets.entities.State.STATE;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.Date;
 import com.tartangatickets.utils.DialogHelper;
@@ -83,7 +83,7 @@ public class NewTicketController {
             ticket = new Ticket();
             ticket.setLocation(tfLocation.getText());
             ticket.setMachineCode(tfMachineCode.getText());
-            ticket.setState(State.OPEN);
+            ticket.setState(STATE.OPEN);
             ticket.setUser(user);
             ticket.setDepartment(user.getDepartment());
             ticket.setTitle(tfAsunto.getText());

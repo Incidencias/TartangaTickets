@@ -24,7 +24,7 @@
             </Button>
             <HBox prefHeight="25.0" prefWidth="295.0">
                <children>
-                  <Label alignment="CENTER" style="-fx-font-size: 15;" text="Lista usuarios:" />
+                  <Label alignment="CENTER" style="-fx-font-size: 15;" text="Usuarios:" />
                </children>
             </HBox>
             <CharmListView fx:id="charmUsuarios" />

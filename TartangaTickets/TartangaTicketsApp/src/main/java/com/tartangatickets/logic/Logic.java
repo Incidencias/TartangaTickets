@@ -8,7 +8,7 @@ package com.tartangatickets.logic;
 import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Message;
-import com.tartangatickets.entities.State;
+import com.tartangatickets.entities.State.STATE;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
@@ -295,7 +295,7 @@ public class Logic implements LogicInterface {
     }
 
     @Override
-    public List<Ticket> findTicketsByState(State state) throws Exception {
+    public List<Ticket> findTicketsByState(STATE state) throws Exception {
         LOGGER.info("Fetching tickets by state");
         List<Ticket> tickets = null;
         tx = session.beginTransaction();

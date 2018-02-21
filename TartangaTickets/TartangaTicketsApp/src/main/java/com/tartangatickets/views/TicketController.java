@@ -6,7 +6,7 @@ import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
-import com.tartangatickets.entities.State;
+import com.tartangatickets.entities.State.STATE;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
@@ -143,9 +143,8 @@ public class TicketController {
     
     private void fillStateCombo() {
         itemsState = FXCollections.observableArrayList();
-        itemsState.addAll(
-                State.OPEN.name(), State.INPROGRESS.name(), 
-                State.BLOQUED.name(), State.CLOSED.name()
+        itemsState.addAll(STATE.OPEN.name(), STATE.INPROGRESS.name(), 
+                STATE.BLOQUED.name(), STATE.CLOSED.name()
         );          
         cbStateLTicket.getItems().addAll(itemsState);
     }
