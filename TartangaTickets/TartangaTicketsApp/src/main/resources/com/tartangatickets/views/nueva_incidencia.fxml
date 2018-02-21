@@ -76,7 +76,7 @@
                         <Label text="Asunto:" />
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="180.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="160.0">
                      <children>
                         <TextField fx:id="tfAsunto" />
                      </children>

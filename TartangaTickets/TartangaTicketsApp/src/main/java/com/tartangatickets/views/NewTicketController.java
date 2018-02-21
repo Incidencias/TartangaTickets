@@ -75,7 +75,7 @@ public class NewTicketController {
     @FXML
     private void handleButtonCreateTicket() {
         Ticket ticket = null;
-        if(tfMachineCode.getText().trim().isEmpty() && tfLocation.getText().trim().isEmpty()&& tfAsunto.getText().trim().isEmpty()){
+        if(tfMachineCode.getText().trim().isEmpty() || tfLocation.getText().trim().isEmpty() || tfAsunto.getText().trim().isEmpty()){
             DialogHelper.newInstance("ERROR",
                     "Los datos no pueden estar vacíos.");
 
@@ -87,15 +87,15 @@ public class NewTicketController {
             ticket.setUser(user);
             ticket.setDepartment(user.getDepartment());
             ticket.setTitle(tfAsunto.getText());
+            try {  
+                logic.createTicket(ticket);
+                DialogHelper.newInstance("INFO", INFO_TICKET_CREADO);
+                //MobileApplication.getInstance().switchView("TicketView");
+            } catch (Exception ex) {
+                DialogHelper.newInstance("ERROR",
+                        "Datos erroneos.");
+            }
+        }
 
-        }
-        try {  
-            logic.createTicket(ticket);
-            DialogHelper.newInstance("INFO", INFO_TICKET_CREADO);
-            MobileApplication.getInstance().switchView("TicketView");
-        } catch (Exception ex) {
-            DialogHelper.newInstance("ERROR",
-                    "Datos erroneos.");
-        }
     } 
 }

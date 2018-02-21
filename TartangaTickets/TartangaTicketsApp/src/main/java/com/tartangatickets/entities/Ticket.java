@@ -84,10 +84,20 @@ public class Ticket implements Serializable {
     private List<Message> messages;
     @ManyToOne
     private Technician technician;
+    private String title;
 
     public Ticket() {
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    
     public Ticket(Date createDate, Date endDate, String machineCode, Department department, String location, State state, User user, List<Message> messages, Technician technician) {
         this.createDate = createDate;
         this.endDate = endDate;
