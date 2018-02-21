@@ -99,11 +99,11 @@ public class MessageController {
         logger.info("Sending message.");
         try {
             message = new Message();
-            message.setBody(tANewMessage.toString());
+            message.setBody(tANewMessage.getText());
             message.setTicket(ticket);
             message.setUser(user);
             logic.sendMessage(message);
-            String m = user.getName()+": "+message.getBody().toString();
+            String m = user.getFullName()+": "+message.getBody().toString();
             cPMessage.getItems().add(label(m));
             tANewMessage.setText("");
         } catch (Exception ex) {
