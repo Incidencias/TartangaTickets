@@ -90,7 +90,7 @@ public class NewTicketController {
             try {  
                 logic.createTicket(ticket);
                 DialogHelper.newInstance("INFO", INFO_TICKET_CREADO);
-                MobileApplication.getInstance().switchView("TicketView");
+                MobileApplication.getInstance().switchView("TicketListView");
             } catch (Exception ex) {
                 DialogHelper.newInstance("ERROR",
                         "Datos erroneos.");

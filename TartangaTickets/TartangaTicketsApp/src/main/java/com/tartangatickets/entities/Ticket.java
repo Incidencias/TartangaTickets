@@ -62,6 +62,11 @@ import org.hibernate.annotations.NamedQuery;
             name="findTicketsByState",
             query="SELECT t FROM Ticket t WHERE t.state = :state "
                     + "ORDER BY t.createDate"
+    ),
+    @NamedQuery(
+            name="findTicketById",
+            query="SELECT t FROM Ticket t WHERE t.id = :id "
+                    + "ORDER BY t.createDate"
     )
  })
 

@@ -65,9 +65,7 @@ public class TicketListController {
         incidencias_charmlist.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         charmTickets.setCellFactory(p -> new TicketCell());
         charmTickets.setHeadersFunction(State::getState);
-        filteredList = new FilteredList<>(
-                FXCollections.observableArrayList(getAllTickets()),
-                getTicketPredicate(null));
+        
         incidencias_charmlist.showingProperty().addListener((obs, oldValue, newValue) -> {  
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
@@ -127,17 +125,12 @@ public class TicketListController {
     }
     
     private void fillTicketList() {
-        itemTickets = FXCollections.observableArrayList();
-        if (user instanceof Technician) {
-            tickets = getAllTickets();
-        }
-        else {
-            tickets = user.getCreatedTickets();
-        }
-        tickets.forEach((ticket) -> {
-            itemTickets.add(ticket);
-        });
-        charmTickets.setItems(itemTickets);
+        filteredList = new FilteredList<>(
+            user instanceof Technician ?
+                    FXCollections.observableArrayList(getAllTickets()) :
+                    FXCollections.observableArrayList(user.getCreatedTickets()),
+            getTicketPredicate(null));
+        charmTickets.setItems(filteredList);
     }
     
     private List<Ticket> getAllTickets() {

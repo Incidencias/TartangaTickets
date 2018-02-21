@@ -47,6 +47,23 @@ public class Logic implements LogicInterface {
     private static HashMap sessionContent = new HashMap<>();
     
     @Override
+    public Ticket findTicketById(Integer id) throws Exception {
+        LOGGER.info("Fetching ticket by Id");
+        tx = session.beginTransaction();
+        List<Ticket> tickets = session
+                .createNamedQuery("findTicketById")
+                .setParameter("id", id)
+                .getResultList();
+        if (tickets == null || tickets.isEmpty()) {
+            tx.rollback();
+            throw new NoTicketException("No se encntro la incidencia");
+        }
+        tx.commit();
+        LOGGER.info("Ticket found");
+        return tickets.get(0);
+    }
+    
+    @Override
     public HashMap getSessionContent() {
         return sessionContent;
     }
@@ -210,6 +227,7 @@ public class Logic implements LogicInterface {
         return users;
     }
     
+    @Override
     public List<Technician> findAllTechnicians() throws Exception {
         LOGGER.info("Fetching all technicians");
         List<Technician> technicians = null;
@@ -344,5 +362,24 @@ public class Logic implements LogicInterface {
                 "{0} tickets found",
                 users.size());
         return users;
+    }
+
+    @Override
+    public void updateTicket(Ticket ticket) throws Exception {
+        LOGGER.info("Updating ticket");
+        tx = session.beginTransaction();
+        session.merge(ticket);
+        session.flush();
+        session.refresh(ticket);
+        if (ticket.getTechnician() != null) {
+            Technician technician = ticket.getTechnician();
+            List<Ticket> tickets = technician.getAssignedTickets();
+            tickets.add(ticket);
+            session.merge(technician);
+            session.flush();
+            session.refresh(technician);
+        }
+        tx.commit();
+        LOGGER.info("Ticket updated");
     }
 }

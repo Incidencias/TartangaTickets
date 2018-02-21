@@ -15,6 +15,7 @@ import com.tartangatickets.views.MessageView;
 import com.tartangatickets.views.NewTicketView;
 import com.tartangatickets.views.PassModifyView;
 import com.tartangatickets.views.TicketDetailView;
+import com.tartangatickets.views.TicketListView;
 import com.tartangatickets.views.UsersListView;
 
 
@@ -48,7 +49,7 @@ public class TartangaTickets extends MobileApplication {
         addViewFactory(PASSMODIFY_VIEW, () -> new PassModifyView(PASSMODIFY_VIEW).getView());
         addViewFactory(TICKET_VIEW, () -> new TicketView(TICKET_VIEW).getView());
         addViewFactory(USER_LIST_VIEW, () -> new UsersListView(USER_LIST_VIEW).getView());
-        addViewFactory(TICKET_LIST_VIEW, () -> new UsersListView(TICKET_LIST_VIEW).getView());
+        addViewFactory(TICKET_LIST_VIEW, () -> new TicketListView(TICKET_LIST_VIEW).getView());
     }
 
     @Override

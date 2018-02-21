@@ -34,4 +34,6 @@ public interface LogicInterface {
     public List<Ticket> findTicketsByTechnician(String technicianLogin) throws Exception;
     public List<Technician> findAllTechnicians() throws Exception;
     public List<User> findUserByLogin(String login) throws Exception;
+    public Ticket findTicketById(Integer id) throws Exception;
+    public void updateTicket(Ticket ticket) throws Exception;
 }
