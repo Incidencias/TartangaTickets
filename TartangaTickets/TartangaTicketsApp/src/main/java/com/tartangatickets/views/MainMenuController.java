@@ -13,6 +13,7 @@ import com.tartangatickets.TartangaTickets;
 import static com.tartangatickets.TartangaTickets.LOGIN_VIEW;
 import static com.tartangatickets.TartangaTickets.NEWTICKET_VIEW;
 import static com.tartangatickets.TartangaTickets.PASSMODIFY_VIEW;
+import static com.tartangatickets.TartangaTickets.TICKET_LIST_VIEW;
 import static com.tartangatickets.TartangaTickets.TICKET_VIEW;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.User;
@@ -60,7 +61,7 @@ public class MainMenuController{
 
     @FXML
     private void handleButtonShowTickets() {
-        MobileApplication.getInstance().switchView(TICKET_VIEW);
+        MobileApplication.getInstance().switchView(TICKET_LIST_VIEW);
 
     }
 

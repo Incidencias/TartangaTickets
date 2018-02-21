@@ -7,7 +7,7 @@ import com.gluonhq.charm.glisten.control.Dialog;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
-import com.tartangatickets.entities.State;
+import com.tartangatickets.entities.State.STATE;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
@@ -150,13 +150,13 @@ public class TicketDetailController {
         Button btnClosed = new Button("Cerrado");
         btnOpen.setOnAction(e -> {
             logger.info("Dialog Edit state Open");
-            if(ticket.getState().equals(State.OPEN)){
+            if(ticket.getState().equals(STATE.OPEN)){
                 Alert alert = new Alert(AlertType.ERROR, "¡Este estado ya estaba seleccionado!");
                 alert.showAndWait();
             }
             else{
                 try {
-                    ticket.setState(State.OPEN);
+                    ticket.setState(STATE.OPEN);
                     endDate = null;
                     ticket.setEndDate(endDate);
                     logic.changeState(ticket);
@@ -169,13 +169,13 @@ public class TicketDetailController {
         });
         btnInProgress.setOnAction(e -> {
             logger.info("Dialog Edit state In progress");
-            if(ticket.getState().equals(State.INPROGRESS)){
+            if(ticket.getState().equals(STATE.INPROGRESS)){
                 Alert alert = new Alert(AlertType.ERROR, "¡Este estado ya estaba seleccionado!");
                 alert.showAndWait();
             }
             else{
                 try {
-                    ticket.setState(State.INPROGRESS);
+                    ticket.setState(STATE.INPROGRESS);
                     endDate = null;
                     ticket.setEndDate(endDate);
                     logic.changeState(ticket);
@@ -187,13 +187,13 @@ public class TicketDetailController {
         });
         btnBloqued.setOnAction(e -> {
             logger.info("Dialog Edit state Bloqued");
-            if(ticket.getState().equals(State.BLOQUED)){
+            if(ticket.getState().equals(STATE.BLOQUED)){
                 Alert alert = new Alert(AlertType.ERROR, "¡Este estado ya estaba seleccionado!");
                 alert.showAndWait();
             }
             else{
                 try {
-                    ticket.setState(State.BLOQUED);
+                    ticket.setState(STATE.BLOQUED);
                     endDate = null;
                     ticket.setEndDate(endDate);
                     logic.changeState(ticket);
@@ -205,14 +205,14 @@ public class TicketDetailController {
         });
         btnClosed.setOnAction(e -> {
             logger.info("Dialog Edit state Close");
-            if(ticket.getState().equals(State.CLOSED)){
+            if(ticket.getState().equals(STATE.CLOSED)){
                 Alert alert = new Alert(AlertType.ERROR, "¡Este estado ya estaba seleccionado!");
                 alert.showAndWait();
             }
             else{   
                 try {
                     endDate = new Date();
-                    ticket.setState(State.CLOSED);
+                    ticket.setState(STATE.CLOSED);
                     ticket.setEndDate(endDate);
                     logic.changeState(ticket);
                 } catch (Exception ex) {

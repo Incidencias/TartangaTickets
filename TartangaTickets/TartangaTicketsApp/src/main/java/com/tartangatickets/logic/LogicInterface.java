@@ -3,7 +3,7 @@ package com.tartangatickets.logic;
 import com.tartangatickets.entities.Credential;
 import com.tartangatickets.entities.Department;
 import com.tartangatickets.entities.Message;
-import com.tartangatickets.entities.State;
+import com.tartangatickets.entities.State.STATE;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
@@ -30,7 +30,7 @@ public interface LogicInterface {
     public void changeState(Ticket ticket) throws Exception; 
     public User authenticate(String login, String password) throws Exception; 
     public List<Department> findAllDepartments() throws Exception; 
-    public List<Ticket> findTicketsByState(State state) throws Exception; 
+    public List<Ticket> findTicketsByState(STATE state) throws Exception; 
     public List<Ticket> findTicketsByTechnician(String technicianLogin) throws Exception;
     public List<Technician> findAllTechnicians() throws Exception;
     public List<User> findUserByLogin(String login) throws Exception;

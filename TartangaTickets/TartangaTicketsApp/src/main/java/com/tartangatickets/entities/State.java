@@ -9,11 +9,18 @@ package com.tartangatickets.entities;
  *
  * @author ubuntu
  */
-public enum State {
+public class State {
+
+    public enum STATE {
+
+        OPEN,
+        INPROGRESS,
+        BLOQUED,
+        CLOSED;
+
+    }
     
-    OPEN,
-    INPROGRESS,
-    BLOQUED,
-    CLOSED;
-    
+    public static STATE getState(Ticket ticket) {
+        return ticket.getState();
+    }
 }

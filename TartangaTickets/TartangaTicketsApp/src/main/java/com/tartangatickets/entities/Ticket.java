@@ -68,6 +68,7 @@ public class Ticket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    private String title;
     @Temporal(TemporalType.DATE)
     private Date createDate;
     @Temporal(TemporalType.DATE)
@@ -77,7 +78,7 @@ public class Ticket implements Serializable {
     private Department department;
     private String location;
     @Enumerated(ORDINAL)
-    private State state;
+    private State.STATE state;
     @ManyToOne
     private User user;
     @OneToMany(mappedBy ="id", cascade = CascadeType.ALL)
@@ -88,7 +89,8 @@ public class Ticket implements Serializable {
     public Ticket() {
     }
 
-    public Ticket(Date createDate, Date endDate, String machineCode, Department department, String location, State state, User user, List<Message> messages, Technician technician) {
+    public Ticket(String title, Date createDate, Date endDate, String machineCode, Department department, String location, State.STATE state, User user, List<Message> messages, Technician technician) {
+        this.title = title;
         this.createDate = createDate;
         this.endDate = endDate;
         this.machineCode = machineCode;
@@ -99,8 +101,6 @@ public class Ticket implements Serializable {
         this.messages = messages;
         this.technician = technician;
     }
-
-    
     
     public Integer getId() {
         return id;
@@ -150,11 +150,11 @@ public class Ticket implements Serializable {
         this.location = location;
     }
 
-    public State getState() {
+    public State.STATE getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(State.STATE state) {
         this.state = state;
     }
 
@@ -182,11 +182,18 @@ public class Ticket implements Serializable {
         this.technician = technician;
     }
 
+    @Override
     public String toString(){
         return id.toString();
     }
 
-    
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     @Override
     public int hashCode() {
