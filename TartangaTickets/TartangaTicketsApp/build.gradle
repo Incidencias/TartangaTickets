@@ -35,6 +35,5 @@ jfxmobile {
     }
     android {
         manifest = 'src/android/AndroidManifest.xml'
-        androidSdk = '/home/jon/tools/bin'
     }
 }
