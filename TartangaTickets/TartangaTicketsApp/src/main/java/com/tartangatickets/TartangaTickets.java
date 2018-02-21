@@ -30,6 +30,7 @@ public class TartangaTickets extends MobileApplication {
     
     @Override
     public void init() {
+        
         addViewFactory(LOGIN_VIEW, () -> new LoginView(LOGIN_VIEW).getView());
         addViewFactory(MAINMENU_VIEW, () -> new MainMenuView(MAINMENU_VIEW).getView());
         addViewFactory(MESSAGE_VIEW, () -> new MessageView(MESSAGE_VIEW).getView());
