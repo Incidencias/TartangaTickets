@@ -100,6 +100,7 @@ public class Ticket implements Serializable {
         this.technician = technician;
     }
 
+
     
     
     public Integer getId() {

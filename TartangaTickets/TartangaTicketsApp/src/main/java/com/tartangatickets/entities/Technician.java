@@ -82,4 +82,18 @@ public class Technician extends User implements Serializable {
         }
         return true;
     } 
+
+    @Override
+    public String toString() {
+        return "com.tartangatickets.entities.Technician[ id=" + login + " ]";
+        
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (login != null ? login.hashCode() : 0);
+        return hash;
+    }
+    
 }
