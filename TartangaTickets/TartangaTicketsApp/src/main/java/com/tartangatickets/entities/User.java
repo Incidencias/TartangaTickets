@@ -79,7 +79,7 @@ public class User implements Serializable {
     protected String name;
     protected String lastName1;
     protected String lastName2;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     protected Department department;
     @OneToMany(mappedBy="user",cascade = CascadeType.ALL, orphanRemoval = true)
     protected List<Ticket> createdTickets;

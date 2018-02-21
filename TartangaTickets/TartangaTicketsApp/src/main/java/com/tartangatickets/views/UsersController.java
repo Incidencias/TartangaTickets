@@ -57,6 +57,7 @@ public class UsersController {
         usuarios.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Usuarios");
                 Button back = MaterialDesignIcon.ARROW_BACK.button();
                 back.setOnAction(event -> 
                     MobileApplication.getInstance().switchToPreviousView()

@@ -7,12 +7,12 @@ import com.gluonhq.charm.glisten.control.CharmListView;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
+import static com.tartangatickets.TartangaTickets.TICKETDETAIL_VIEW;
 import com.tartangatickets.entities.State;
 import com.tartangatickets.entities.State.STATE;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
-import com.tartangatickets.exceptions.NoTechnicianException;
 import com.tartangatickets.exceptions.NoTicketException;
 import com.tartangatickets.logic.LogicInterface;
 import com.tartangatickets.utils.DialogHelper;
@@ -21,17 +21,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
@@ -51,10 +48,8 @@ public class TicketListController {
     private CharmListView<Ticket, STATE> charmTickets ;
     
     private final LogicInterface logic = TartangaTickets.LOGIC; 
-    private final HashMap sessionContent = logic.getSessionContent();
+    private final HashMap sessionContent = logic.getSESSION_CONTENT();
     private User user;
-    private List<Ticket> tickets;
-    private ObservableList<Ticket> itemTickets;
     private FilteredList<Ticket> filteredList;
     
     /**
@@ -69,10 +64,11 @@ public class TicketListController {
         incidencias_charmlist.showingProperty().addListener((obs, oldValue, newValue) -> {  
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Incidencias");
                 Button back = MaterialDesignIcon.ARROW_BACK.button();
-                back.setOnAction(event -> 
-                    MobileApplication.getInstance().switchToPreviousView()
-                );
+                back.setOnAction(event -> {
+                    MobileApplication.getInstance().switchView(TartangaTickets.MAINMENU_VIEW);
+                });
                 appBar.setNavIcon(back);
                 appBar.getMenuItems().setAll(buildFilterMenu());
                 user = (User) sessionContent.get("activeId"); 
@@ -83,11 +79,12 @@ public class TicketListController {
                     public void changed(ObservableValue obs, Object oldItem, Object newItem) {
                         if (newItem != null) {
                             sessionContent.put("ticketId", ((Ticket) newItem).getId());
-                            MobileApplication.getInstance().switchView("TicketDetailView");
+                            
+                            MobileApplication.getInstance().switchView(TICKETDETAIL_VIEW);
                         }
                     }
                 });
-            }    
+            } 
         });
     }
     
@@ -125,16 +122,21 @@ public class TicketListController {
     }
     
     private void fillTicketList() {
+        List<Ticket> tickets = null;
+        if (user instanceof Technician) {
+            tickets = getAllTickets();
+        } else {
+            tickets = user.getCreatedTickets();
+        }
+        if (tickets == null) return;
         filteredList = new FilteredList<>(
-            user instanceof Technician ?
-                    FXCollections.observableArrayList(getAllTickets()) :
-                    FXCollections.observableArrayList(user.getCreatedTickets()),
-            getTicketPredicate(null));
+                FXCollections.observableArrayList(tickets),
+                getTicketPredicate(null));
         charmTickets.setItems(filteredList);
     }
     
     private List<Ticket> getAllTickets() {
-        tickets = null;
+        List<Ticket> tickets = null;
         try {
             tickets = logic.findAllTickets();
         } catch (NoTicketException ex) {

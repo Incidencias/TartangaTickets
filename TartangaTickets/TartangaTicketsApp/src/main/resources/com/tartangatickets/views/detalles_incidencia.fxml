@@ -170,20 +170,12 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnSendMessage" mnemonicParsing="false" onAction="#handleButtonSendMessage" prefHeight="32.0" prefWidth="90.0" text="Mensajes" />
+                        <Button fx:id="btnSendMessage" mnemonicParsing="false" onAction="#handleButtonSendMessage" prefHeight="30.0" prefWidth="90.0" text="Mensajes" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnEditState" mnemonicParsing="false" onAction="#handleButtonEditState" prefWidth="90.0" text="Estado" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Button fx:id="btnStore" mnemonicParsing="false" onAction="#handleButtonStore" prefWidth="90.0" text="Guardar">
-                           <VBox.margin>
-                              <Insets left="20.0" />
-                           </VBox.margin></Button>
+                        <Button fx:id="btnEditState" mnemonicParsing="false" onAction="#handleButtonEditState" prefHeight="30.0" prefWidth="90.0" text="Estado" />
                      </children>
                   </VBox>
                </children>

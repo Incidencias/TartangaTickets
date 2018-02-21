@@ -4,7 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -14,21 +13,6 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="50.0" prefWidth="295.0" spacing="20.0">
-               <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="150.0">
-                     <children>
-                        <Label style="-fx-font-size: 25;" text="Incidencia:" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="69.0" prefWidth="180.0">
-                     <children>
-                        <Label fx:id="lblTicket" prefHeight="18.0" prefWidth="180.0" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <Separator prefWidth="200.0" />
             <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
@@ -140,7 +124,7 @@
                   <Insets top="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Button fx:id="btnCreateTicket" mnemonicParsing="false" onAction="#handleButtonCreateTicket" text="Crear incidencia" />
                </children>

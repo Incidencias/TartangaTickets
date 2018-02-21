@@ -45,7 +45,7 @@ public class TicketController {
     private ComboBox cbTechnicianLTicket;
     
     private final LogicInterface logic = TartangaTickets.LOGIC; 
-    private final HashMap sessionContent = logic.getSessionContent();
+    private final HashMap sessionContent = logic.getSESSION_CONTENT();
     private User user;
     private List<Ticket> visibleTickets = new ArrayList<>();
     private ObservableList<String> itemTickets;
@@ -152,6 +152,7 @@ public class TicketController {
     private void fillTechniciansCombo() {
         itemsTechnicians = FXCollections.observableArrayList();
         List<Technician> technicians = getAllTechnicians();
+        if (technicians == null) return;
         technicians.forEach((technician) -> {
             itemsTechnicians.add(technician.getFullName());
         });
@@ -167,6 +168,7 @@ public class TicketController {
         else {
             visibleTickets.addAll(user.getCreatedTickets());
         }
+        if (visibleTickets == null) return;
         visibleTickets.forEach((ticket) -> {
             itemTickets.add(ticket.toString());
         });

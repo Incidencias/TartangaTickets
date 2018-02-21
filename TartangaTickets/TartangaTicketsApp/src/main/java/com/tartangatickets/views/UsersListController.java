@@ -47,9 +47,10 @@ public class UsersListController {
         usuarios_charmlist.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Usuarios");
                 Button back = MaterialDesignIcon.ARROW_BACK.button();
                 back.setOnAction(event -> 
-                    MobileApplication.getInstance().switchToPreviousView()
+                    MobileApplication.getInstance().switchView(TartangaTickets.MAINMENU_VIEW)
                 );
                 appBar.setNavIcon(back);
                 fillList();
@@ -59,6 +60,9 @@ public class UsersListController {
     
     @FXML
     private void handleButtonNewUser(){
+        MobileApplication
+                .getInstance()
+                .addViewFactory(NEWUSER_VIEW, () -> new NewUserView(NEWUSER_VIEW).getView());
         MobileApplication.getInstance().switchView(NEWUSER_VIEW);
     }
 

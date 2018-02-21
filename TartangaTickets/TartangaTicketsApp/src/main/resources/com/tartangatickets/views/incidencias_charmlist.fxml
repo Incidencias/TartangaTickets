@@ -3,7 +3,6 @@
 <?import com.gluonhq.charm.glisten.control.CharmListView?>
 <?import com.gluonhq.charm.glisten.mvc.View?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -14,7 +13,6 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <Label alignment="CENTER" style="-fx-font-size: 15;" text="Incidencias:" />
             <CharmListView fx:id="charmTickets" prefHeight="478.0" prefWidth="295.0" />
          </children>
       </VBox>

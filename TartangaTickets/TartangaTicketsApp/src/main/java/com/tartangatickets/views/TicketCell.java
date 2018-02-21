@@ -40,18 +40,19 @@ public class TicketCell extends CharmListCell<Ticket> {
             String path = null;
             switch (option) {
                 case "OPEN":
-                    path = "file:";
+                    path = "file:src/main/resources/com/tartangatickets/drawable/open.png";
                     break;
                 case "INPROGRESS":
-                    path = "file:";    
+                    path = "file:src/main/resources/com/tartangatickets/drawable/inprogress.png";  
+                    break;
                 case "BLOQUED":
-                    path = "file:";
+                    path = "file:src/main/resources/com/tartangatickets/drawable/warning.png";
                     break;
                 case "CLOSED":
-                    path = "file:";
+                    path = "file:src/main/resources/com/tartangatickets/drawable/done.png";
                     break;
             }
-                
+            
             Image state = new Image(path, 30, 0, true, true);
             if (image != null) {
                 image.setImage(state);

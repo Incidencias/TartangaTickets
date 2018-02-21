@@ -2,6 +2,7 @@ package com.tartangatickets.views;
 
 import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
+import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.Dialog;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -18,16 +19,17 @@ import com.tartangatickets.utils.DialogHelper;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -65,21 +67,12 @@ public class TicketDetailController {
     @FXML
     private ComboBox<Technician> comboTechnician;
     
-    
     private final LogicInterface logic = TartangaTickets.LOGIC; 
-    private final HashMap sessionContent = logic.getSessionContent();
+    private final HashMap sessionContent = logic.getSESSION_CONTENT();
     private User user;
-    
     private Ticket ticket;
-    private int i = 0; 
-    private List<Ticket> tickets =  new ArrayList<Ticket>();
-    private List<Technician> allTech = new ArrayList<Technician>();
     private ObservableList<Technician> itemsTechnicians;
-    private int positionTech;
-
-    DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-    private static final String DATE_PATTERN = "dd-MM-yyyy";
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
+    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     
     /**
      * Initializes the controller class.
@@ -90,25 +83,44 @@ public class TicketDetailController {
         detalles_incidencia.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         detalles_incidencia.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
+                ticket = null;
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Incidencia");
                 Button back = MaterialDesignIcon.ARROW_BACK.button();
                 back.setOnAction(event -> {
-                    sessionContent.remove("activeId");
-                    MobileApplication.getInstance().switchToPreviousView();
+                    sessionContent.remove("ticketId");
+                    MobileApplication.getInstance().switchView(TartangaTickets.TICKET_LIST_VIEW);
+                });
+                Button home = MaterialDesignIcon.HOME.button();
+                home.setOnAction(event -> {
+                    sessionContent.remove("ticketId");
+                    MobileApplication.getInstance().switchView(TartangaTickets.MAINMENU_VIEW);
+                });
+                Button store = MaterialDesignIcon.SAVE.button();
+                store.setOnAction(event -> {
+                    updateTicket();
+                    MobileApplication.getInstance().switchView(TartangaTickets.TICKET_LIST_VIEW);
                 });
                 appBar.setNavIcon(back);
-                user = (User) sessionContent.get("activeId");
-                Integer ticketId = (Integer) sessionContent.get("ticketId");
-                getTicket(ticketId);
+                appBar.getActionItems().addAll(home, store);
+                
+                if (user == null)
+                    user = (User) sessionContent.get("activeId");
+                
+                if (ticket == null) {
+                    Integer ticketId = (Integer) sessionContent.get("ticketId");
+                    getTicket(ticketId);
+                }
                 
                 if(!(user instanceof Technician)){
                     btnEditState.setVisible(false);
                     btnStore.setVisible(false);
                     comboTechnician.setEditable(true);
                 }
-                fillTechniciansCombo();
-                loadData();
             }
+            if (comboTechnician.getItems().isEmpty())
+                fillTechniciansCombo();
+            loadData();
         });
     }
     
@@ -121,11 +133,14 @@ public class TicketDetailController {
     private void handleButtonEditState() throws IOException{
         Dialog dialog = new Dialog();
         dialog.setTitle(new Label("Seleccione estado"));
-        dialog.setContent(new Label("Asignar un estado a la incidencia: "));
         Button btnOpen = new Button("Abierto");
+        btnOpen.setPrefWidth(200);
         Button btnInProgress = new Button("Progreso");
+        btnInProgress.setPrefWidth(200);
         Button btnBloqued = new Button("Bloqueado");
+        btnBloqued.setPrefWidth(200);
         Button btnClosed = new Button("Cerrado");
+        btnClosed.setPrefWidth(200);
         btnOpen.setOnAction(e -> {
             if(ticket.getState().equals(STATE.OPEN)){
                 dialog.hide();
@@ -162,9 +177,13 @@ public class TicketDetailController {
                 dialog.hide();
             }
         });
-        dialog.getButtons().addAll(btnOpen, btnInProgress, btnBloqued, btnClosed);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(btnOpen, btnInProgress, btnClosed, btnBloqued);
+        vBox.setSpacing(5);
+        vBox.setAlignment(Pos.CENTER);
+        dialog.setContent(vBox);
         dialog.showAndWait();
-        updateState();
+        updateUIState();
     }
 
     
@@ -178,7 +197,7 @@ public class TicketDetailController {
         }
     }
     
-    public void handleButtonStore() {
+    public void updateTicket() {
         try {
             logic.updateTicket(ticket);
         } catch (Exception ex) {
@@ -234,11 +253,11 @@ public class TicketDetailController {
         lblMachineCodeTicket.setText(ticket.getMachineCode());
         lblStateTicket.setText(ticket.getState().name().toLowerCase());
         if(ticket.getCreateDate()!=null){
-            lblCreateDateTicket.setText(formato.format(ticket.getCreateDate()));                                     
+            lblCreateDateTicket.setText(formatter.format(ticket.getCreateDate()));                                     
         }
         if(ticket.getEndDate()!=null){
                     
-            lblEndDateTicket.setText(formato.format(ticket.getEndDate()));                
+            lblEndDateTicket.setText(formatter.format(ticket.getEndDate()));                
         }
     }
 
@@ -253,7 +272,9 @@ public class TicketDetailController {
         }
     }
 
-    private void updateState() {
+    private void updateUIState() {
         lblStateTicket.setText(ticket.getState().name().toLowerCase());
+        if (ticket.getState().equals(STATE.CLOSED))
+            lblEndDateTicket.setText(formatter.format(new Date()));
     }
 }

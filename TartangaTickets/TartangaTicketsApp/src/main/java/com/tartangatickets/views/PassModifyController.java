@@ -43,7 +43,7 @@ public class PassModifyController {
     @FXML
     private Button btModify;
     private final LogicInterface logic = TartangaTickets.LOGIC;
-    private final HashMap sessionContent = logic.getSessionContent();
+    private final HashMap sessionContent = logic.getSESSION_CONTENT();
     private final User user = (User) sessionContent.get("activeId");
 
     public void initialize() {
@@ -51,10 +51,13 @@ public class PassModifyController {
         modificar_pass.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Modificar Contraseña");
                 Button back = MaterialDesignIcon.ARROW_BACK.button();
-                back.setOnAction(event -> 
-                    MobileApplication.getInstance().switchToPreviousView()
-                );
+                back.setOnAction(event -> {
+                    MobileApplication.getInstance().switchToPreviousView();
+                    MobileApplication.getInstance().removeViewFactory(TartangaTickets.PASSMODIFY_VIEW);
+                    
+                });
                 appBar.setNavIcon(back);
             }
         });
@@ -68,6 +71,7 @@ public class PassModifyController {
                 if(pfNewPass.getText().equals(pfRepeatPass.getText())) {
                     logic.changePassword(user.getCredential(), pfNewPass.getText());
                     DialogHelper.newInstance("INFO", "Contraseña cambiada");
+                    MobileApplication.getInstance().removeViewFactory(TartangaTickets.PASSMODIFY_VIEW);
                     MobileApplication.getInstance().switchView(MAINMENU_VIEW);
                 } else {
                     DialogHelper.newInstance("WARNING", NEW_PASSWORD_ERROR);

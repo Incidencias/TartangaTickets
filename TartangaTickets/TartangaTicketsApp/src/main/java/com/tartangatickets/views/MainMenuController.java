@@ -14,7 +14,6 @@ import static com.tartangatickets.TartangaTickets.LOGIN_VIEW;
 import static com.tartangatickets.TartangaTickets.NEWTICKET_VIEW;
 import static com.tartangatickets.TartangaTickets.PASSMODIFY_VIEW;
 import static com.tartangatickets.TartangaTickets.TICKET_LIST_VIEW;
-import static com.tartangatickets.TartangaTickets.TICKET_VIEW;
 import com.tartangatickets.entities.Technician;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
@@ -40,23 +39,28 @@ public class MainMenuController{
     private Button btShowUsers;
     
     private final LogicInterface logic = TartangaTickets.LOGIC; 
-    private final HashMap sessionContent = logic.getSessionContent();
+    private final HashMap sessionContent = logic.getSESSION_CONTENT();
+    private User user;
    
     
     public void initialize() {
-            btShowUsers.setVisible(false);
-            menu_principal.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
-            menu_principal.showingProperty().addListener((obs, oldValue, newValue) -> {
+        btShowUsers.setVisible(false);
+        menu_principal.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
+        menu_principal.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Menú");
             }
-        });
             
-            User user =(User) sessionContent.get("activeId");
-                
+            if(user == null)
+                user = (User) sessionContent.get("activeId");
+
             if(user instanceof Technician && ((Technician)user).getIsAdmin()){
                 btShowUsers.setVisible(true);
             }
+        });
+            
+        
     }
 
     @FXML
@@ -67,12 +71,16 @@ public class MainMenuController{
 
     @FXML
     private void handleButtonCreateTicket() {
+        MobileApplication.getInstance().addViewFactory(NEWTICKET_VIEW, () -> new NewTicketView(NEWTICKET_VIEW).getView());
         MobileApplication.getInstance().switchView(NEWTICKET_VIEW);
 
     }
 
     @FXML
     private void handleButtonModifyPass() {
+        MobileApplication
+                .getInstance()
+                .addViewFactory(PASSMODIFY_VIEW, () -> new PassModifyView(PASSMODIFY_VIEW).getView());
         MobileApplication.getInstance().switchView(PASSMODIFY_VIEW);
 
     }
@@ -80,11 +88,12 @@ public class MainMenuController{
     @FXML
     private void handleButtonShowUsers() {
         MobileApplication.getInstance().switchView(TartangaTickets.USER_LIST_VIEW);
-
     }
 
     @FXML
     private void handleButtonLogOut() {
+        sessionContent.remove("activeId");
+        user = null;
         MobileApplication.getInstance().switchView(LOGIN_VIEW);
     }
 }

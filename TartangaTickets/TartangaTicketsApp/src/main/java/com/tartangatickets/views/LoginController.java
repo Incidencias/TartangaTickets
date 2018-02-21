@@ -4,7 +4,6 @@ import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
-import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
@@ -12,6 +11,7 @@ import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import com.gluonhq.charm.glisten.control.TextField;
+import static com.tartangatickets.TartangaTickets.RECOVERPASS_VIEW;
 import com.tartangatickets.exceptions.UserLoginException;
 import javafx.scene.control.PasswordField;
 import com.tartangatickets.utils.DialogHelper;
@@ -37,7 +37,7 @@ public class LoginController {
     @FXML
     private Button btnRecoverpass;
     private final LogicInterface logic = TartangaTickets.LOGIC;
-    private final HashMap sessionContent = logic.getSessionContent();
+    private final HashMap sessionContent = logic.getSESSION_CONTENT();
     
     
     public void initialize() {
@@ -45,6 +45,7 @@ public class LoginController {
         login.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Iniciar Sesión");
             }
         });
 
@@ -59,23 +60,27 @@ public class LoginController {
             User user = null;
             try {
                 user = logic.authenticate(tfUser.getText(), pfPass.getText());
-
                 sessionContent.put("activeId", user);
                 pfPass.clear();
-                MobileApplication.getInstance().switchView("MainMenuView");
+                tfUser.setText(null);
+                MobileApplication.getInstance().switchView(TartangaTickets.MAINMENU_VIEW);
             } catch (UserLoginException ex) {
-                ex.printStackTrace();
+                pfPass.clear();
+                tfUser.setText(null);
                 DialogHelper.newInstance("ERROR",ex.getMessage() );
             } catch (Exception ex) {
-                ex.printStackTrace();
                 DialogHelper.newInstance("ERROR",GENERAL_ERROR );
             }        
-
         }
     }
     @FXML
     private void handleButtonRecoverpass(){
-        MobileApplication.getInstance().switchView("RecoverPassView");
         pfPass.clear();
+        
+        MobileApplication
+                .getInstance()
+                .addViewFactory(RECOVERPASS_VIEW, () -> new RecoverPassView(RECOVERPASS_VIEW).getView());
+        
+        MobileApplication.getInstance().switchView("RecoverPassView");
     }
 }

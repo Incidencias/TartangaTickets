@@ -40,6 +40,7 @@ public class NewUserController  {
     private static final String EMAIL_ERROR = "Error al enviar email al usuario.";
     private static final String EMAIL_VALID_ERROR = "Error en el formato de email.";
     private static final String EMAIL_REPEATED_ERROR = "Ya existe un usuario con ese email.";
+    private static final String INFO_USER_CREATED = "Usuario creado.";
     
     @FXML
     private View nuevo_usuario;
@@ -64,11 +65,18 @@ public class NewUserController  {
         nuevo_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Crear Usuario");
                 Button back = MaterialDesignIcon.ARROW_BACK.button();
-                back.setOnAction(event -> 
-                    MobileApplication.getInstance().switchToPreviousView()
-                );
+                back.setOnAction(event -> {
+                    MobileApplication.getInstance().switchToPreviousView();
+                    MobileApplication.getInstance().removeViewFactory(TartangaTickets.NEWUSER_VIEW);
+                });
+                Button home = MaterialDesignIcon.HOME.button();
+                home.setOnAction(event -> {
+                    MobileApplication.getInstance().switchView(TartangaTickets.MAINMENU_VIEW);
+                });
                 appBar.setNavIcon(back);
+                appBar.getActionItems().addAll(home);
             }
         });
                  
@@ -88,7 +96,7 @@ public class NewUserController  {
     @FXML
     private void handleButtonCreateUser(){
         Credential credential = new Credential();
-        Department department = new Department();
+        Department department;
 
         //fields not empty
         if(!tfName.getText().trim().isEmpty()&& !tfLastname1.getText().trim().isEmpty()&&!tfEmail.getText().trim().isEmpty()){
@@ -106,8 +114,9 @@ public class NewUserController  {
                 DialogHelper.newInstance("ERROR", EMAIL_VALID_ERROR);
                 return;
             }
-            if (!emailExists(email)) {
+            if (emailExists(email)) {
                 DialogHelper.newInstance("ERROR", EMAIL_REPEATED_ERROR);
+                tfEmail.setText(null);
                 return;
             }
             credential.setLogin(email);
@@ -119,12 +128,9 @@ public class NewUserController  {
             user.setCredential(credential);
             try {  
                 logic.createUser(user);
-                tfName.setText("");
-                tfLastname1.setText("");
-                tfLastname2.setText("");
-                tfEmail.setText("");
-                cbTechnician.setSelected(false);
-                
+                MobileApplication.getInstance().showMessage(INFO_USER_CREATED);
+                MobileApplication.getInstance().removeViewFactory(TartangaTickets.NEWUSER_VIEW);
+                MobileApplication.getInstance().switchView(TartangaTickets.USER_LIST_VIEW);
             } catch (EmailException ex) {
                 DialogHelper.newInstance("ERROR", EMAIL_ERROR);
             } catch (Exception ex) {
@@ -138,7 +144,7 @@ public class NewUserController  {
     private boolean emailExists(String email) {
         boolean exists = false;
         try {
-            exists = logic.findUserByLogin(email).size() < 0;
+            exists = logic.findUserByLogin(email).size() > 0;
         } catch (Exception e) {
             DialogHelper.newInstance("ERROR", GENERAL_ERROR);
         }

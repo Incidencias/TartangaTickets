@@ -36,10 +36,12 @@ public class RecoverPasswordController {
         recuperar_pass.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Recuperar Contraseña");
                 Button back = MaterialDesignIcon.ARROW_BACK.button();
-                back.setOnAction(event -> 
-                    MobileApplication.getInstance().switchToPreviousView()
-                );
+                back.setOnAction(event -> {
+                    MobileApplication.getInstance().switchToPreviousView();
+                    MobileApplication.getInstance().removeViewFactory(TartangaTickets.RECOVERPASS_VIEW);
+                });
                 appBar.setNavIcon(back);
                 Swatch.AMBER.assignTo(recuperar_pass.getScene());
             }
@@ -56,9 +58,10 @@ public class RecoverPasswordController {
         } else {
             try {
                 logic.recoverPassword(tfUser.getText());
-                DialogHelper.newInstance("ERROR",
+                DialogHelper.newInstance("INFO",
                     "Se ha enviado la nueva contraseña a su correo.");
-                MobileApplication.getInstance().switchView("HOME_VIEW");
+                MobileApplication.getInstance().switchView(TartangaTickets.LOGIN_VIEW);
+                MobileApplication.getInstance().removeViewFactory(TartangaTickets.RECOVERPASS_VIEW);
             } catch (NoUserException ex) {
                 DialogHelper.newInstance("ERROR",
                     ex.getMessage());

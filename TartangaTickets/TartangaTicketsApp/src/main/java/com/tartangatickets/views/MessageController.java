@@ -17,7 +17,6 @@ import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +48,7 @@ public class MessageController {
     private Button btnSend;
     
     private LogicInterface logic = TartangaTickets.LOGIC; 
-    private HashMap sessionContent = logic.getSessionContent();
+    private HashMap sessionContent = logic.getSESSION_CONTENT();
     
     private List<Ticket> tickets =  new ArrayList<Ticket>();
     private User user;

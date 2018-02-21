@@ -8,13 +8,11 @@ import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.entities.Ticket;
-import com.tartangatickets.entities.Message;
 import com.tartangatickets.entities.State.STATE;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.Date;
 import com.tartangatickets.utils.DialogHelper;
 import java.util.HashMap;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,7 +26,7 @@ import javafx.scene.control.TextField;
 public class NewTicketController {
 
     private static final String GENERAL_ERROR = "Error inesperado.";
-    private static final String INFO_TICKET_CREADO = "Ticket creado.";
+    private static final String INFO_TICKET_CREADO = "Incidencia registrada.";
     
     @FXML
     private View nueva_incidencia;
@@ -49,7 +47,7 @@ public class NewTicketController {
     @FXML
     private Button btnCreateTicket;
     private final LogicInterface logic = TartangaTickets.LOGIC;
-    private final HashMap sessionContent = logic.getSessionContent();
+    private final HashMap sessionContent = logic.getSESSION_CONTENT();
     private final User user = (User) sessionContent.get("activeId");
     
     /**
@@ -60,10 +58,12 @@ public class NewTicketController {
         nueva_incidencia.showingProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue) {
                 AppBar appBar = MobileApplication.getInstance().getAppBar();
+                appBar.setTitleText("Crear Incidencia");
                 Button back = MaterialDesignIcon.ARROW_BACK.button();
-                back.setOnAction(event -> 
-                    MobileApplication.getInstance().switchToPreviousView()
-                );
+                back.setOnAction(event -> {
+                    MobileApplication.getInstance().switchView(TartangaTickets.MAINMENU_VIEW);
+                    MobileApplication.getInstance().removeViewFactory(TartangaTickets.NEWTICKET_VIEW);
+                });
                 appBar.setNavIcon(back);
             }
         });
@@ -76,9 +76,10 @@ public class NewTicketController {
     private void handleButtonCreateTicket() {
         Ticket ticket = null;
         if(tfMachineCode.getText().trim().isEmpty() || tfLocation.getText().trim().isEmpty() || tfAsunto.getText().trim().isEmpty()){
-            DialogHelper.newInstance("ERROR",
-                    "Los datos no pueden estar vacíos.");
-
+            DialogHelper.newInstance(
+                    "ERROR",
+                    "Los campos no pueden estar vacíos."
+            );
         }else{
             ticket = new Ticket();
             ticket.setLocation(tfLocation.getText());
@@ -89,13 +90,12 @@ public class NewTicketController {
             ticket.setTitle(tfAsunto.getText());
             try {  
                 logic.createTicket(ticket);
-                DialogHelper.newInstance("INFO", INFO_TICKET_CREADO);
-                MobileApplication.getInstance().switchView("TicketListView");
+                MobileApplication.getInstance().showMessage(INFO_TICKET_CREADO);
+                MobileApplication.getInstance().switchView(TartangaTickets.TICKET_LIST_VIEW);
+                MobileApplication.getInstance().removeViewFactory(TartangaTickets.NEWTICKET_VIEW);
             } catch (Exception ex) {
-                DialogHelper.newInstance("ERROR",
-                        "Datos erroneos.");
+                DialogHelper.newInstance("ERROR",GENERAL_ERROR);
             }
         }
-
     } 
 }

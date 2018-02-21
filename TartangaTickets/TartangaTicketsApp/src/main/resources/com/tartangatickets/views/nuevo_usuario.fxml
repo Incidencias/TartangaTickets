@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -16,12 +15,6 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="335.0">
-               <children>
-                  <Label style="-fx-font-size: 25;" text="Nuevo usuario" />
-                  <Separator prefWidth="200.0" />
-               </children>
-            </VBox>
             <VBox prefHeight="315.0" prefWidth="295.0" spacing="5.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="335.0">
@@ -119,7 +112,7 @@
                   <Insets left="20.0" />
                </padding>
             </VBox>
-            <HBox alignment="TOP_CENTER" prefHeight="79.0" prefWidth="335.0" spacing="30.0">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="79.0" prefWidth="335.0" spacing="30.0">
                <children>
                   <Button fx:id="btCreateUser" layoutX="122.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleButtonCreateUser" prefHeight="36.0" prefWidth="112.0" text="Crear" />
                </children>

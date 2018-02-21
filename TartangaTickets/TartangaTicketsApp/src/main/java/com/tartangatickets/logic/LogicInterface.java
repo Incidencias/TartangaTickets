@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface LogicInterface {
     
-    public HashMap<String, String> getSessionContent();
+    public HashMap<String, String> getSESSION_CONTENT();
     public void createTicket(Ticket ticket) throws Exception; 
     public void sendMessage(Message message) throws Exception; 
     public List<Ticket> findTicketsByUser(String userLogin) throws Exception; 

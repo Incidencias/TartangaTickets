@@ -44,7 +44,7 @@ public class Logic implements LogicInterface {
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
     private final Session session = factory.openSession();
     private Transaction tx = null;
-    private static HashMap sessionContent = new HashMap<>();
+    private static final HashMap SESSION_CONTENT = new HashMap<>();
     
     @Override
     public Ticket findTicketById(Integer id) throws Exception {
@@ -64,8 +64,8 @@ public class Logic implements LogicInterface {
     }
     
     @Override
-    public HashMap getSessionContent() {
-        return sessionContent;
+    public HashMap getSESSION_CONTENT() {
+        return SESSION_CONTENT;
     }
     
     @Override
@@ -74,6 +74,17 @@ public class Logic implements LogicInterface {
         tx = session.beginTransaction();
         ticket.setCreateDate(new Date());
         session.persist(ticket);
+        session.flush();
+        session.refresh(ticket);
+        User user = ticket.getUser();
+        List<Ticket> userTickets = user.getCreatedTickets();
+        if (userTickets == null)
+            userTickets = new ArrayList<>();
+        userTickets.add(ticket);
+        user.setCreatedTickets(userTickets);
+        session.merge(user);
+        session.flush();
+        session.refresh(user);
         tx.commit();
         // TODO Send email
         LOGGER.info("Ticket created");
@@ -90,6 +101,7 @@ public class Logic implements LogicInterface {
         ticket.setMessages(messages);
         session.merge(ticket);
         // TODO send email
+        tx.commit();
         LOGGER.info("Ticket message created");
     }
 
@@ -153,6 +165,7 @@ public class Logic implements LogicInterface {
                     + "minúscula, carácter especial y dígito");
         }
         tx.commit();
+        LOGGER.info("Password changed");
     }
 
     @Override
@@ -347,6 +360,7 @@ public class Logic implements LogicInterface {
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
                 tickets.size());
+        tx.commit();
         return tickets;
     }
 
@@ -361,6 +375,7 @@ public class Logic implements LogicInterface {
         LOGGER.log(Level.INFO,
                 "{0} tickets found",
                 users.size());
+        tx.commit();
         return users;
     }
 
@@ -368,6 +383,7 @@ public class Logic implements LogicInterface {
     public void updateTicket(Ticket ticket) throws Exception {
         LOGGER.info("Updating ticket");
         tx = session.beginTransaction();
+        ticket.setEndDate(new Date());
         session.merge(ticket);
         session.flush();
         session.refresh(ticket);
