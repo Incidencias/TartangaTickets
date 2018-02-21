@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tartangatickets.entities;
 
 import java.io.Serializable;
@@ -16,9 +11,16 @@ import javax.persistence.Table;
 
 
 /**
+ *  Encapsulates the data of the ticket.
+ *  <ul>
+ *      <li><strong>isAdmin:</strong> Admin user.</li>
+ *      <li><strong>assignedTickets:</strong> Technician assigned ticket´s.</li>
+ *  </ul>
  *
- * @author Sergio López
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
+
 @Entity(name="Technician")
 @Table(name="technicians", schema="tartanga_ticket_db")
 @NamedQueries({
