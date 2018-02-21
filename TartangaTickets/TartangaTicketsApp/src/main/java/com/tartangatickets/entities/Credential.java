@@ -12,9 +12,18 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- * @author ionut
+ *  Encapsulates user credential.
+ *  <ul>
+ *      <li><strong>login:</strong> Identifier of the credential.</li>
+ *      <li><strong>password:</strong> Password.</li>
+ *      <li><strong>lastAccess:</strong> Last access.</li>
+ *      <li><strong>lastPassChange:</strong> Last pass change.</li>
+ *  </ul>
+ * 
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
+
 @Entity(name="Credential")
 @Table(name="credentials", schema="tartanga_ticket_db")
 @NamedQueries({

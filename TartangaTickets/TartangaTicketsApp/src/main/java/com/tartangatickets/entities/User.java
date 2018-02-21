@@ -18,18 +18,20 @@ import javax.persistence.Table;
 
 
 /**
- *The User class encapsulates the data of each user:
- * <ul>
- *  <li><strong>name</strong> is the name of the user.</li>
- *  <li><strong>lastName1</strong> is the fist last name of the user.</li>
- *  <li><strong>lastName2</strong> is the second last name of the user.</li>
- *  <li><strong>department</strong>is the code department of the user.</li>
- *  <li><strong>credential</strong>is the Credential of the user.</li>
- *  <li><strong>createdTickets</strong>are the created tickets of the user.</li>
- * </ul>
+ *  Encapsulates the data of each user.
+ *  <ul>
+ *      <li><strong>name:</strong> Name of the user.</li>
+ *      <li><strong>lastName1:</strong> First last name of the user.</li>
+ *      <li><strong>lastName2:</strong> Second last name of the user.</li>
+ *      <li><strong>department:</strong> Code department of the user.</li>
+ *      <li><strong>credential:</strong> Credential of the user.</li>
+ *      <li><strong>createdTickets:</strong> Created tickets of the user.</li>
+ *  </ul>
  * 
- * @author Iker Jon Mediavilla
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
+
 @Entity(name="User")
 @Table(name="users", schema="tartanga_ticket_db")
 @NamedQueries({
