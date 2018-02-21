@@ -18,12 +18,9 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.logic.LogicInterface;
 import java.io.IOException;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -99,11 +96,11 @@ public class MessageController {
         logger.info("Sending message.");
         try {
             message = new Message();
-            message.setBody(tANewMessage.toString());
+            message.setBody(tANewMessage.getText());
             message.setTicket(ticket);
             message.setUser(user);
             logic.sendMessage(message);
-            String m = user.getName()+": "+message.getBody().toString();
+            String m = user.getFullName()+": "+message.getBody().toString();
             cPMessage.getItems().add(label(m));
             tANewMessage.setText("");
         } catch (Exception ex) {

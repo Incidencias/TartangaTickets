@@ -13,6 +13,7 @@ import com.tartangatickets.entities.Ticket;
 import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoTechnicianException;
 import com.tartangatickets.logic.LogicInterface;
+import com.tartangatickets.utils.DialogHelper;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -31,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -46,9 +48,10 @@ public class TicketDetailController {
    
     private Stage stage;
     
+    private static final String GENERAL_ERROR = "Error inesperado.";
+    
     @FXML
     private View detalles_incidencia;
-    
     @FXML
     private Label lblIdTicket;
     @FXML
@@ -73,17 +76,22 @@ public class TicketDetailController {
     private Button btnEditState;
     @FXML
     private Button btnEditTechnician;
+    @FXML
+    private ComboBox<Technician> comboTechnician;
     
     
     private LogicInterface logic = TartangaTickets.LOGIC; 
     private HashMap sessionContent = logic.getSessionContent();
     private User user;
+    
     private Ticket ticket;
     private Date endDate;
     private int i = 0; 
     private Integer ticketId;
     private List<Ticket> tickets =  new ArrayList<Ticket>();
     private List<Technician> allTech = new ArrayList<Technician>();
+    private ObservableList<Technician> itemsTechnicians;
+    private int positionTech;
 
     DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
     private static final String DATE_PATTERN = "dd-MM-yyyy";
@@ -117,13 +125,15 @@ public class TicketDetailController {
                 if(user instanceof Technician){
                     btnEditState.setVisible(true);
                     btnEditTechnician.setVisible(true);
+                    comboTechnician.setEditable(false);
                 }
                 else{
                     btnEditState.setVisible(false);
                     btnEditTechnician.setVisible(false);
+                    comboTechnician.setEditable(true);
                 }
                 
-                
+                techniciansCombo();
                 loadData();
                 
                 
@@ -226,41 +236,16 @@ public class TicketDetailController {
         loadData();
     }
     @FXML
-    private void handleButtonEditTechnician() {
-        logger.info("Openning a dialog to change technician. ");
-        ListView lvTechnician = new ListView<String>();
-
-        try {
-            allTech = logic.findAllTechnicians();
-        } catch (NoTechnicianException ex) {
-            Logger.getLogger(TicketDetailController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(TicketDetailController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ObservableList<String> data ;
-        Dialog dialog = new Dialog();
-        dialog.setTitle(new Label("Cambiando el tecnico"));
-        dialog.setContent(lvTechnician);
-        
-        data = FXCollections.observableArrayList();
-        for(int i=0; i<allTech.size(); i++){
-            data.add(allTech.get(i).getFullName());
-        }
-        
-        lvTechnician.setItems(data);
-        int techSelecPosi = lvTechnician.getSelectionModel().getSelectedIndex();
-        Technician technicianSelec = allTech.get(techSelecPosi);
-        user.getCreatedTickets().get(i).setTechnician(technicianSelec);
-        try {
-            logic.assignTicket(ticket);
-        } catch (Exception ex) {
-            Logger.getLogger(TicketDetailController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        loadData();
-        
+    private void handleButtonNoTechnician() {        
+        ticket.setTechnician(null);
+        comboTechnician.getSelectionModel().clearSelection(-1);
+        loadData();    
     }
     
-    //TODO saber que tipo de usuarios y segun eso esconder los botones, fomato de las fechas
+    public void handleComboBoxTechnician(){        
+        ticket.setTechnician(comboTechnician.getSelectionModel().getSelectedItem()); 
+        loadData();
+    }
 
     private void findTicket() {
         try {
@@ -276,36 +261,58 @@ public class TicketDetailController {
                 
     }
     
+    private List<Technician> getAllTechnicians() {
+        List<Technician> technicians = null;
+        try {
+            technicians = logic.findAllTechnicians();
+        } catch (NoTechnicianException ex) {
+            comboTechnician.setDisable(true);
+        } catch (Exception ex) {
+            DialogHelper.newInstance("ERROR", GENERAL_ERROR);
+        }
+        return technicians;
+    }
+    
+    private void techniciansCombo() {
+        itemsTechnicians = FXCollections.observableArrayList();
+        List<Technician> technicians = getAllTechnicians();
+        technicians.forEach((technician) -> {
+            itemsTechnicians.add(technician);
+        });
+        
+        comboTechnician.getItems().addAll(itemsTechnicians);
+    }
    
 
     private void loadData() {
         lblIdTicket.setText(ticket.getId().toString());
-                logger.info(ticket.getId().toString());
-                lblUserTicket.setText(ticket.getUser().getFullName());
-                logger.info(ticket.getUser().getFullName());
-                lblTechnicianTicket.setText(ticket.getTechnician().getFullName());
-                logger.info(ticket.getTechnician().getFullName());
-                lblDepartmentTicket.setText(ticket.getDepartment().getName());
-                logger.info(ticket.getDepartment().getName());
-                lblLocationTicket.setText(ticket.getLocation());
-                logger.info(ticket.getLocation());
-                lblMachineCodeTicket.setText(ticket.getMachineCode());
-                logger.info(ticket.getMachineCode());
-                lblStateTicket.setText(ticket.getState().toString());
-                logger.info(ticket.getState().toString());
-                if(ticket.getCreateDate()!=null){
-                    logger.info(formato.format(ticket.getCreateDate()));                  
-                    lblCreateDateTicket.setText(formato.format(ticket.getCreateDate()));                                     
-                }
-                else{
-                    lblCreateDateTicket.setText(null);
-                }
-                if(ticket.getEndDate()!=null){
-                    logger.info(formato.format(ticket.getEndDate()));
-                    lblEndDateTicket.setText(formato.format(ticket.getEndDate()));                
-                }
-                else{
-                    lblEndDateTicket.setText(null);
-                }
+                
+        lblUserTicket.setText(ticket.getUser().getFullName());
+                
+        
+        if(ticket.getTechnician()==null){
+            comboTechnician.getSelectionModel().select(-1);
+        }
+        else{         
+            comboTechnician.setValue(ticket.getTechnician());                               
+        }
+        lblDepartmentTicket.setText(ticket.getDepartment().getName());               
+        lblLocationTicket.setText(ticket.getLocation());
+        lblMachineCodeTicket.setText(ticket.getMachineCode());
+        lblStateTicket.setText(ticket.getState().toString());
+        if(ticket.getCreateDate()!=null){
+            lblCreateDateTicket.setText(formato.format(ticket.getCreateDate()));                                     
+        }
+        else{
+            lblCreateDateTicket.setText(null);
+        }
+        if(ticket.getEndDate()!=null){
+                    
+            lblEndDateTicket.setText(formato.format(ticket.getEndDate()));                
+        }
+        else{
+            lblEndDateTicket.setText(null);
+            
+        }
     }
 }

@@ -69,6 +69,23 @@
                   <Insets top="20.0" />
                </padding>
             </HBox>
+            <HBox prefHeight="50.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
+                     <children>
+                        <Label text="Asunto:" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="160.0">
+                     <children>
+                        <TextField fx:id="tfAsunto" />
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </HBox>
             <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
@@ -116,23 +133,6 @@
                   <VBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="180.0">
                      <children>
                         <Label fx:id="lblCreateDate" prefHeight="18.0" prefWidth="180.0" />
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets top="20.0" />
-               </padding>
-            </HBox>
-            <HBox prefHeight="50.0" prefWidth="200.0">
-               <children>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0">
-                     <children>
-                        <Label text="Mensaje:" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="180.0">
-                     <children>
-                        <TextField fx:id="tfMessage" />
                      </children>
                   </VBox>
                </children>

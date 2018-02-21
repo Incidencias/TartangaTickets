@@ -20,12 +20,12 @@ import javax.persistence.Table;
 /**
  *The User class encapsulates the data of each user:
  * <ul>
- *  <li><stron>name</strong> is the name of the user.</li>
- *  <li><stron>lastName1</strong> is the fist last name of the user.</li>
- *  <li><stron>lastName2</strong> is the second last name of the user.</li>
- *  <li><stron>department</strong>is the code department of the user.</li>
- *  <li><stron>credential</strong>is the Credential of the user.</li>
- *  <li><stron>createdTickets</strong>are the created tickets of the user.</li>
+ *  <li><strong>name</strong> is the name of the user.</li>
+ *  <li><strong>lastName1</strong> is the fist last name of the user.</li>
+ *  <li><strong>lastName2</strong> is the second last name of the user.</li>
+ *  <li><strong>department</strong>is the code department of the user.</li>
+ *  <li><strong>credential</strong>is the Credential of the user.</li>
+ *  <li><strong>createdTickets</strong>are the created tickets of the user.</li>
  * </ul>
  * 
  * @author Iker Jon Mediavilla
@@ -179,6 +179,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tartangatickets.entities.User[ id=" + credential.getLogin() + " ]";
+        return getFullName();
     }
 }

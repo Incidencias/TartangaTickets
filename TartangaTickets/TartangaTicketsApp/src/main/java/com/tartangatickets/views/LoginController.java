@@ -64,8 +64,10 @@ public class LoginController {
                 pfPass.clear();
                 MobileApplication.getInstance().switchView("MainMenuView");
             } catch (UserLoginException ex) {
+                ex.printStackTrace();
                 DialogHelper.newInstance("ERROR",ex.getMessage() );
             } catch (Exception ex) {
+                ex.printStackTrace();
                 DialogHelper.newInstance("ERROR",GENERAL_ERROR );
             }        
 
@@ -74,5 +76,6 @@ public class LoginController {
     @FXML
     private void handleButtonRecoverpass(){
         MobileApplication.getInstance().switchView("RecoverPassView");
+        pfPass.clear();
     }
 }

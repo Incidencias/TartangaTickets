@@ -82,4 +82,19 @@ public class Technician extends User implements Serializable {
         }
         return true;
     } 
+
+    @Override
+    public String toString() {
+
+        return getFullName();
+        
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (login != null ? login.hashCode() : 0);
+        return hash;
+    }
+
 }

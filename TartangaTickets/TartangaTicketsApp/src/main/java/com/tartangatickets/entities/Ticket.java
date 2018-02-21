@@ -85,6 +85,7 @@ public class Ticket implements Serializable {
     private List<Message> messages;
     @ManyToOne
     private Technician technician;
+    private String title;
 
     public Ticket() {
     }
@@ -100,6 +101,14 @@ public class Ticket implements Serializable {
         this.user = user;
         this.messages = messages;
         this.technician = technician;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
     
     public Integer getId() {
