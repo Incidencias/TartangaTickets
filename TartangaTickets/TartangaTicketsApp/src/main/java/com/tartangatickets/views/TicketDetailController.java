@@ -312,6 +312,7 @@ public class TicketDetailController {
         }
         else{
             lblEndDateTicket.setText(null);
+            
         }
     }
 }
