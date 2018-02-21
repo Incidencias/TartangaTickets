@@ -77,7 +77,7 @@ public class User implements Serializable {
     protected String name;
     protected String lastName1;
     protected String lastName2;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     protected Department department;
     @OneToMany(mappedBy="user",cascade = CascadeType.ALL, orphanRemoval = true)
     protected List<Ticket> createdTickets;
@@ -154,7 +154,7 @@ public class User implements Serializable {
     }
     
     public String getFullName() {
-        return name + " " + lastName1;
+        return name + " " + lastName1 + " " + (lastName2 != null ? lastName2 : "");
     }
     
     @Override
