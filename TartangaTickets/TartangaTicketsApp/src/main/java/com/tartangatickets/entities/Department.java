@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tartangatickets.entities;
 
 import java.io.Serializable;
@@ -15,14 +10,16 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- *The Department class encapsulates the data of each department:
- * <ul>
- *  <li><stron>code</strong> is the identifier of the department.</li>
- *  <li><stron>name</strong> is the name of the department.</li>
- * </ul>
+ *  Encapsulates the data of each department.
+ *  <ul>
+ *      <li><strong>code:</strong> Identifier of the department.</li>
+ *      <li><strong>name:</strong> Name of the department.</li>
+ *  </ul>
  * 
- * @author Iker Jon Mediavilla
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
+
 @Entity(name="Department")
 @Table(name="departments", schema="tartanga_ticket_db")
 @NamedQueries({

@@ -9,9 +9,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
+ *  Encapsulates the data of the message.
+ *  <ul>
+ *      <li><strong>id:</strong> Identification number.</li>
+ *      <li><strong>body:</strong> Ticket body.</li>
+ *      <li><strong>ticket:</strong> Ticket end date.</li>
+ *      <li><strong>user:</strong> Ticket creator.</li>
+ *  </ul>
  *
- * @author ionut
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
+
 @Entity(name="Message")
 @Table(name="messages", schema="tartanga_ticket_db")
 public class Message implements Serializable {

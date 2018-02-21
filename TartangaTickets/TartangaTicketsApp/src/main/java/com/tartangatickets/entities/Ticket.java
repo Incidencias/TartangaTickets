@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tartangatickets.entities;
 
 import java.io.Serializable;
@@ -27,17 +22,25 @@ import org.hibernate.annotations.NamedQuery;
 
 
 /**
- *  Mantiene los datos que contienen los tickets
+ *  Encapsulates the data of the ticket.
  *  <ul>
- *      <li><strong>id</strong>Número de identificación  </li>
- *      <li><strong>createDate</strong> Fecha de creación del pedido</li>
- *      <li><strong>endDate</strong> Fecha de  </li>
- *      <li><strong>repartidors</strong> Lista de repartidores {@link  gestionrepartidores.entity.Repartidor} que reparten en ese área</li>
- *      <li><strong>pedidos</strong> Collección de pedidos {@link  gestionrepartidores.entity.Pedido} existentes en ese área</li>
+ *      <li><strong>id:</strong> Identification number.</li>
+ *      <li><strong>createDate:</strong> Ticket create date.</li>
+ *      <li><strong>endDate:</strong> Ticket end date.</li>
+ *      <li><strong>machineCode:</strong> Machine code.</li>
+ *      <li><strong>department:</strong> User department.</li>
+ *      <li><strong>location:</strong> Location of the machine.</li>
+ *      <li><strong>state:</strong> Ticket status.</li>
+ *      <li><strong>user:</strong> Ticket creator.</li>
+ *      <li><strong>messages:</strong> List of ticket messages.</li>
+ *      <li><strong>technician:</strong> Ticket´s technician.</li>
+ *      <li><strong>title:</strong> Ticket title.</li>
  *  </ul>
  *
- * @author Sergio López
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
+
 @Entity(name="Ticket")
 @Table(name="tickets", schema="tartanga_ticket_db")
 @NamedQueries({
