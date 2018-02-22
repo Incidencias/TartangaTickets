@@ -4,6 +4,7 @@ import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.CharmListView;
+import com.gluonhq.charm.glisten.layout.layer.FloatingActionButton;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;
 import com.tartangatickets.TartangaTickets;
@@ -32,6 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.VBox;
 
 /**
  * Handle the ticket details window 
@@ -51,6 +53,7 @@ public class TicketListController {
     private View incidencias_charmlist;    
     @FXML
     private CharmListView<Ticket, STATE> charmTickets ;
+    @FXML VBox vbMain;
     
     private final LogicInterface logic = TartangaTickets.LOGIC; 
     private final HashMap sessionContent = logic.getSESSION_CONTENT();
@@ -79,9 +82,11 @@ public class TicketListController {
                 appBar.setNavIcon(back);
                 appBar.getMenuItems().setAll(buildFilterMenu());
                 user = (User) sessionContent.get("activeId"); 
+
                 fillTicketList();    
 
                 //Creates a listener of the charm list
+
                 charmTickets.selectedItemProperty().addListener(new ChangeListener() {
                     @Override
                     public void changed(ObservableValue obs, Object oldItem, Object newItem) {
@@ -95,6 +100,17 @@ public class TicketListController {
                 });
             } 
         });
+        
+        FloatingActionButton fab = new FloatingActionButton(
+                MaterialDesignIcon.ADD.text,
+                e -> {
+                    MobileApplication
+                            .getInstance()
+                            .addViewFactory(TartangaTickets.NEWTICKET_VIEW, () -> 
+                                    new NewTicketView(TartangaTickets.NEWTICKET_VIEW).getView());
+                    MobileApplication.getInstance().switchView(TartangaTickets.NEWTICKET_VIEW);
+                });
+        incidencias_charmlist.getLayers().add(fab.getLayer());
     }
     
     /**
@@ -166,11 +182,10 @@ public class TicketListController {
         try {
             tickets = logic.findAllTickets();
         } catch (NoTicketException ex) {
-            DialogHelper.newInstance("INFO", ex.getMessage());
+            
         } catch (Exception ex) {
             DialogHelper.newInstance("ERROR", GENERAL_ERROR);
         }
         return tickets;
     }
-
 }
