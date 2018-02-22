@@ -28,9 +28,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 /**
- * FXML Controller class
- *
- * @author Iker Jon
+ * Handle the Message window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *      <li><strong>sessionContent:</strong> HasMap from logic</li>
+
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class MessageController {
     
@@ -58,9 +64,11 @@ public class MessageController {
     private int i=0;
     
     /**
-     * Initializes the controller class.
+     * First actions when initialize the window
+     *  -Set up AppBar
+     *  -Gets the logged user and selected ticket id from sessionContent HasMap 
+     *  -Fill cardpane with messages
      */
-    
     public void initialize(/*URL url, ResourceBundle rb*/) {
         mensajes.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         mensajes.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -84,12 +92,21 @@ public class MessageController {
             }
         });
     }  
-    
+    /**
+     * Set up a new label with padding with a given string
+     * @param caption String to set up the label
+     * @return the created label
+     */
     private Label label( String caption ) {
         Label label = new Label( caption );
         label.setStyle("-fx-padding:10;");
         return label;
     }
+    
+    /**
+     * Send a message with the window fields data
+     * @throws IOException 
+     */
     @FXML
     private void handleButtonSend() throws IOException{
         logger.info("Sending message.");
@@ -107,6 +124,9 @@ public class MessageController {
         }
     }
     
+    /**
+     * Get the ticket from the id of selected ticket stored in sessionContent HasMap
+     */
     private void findTicket() {
         try {
             tickets = logic.findAllTickets();

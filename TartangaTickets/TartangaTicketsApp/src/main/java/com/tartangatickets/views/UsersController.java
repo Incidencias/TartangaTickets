@@ -31,7 +31,12 @@ import javafx.util.Callback;
 /**
  * Shows a list of users registered in the application and shows a option to 
  * create new users
- * @author ubuntu
+ * 
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class UsersController {
     
@@ -52,6 +57,12 @@ public class UsersController {
     private final LogicInterface logic = TartangaTickets.LOGIC; 
     private List <User> users;
     
+        /**
+     * First actions when initialize the window
+     * -Set up the AppBar
+     * -fill users table
+     * -set up table properties
+     */
     public void initialize() {
         usuarios.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         usuarios.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -79,6 +90,9 @@ public class UsersController {
         });
     }
     
+    /**
+     * Load NEWUSER_VIEW
+     */
     @FXML
     private void handleButtonNewUser(){
         MobileApplication.getInstance().switchView(NEWUSER_VIEW);

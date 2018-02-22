@@ -11,8 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *
- * @author ubuntu
+ * Interface of all the logic transactions of the program
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public interface LogicInterface {
     

@@ -15,8 +15,15 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.codec.binary.Hex;
 
 /**
- *
- * @author ubuntu
+ * Handle the password operations, checking the password security and generate secure password
+ *  
+ *  <ul>
+ *      <li><strong>SHA_512:</strong> Security algorithm</li>
+ *      <li><strong>PASSWORD_REGEX:</strong> Password regex to check password security</li>
+ *      <li><strong>CHARACTERS:</strong> characters for password creation </li>
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class PasswordHandler {
     
@@ -27,6 +34,13 @@ public class PasswordHandler {
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&+="
                     .toCharArray();
     
+    /**
+     * Get hash code using a password and salt
+     * @param password String password 
+     * @param salt String salt to add to the password
+     * @return String - the generated hash
+     * @throws NoSuchAlgorithmException 
+     */
     public static String getHash(String password, String salt) 
             throws NoSuchAlgorithmException {
         MessageDigest md;
@@ -36,12 +50,21 @@ public class PasswordHandler {
         return Arrays.toString(Hex.encodeHex(md.digest(passwordBytes)));
     }
     
+    /**
+     * Checks complexity/security of a given password
+     * @param password String- password to check
+     * @return boolean True - security control pass /False - not secure enough
+     */
     public static boolean checkSecurity(String password) {
         Pattern pattern = Pattern.compile(PASSWORD_REGEX);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
     
+    /**
+     * Generates a passwords
+     * @return String - generated password
+     */
     public static String generatePassword() {
         return RandomStringUtils.random(8, 0, CHARACTERS.length-1, 
                 false, false, CHARACTERS, new SecureRandom());

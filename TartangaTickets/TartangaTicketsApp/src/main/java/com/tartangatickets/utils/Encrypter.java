@@ -88,6 +88,11 @@ public class Encrypter {
     }
     */
     
+    /**
+     * Get the email credentials from an encrypted file
+     * @return a list of strings with the email credentials 
+     * @throws EncrypterException 
+     */
     public static List<String> decryptFile() throws EncrypterException {
         List<String> emailCredentials = new ArrayList<>();
         byte[] salt = getSalt();
@@ -144,7 +149,11 @@ public class Encrypter {
         }
     }
     */
-    
+    /**
+     * gets the salt from a file
+     * @return byte array with the salt
+     * @throws EncrypterException 
+     */
     private static byte[] getSalt() throws EncrypterException {
         byte [] salt;
         try (FileInputStream in = new FileInputStream(FILE_SALT)) {

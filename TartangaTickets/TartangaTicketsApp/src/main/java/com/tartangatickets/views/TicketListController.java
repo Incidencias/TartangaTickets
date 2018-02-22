@@ -34,9 +34,14 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
 
 /**
- * FXML Controller class
- *
- * @author Iker Jon 
+ * Handle the ticket details window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *      <li><strong>sessionContent:</strong> HasMap from logic</li> 
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class TicketListController {
     
@@ -51,11 +56,13 @@ public class TicketListController {
     private final HashMap sessionContent = logic.getSESSION_CONTENT();
     private User user;
     private FilteredList<Ticket> filteredList;
-    
-    /**
-     * Initializes the controller class.
-     */
      
+    /**
+     * First actions when initialize the window
+     * -Set up the AppBar
+     * -Get the logged user
+     * -Fill ticket list
+     */
     public void initialize() {
         incidencias_charmlist.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         charmTickets.setCellFactory(p -> new TicketCell());
@@ -74,12 +81,14 @@ public class TicketListController {
                 user = (User) sessionContent.get("activeId"); 
                 fillTicketList();    
 
+                //Creates a listener of the charm list
                 charmTickets.selectedItemProperty().addListener(new ChangeListener() {
                     @Override
                     public void changed(ObservableValue obs, Object oldItem, Object newItem) {
                         if (newItem != null) {
+                            //set up ticket id the select ticket
                             sessionContent.put("ticketId", ((Ticket) newItem).getId());
-                            
+                            //Goes to TICKETDETAIL_VIEW
                             MobileApplication.getInstance().switchView(TICKETDETAIL_VIEW);
                         }
                     }
@@ -88,6 +97,10 @@ public class TicketListController {
         });
     }
     
+    /**
+     * Filter menu of tickets using the state
+     * @return 
+     */
     private List<MenuItem> buildFilterMenu() {
         final List<MenuItem> menu = new ArrayList<>();
 
@@ -117,10 +130,20 @@ public class TicketListController {
         return menu;
     }
     
+    /**
+     * Gets the predicate
+     * @param state Predicate of Ticket
+     * @return 
+     */
     private Predicate<Ticket> getTicketPredicate(State.STATE state) {
         return ticket -> state == null || ticket.getState().name().equals(state.name());
     }
     
+    /**
+     * fill the ticket list 
+     *  -with all the tickets if the logged user is a technician
+     *  -with logged user created tickets if its a normal user
+     */
     private void fillTicketList() {
         List<Ticket> tickets = null;
         if (user instanceof Technician) {
@@ -134,7 +157,10 @@ public class TicketListController {
                 getTicketPredicate(null));
         charmTickets.setItems(filteredList);
     }
-    
+    /**
+     * Gets all the tickets from the database
+     * @return list with all the tickets
+     */
     private List<Ticket> getAllTickets() {
         List<Ticket> tickets = null;
         try {

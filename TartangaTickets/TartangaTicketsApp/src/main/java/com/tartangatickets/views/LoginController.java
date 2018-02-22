@@ -18,9 +18,15 @@ import com.tartangatickets.utils.DialogHelper;
 
 
 /**
- * FXML Controller class
- *
- * @author ionut
+ * Handle the login window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *      <li><strong>sessionContent:</strong> HasMap from logic</li>
+
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class LoginController {
     
@@ -39,7 +45,10 @@ public class LoginController {
     private final LogicInterface logic = TartangaTickets.LOGIC;
     private final HashMap sessionContent = logic.getSESSION_CONTENT();
     
-    
+    /**
+     * First actions when initialize the window
+     * Set up the AppBar
+     */
     public void initialize() {
         login.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         login.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -50,7 +59,9 @@ public class LoginController {
         });
 
     }
-    
+    /**
+     * Checks if the inserted user and password in the login are correct
+     */
     @FXML
     private void handleButtonAccess() {
         if(this.tfUser.getText().trim().isEmpty() || 
@@ -73,6 +84,9 @@ public class LoginController {
             }        
         }
     }
+    /**
+     * Load the window for recovery pass
+     */
     @FXML
     private void handleButtonRecoverpass(){
         pfPass.clear();

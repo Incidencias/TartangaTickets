@@ -22,15 +22,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 /**
- * FXML Controller class
- *
- * @author Sergio
+ * Handle the Menu window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *      <li><strong>sessionContent:</strong> HasMap from logic</li>
+
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class MainMenuController{
 
-    /**
-     * Initializes the controller class.
-     */
+
    // private static final Logger LOGGER= Logger.getLogger("views");
     
     @FXML
@@ -42,7 +46,11 @@ public class MainMenuController{
     private final HashMap sessionContent = logic.getSESSION_CONTENT();
     private User user;
    
-    
+     /**
+     * First actions when initialize the window
+     * -Set up the AppBar
+     * -Set "Usuarios" button visible if the logged user is a technician
+     */
     public void initialize() {
         btShowUsers.setVisible(false);
         menu_principal.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
@@ -63,12 +71,18 @@ public class MainMenuController{
         
     }
 
+    /**
+     * Load TICKET_LIST_VIEW
+     */
     @FXML
     private void handleButtonShowTickets() {
         MobileApplication.getInstance().switchView(TICKET_LIST_VIEW);
 
     }
 
+    /**
+     * Create and Load NEWTICKET_VIEW
+     */
     @FXML
     private void handleButtonCreateTicket() {
         MobileApplication.getInstance().addViewFactory(NEWTICKET_VIEW, () -> new NewTicketView(NEWTICKET_VIEW).getView());
@@ -76,6 +90,9 @@ public class MainMenuController{
 
     }
 
+    /**
+     * Create and Load PASSMODIFY_VIEW
+     */
     @FXML
     private void handleButtonModifyPass() {
         MobileApplication
@@ -85,11 +102,18 @@ public class MainMenuController{
 
     }
 
+    /**
+     * Load USER_LIST_VIEW
+     */
     @FXML
     private void handleButtonShowUsers() {
         MobileApplication.getInstance().switchView(TartangaTickets.USER_LIST_VIEW);
     }
-
+    
+    /**
+     * remove from sessionContent HasMap the logged user
+     * and load LOGIN_VIEW
+     */
     @FXML
     private void handleButtonLogOut() {
         sessionContent.remove("activeId");

@@ -31,8 +31,15 @@ import org.apache.commons.mail.EmailException;
 
 
 /**
- * Creates a new user on the application with the inserted data
- * @author Sergio
+ * Handle the new user window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+
+
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class NewUserController  {
     
@@ -60,6 +67,11 @@ public class NewUserController  {
     private List<Department> departments;
     private final LogicInterface logic = TartangaTickets.LOGIC; 
     
+     /**
+     * First actions when initialize the window
+     * -Set up the AppBar
+     * -Fill the dropdowbutton with departments
+     */
     public void initialize() {
         nuevo_usuario.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         nuevo_usuario.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -93,6 +105,9 @@ public class NewUserController  {
         }
     }
     
+    /**
+     * Creates a user with view data
+     */
     @FXML
     private void handleButtonCreateUser(){
         Credential credential = new Credential();
@@ -141,6 +156,11 @@ public class NewUserController  {
         }
     }
     
+    /**
+     * Check if the typed email exist in the database
+     * @param email String - email to check
+     * @return boolean True -exist /False -doesn't exist
+     */
     private boolean emailExists(String email) {
         boolean exists = false;
         try {
