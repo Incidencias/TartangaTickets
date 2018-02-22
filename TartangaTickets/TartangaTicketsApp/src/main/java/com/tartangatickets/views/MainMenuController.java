@@ -65,6 +65,8 @@ public class MainMenuController{
 
             if(user instanceof Technician && ((Technician)user).getIsAdmin()){
                 btShowUsers.setVisible(true);
+            } else {
+                btShowUsers.setVisible(false);
             }
         });
             
