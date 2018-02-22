@@ -51,6 +51,10 @@ import javax.transaction.Transactional;
 public class Logic implements LogicInterface {
     
     private static final Logger LOGGER = Logger.getLogger("com.tartangatickets.logic");
+    private static final String TICKET_STATE_CHANGE = "TicketStateChange";
+    private static final String TICKET_UPDATE_TECHNICIAN = "TicketUpdateTechnician";
+    private static final String USER_TICKET_UPDATE_TECHNICIAN = "UserTicketUpdateTechnician";
+    private static final String TICKET_CREATED = "TicketCreated";
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
     private final Session session = factory.openSession();
     private Transaction tx = null;
@@ -83,16 +87,17 @@ public class Logic implements LogicInterface {
      * @return the session_content HashMap
      */
     @Override
-    public HashMap getSESSION_CONTENT() {
+    public HashMap getSessionContent() {
         return SESSION_CONTENT;
     }
     
     /**
      * Creates a new ticket with received parameters
      * @param ticket 
+     * @throws java.lang.Exception 
      */
     @Override
-    public void createTicket(Ticket ticket) {
+    public void createTicket(Ticket ticket) throws Exception {
         LOGGER.info("Creating ticket");
         tx = session.beginTransaction();
         ticket.setCreateDate(new Date());
@@ -109,29 +114,30 @@ public class Logic implements LogicInterface {
         session.flush();
         session.refresh(user);
         tx.commit();
-        // TODO Send email
         LOGGER.info("Ticket created");
+        LOGGER.info("Sending created ticket notification");
+        sendNotification(ticket, TICKET_CREATED);
+        
     }
 
-    /**
-     * Appends new message a ticket
-     * @param message 
-     * @throws java.lang.Exception 
-     */
-    @Override
-    public void sendMessage(Message message) throws Exception {
-        LOGGER.info("Creating ticket message");
-        tx = session.beginTransaction();
-        //session.persist(message);
-        Ticket ticket = message.getTicket();
-        List<Message> messages = new ArrayList<>();
-        messages.add(message);
-        ticket.setMessages(messages);
-        session.merge(ticket);
-        // TODO send email
-        tx.commit();
-        LOGGER.info("Ticket message created");
-    }
+//    /**
+//     * Appends new message a ticket
+//     * @param message 
+//     * @throws java.lang.Exception 
+//     */
+//    @Override
+//    public void sendMessage(Message message) throws Exception {
+//        LOGGER.info("Creating ticket message");
+//        tx = session.beginTransaction();
+//        //session.persist(message);
+//        Ticket ticket = message.getTicket();
+//        List<Message> messages = new ArrayList<>();
+//        messages.add(message);
+//        ticket.setMessages(messages);
+//        session.merge(ticket);
+//        tx.commit();
+//        LOGGER.info("Ticket message created");
+//    }
 
     /**
      * Finds a ticked using the user login
@@ -148,7 +154,6 @@ public class Logic implements LogicInterface {
         tickets = session.createNamedQuery("findTicketsByUser")
                 .setParameter("login", userLogin)
                 .getResultList();
-        
         if (tickets == null || tickets.isEmpty()){
             tx.rollback();
             throw new NoTicketException("No se encontraron tickets");
@@ -275,18 +280,19 @@ public class Logic implements LogicInterface {
         return user;
     }
 
-    /**
-     * Delete user from database
-     * @param user a user to erase
-     */
-    @Override
-    public void deleteUser(User user) {
-        LOGGER.info("Deleting user");
-        tx = session.beginTransaction();
-        session.remove(user);
-        tx.commit();
-        LOGGER.info("User deleted");
-    }
+//    /**
+//     * Delete user from database
+//     * @param user a user to erase
+//     * @throws java.lang.Exception
+//     */
+//    @Override
+//    public void deleteUser(User user) throws Exception {
+//        LOGGER.info("Deleting user");
+//        tx = session.beginTransaction();
+//        session.remove(user);
+//        tx.commit();
+//        LOGGER.info("User deleted");
+//    }
 
     /**
      * Finds all users
@@ -337,36 +343,35 @@ public class Logic implements LogicInterface {
         return technicians;
     }
 
-    /**
-     * Assigns the ticket to technician corresponding to ticket technician
-     * @param ticket the ticket to assign
-     * @throws java.lang.Exception
-     */
-    @Override
-    public void assignTicket(Ticket ticket) throws Exception {
-        LOGGER.info("Assigning ticket");
-        tx = session.beginTransaction();
-        session.merge(ticket);
-        User technician = ticket.getTechnician();
-        session.merge(technician);
-        tx.commit();
-        LOGGER.info("Ticket assigned");
-    }
+//    /**
+//     * Assigns the ticket to technician corresponding to ticket technician
+//     * @param ticket the ticket to assign
+//     * @throws java.lang.Exception
+//     */
+//    @Override
+//    public void assignTicket(Ticket ticket) throws Exception {
+//        LOGGER.info("Assigning ticket");
+//        tx = session.beginTransaction();
+//        session.merge(ticket);
+//        User technician = ticket.getTechnician();
+//        session.merge(technician);
+//        tx.commit();
+//        LOGGER.info("Ticket assigned");
+//    }
 
-    /**
-     * Updates the ticket data with the given ticket information
-     * @param ticket ticket whose state is going to change
-     * @throws Exception
-     */
-    @Override
-    public void changeState(Ticket ticket)throws Exception {
-        LOGGER.info("Changing ticket state");
-        tx = session.beginTransaction();
-        session.merge(ticket);
-        tx.commit();
-        // TODO send message to user
-        LOGGER.info("Ticket state changed");
-    }
+//    /**
+//     * Updates the ticket data with the given ticket information
+//     * @param ticket ticket whose state is going to change
+//     * @throws Exception
+//     */
+//    @Override
+//    public void changeState(Ticket ticket)throws Exception {
+//        LOGGER.info("Changing ticket state");
+//        tx = session.beginTransaction();
+//        session.merge(ticket);
+//        tx.commit();
+//        LOGGER.info("Ticket state changed");
+//    }
 
     /**
      * Checks if the credentials of a user exist with login and password
@@ -509,7 +514,6 @@ public class Logic implements LogicInterface {
     public void updateTicket(Ticket ticket) throws Exception {
         LOGGER.info("Updating ticket");
         tx = session.beginTransaction();
-        ticket.setEndDate(new Date());
         session.merge(ticket);
         session.flush();
         session.refresh(ticket);
@@ -520,8 +524,59 @@ public class Logic implements LogicInterface {
             session.merge(technician);
             session.flush();
             session.refresh(technician);
+            sendNotification(ticket, TICKET_UPDATE_TECHNICIAN);
+            sendNotification(ticket, USER_TICKET_UPDATE_TECHNICIAN);
         }
         tx.commit();
+        sendNotification(ticket, TICKET_STATE_CHANGE);
         LOGGER.info("Ticket updated");
+    }
+
+    private void sendNotification(Ticket ticket, String tag) throws Exception {
+        String address;
+        String message;
+        String subject;
+        List<String> addresses = new ArrayList<>();
+        switch (tag) {
+            case TICKET_CREATED:
+                List<Technician> technicians = findAllTechnicians();
+                if (!technicians.isEmpty()) {
+                    for (Technician technician : technicians)
+                        addresses.add(technician.getLogin());
+                    message = "A new Ticket was created:\n\n"
+                        + "Subject: " + ticket.getTitle() + "\n"
+                        + "User: " + ticket.getUser();
+                    subject = "New Ticket";
+                    EmailSender.sendEmail(addresses, subject, message);
+                }
+                break;
+            case TICKET_STATE_CHANGE:
+                message = "Your ticket's state has changed.\n\n"
+                        + "State: " + ticket.getState().name();
+                subject = "Ticket: #" + ticket.getId() + " state changed.";
+                address = ticket.getUser().getLogin();
+                addresses.add(address);
+                EmailSender.sendEmail(addresses, subject, message);
+                break;
+            case TICKET_UPDATE_TECHNICIAN:
+                User activeUser = (User) SESSION_CONTENT.get("activeId");
+                address = ticket.getTechnician().getLogin();
+                addresses.add(address);
+                subject = "Ticket assigned";
+                message = "You have a new ticket assignation.\n\n"
+                        + "Ticket: #" + ticket.getId()
+                        + "\nSubject: " + ticket.getTitle();
+                EmailSender.sendEmail(addresses, subject, message);
+                break;
+            case USER_TICKET_UPDATE_TECHNICIAN:
+                address = ticket.getUser().getLogin();
+                addresses.add(address);
+                subject = "Technician assigned to your ticket #" + ticket.getId();
+                message = "A technician has been assigned to your ticket.\n\n"
+                        + "Ticket: #" + ticket.getId()
+                        + "\nSubject: " + ticket.getTitle();
+                EmailSender.sendEmail(addresses, subject, message);
+                break;
+        }
     }
 }

@@ -23,33 +23,6 @@ public class EmailSender {
     private static final int PORT = 465;
     private static final boolean SSL_FLAG = true;
 
-    /*
-    public static void main(String[] args) {
-        EmailSender sender = new EmailSender();
-        sender.sendEmail();
-    }
-    */
-    /*
-         example
-    public static void sendEmail(String toAddress) 
-            throws EncrypterException, EmailException {
-        String subject = "Prueba Email";
-        String message = "Que pasa ninio cebolleta";
-        List<String> emailCredentials = Encrypter.decryptFile();
-        String userName = emailCredentials.get(0);
-        String password = emailCredentials.get(1);
-        Email email = new SimpleEmail();
-        email.setHostName(HOST);
-        email.setSmtpPort(PORT);
-        email.setAuthenticator(new DefaultAuthenticator(userName, password));
-        email.setSSLOnConnect(SSL_FLAG);
-        email.setFrom(userName);
-        email.setSubject(subject);
-        email.setMsg(message);
-        email.addTo(toAddress);
-        email.send();
-    }
-    */
     /**
      * Sends email with a password to a given address 
      * @param toAddress String - mail of the email receiver
@@ -74,6 +47,24 @@ public class EmailSender {
         email.setSubject(subject);
         email.setMsg(message);
         email.addTo(toAddress);
+        email.send();
+    }
+    
+    public static void sendEmail(List<String> toAddresses, String subject, String message) 
+            throws EncrypterException, EmailException {
+        List<String> emailCredentials = Encrypter.decryptFile();
+        String userName = emailCredentials.get(0);
+        String password = emailCredentials.get(1);
+        Email email = new SimpleEmail();
+        email.setHostName(HOST);
+        email.setSmtpPort(PORT);
+        email.setAuthenticator(new DefaultAuthenticator(userName, password));
+        email.setSSLOnConnect(SSL_FLAG);
+        email.setFrom(userName);
+        email.setSubject(subject);
+        email.setMsg(message);
+        for (String address : toAddresses) 
+            email.addTo(address);
         email.send();
     }
 }

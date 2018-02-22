@@ -56,7 +56,7 @@ public class TicketListController {
     @FXML VBox vbMain;
     
     private final LogicInterface logic = TartangaTickets.LOGIC; 
-    private final HashMap sessionContent = logic.getSESSION_CONTENT();
+    private final HashMap sessionContent = logic.getSessionContent();
     private User user;
     private FilteredList<Ticket> filteredList;
      

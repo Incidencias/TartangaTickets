@@ -170,11 +170,6 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="btnSendMessage" mnemonicParsing="false" onAction="#handleButtonSendMessage" prefHeight="30.0" prefWidth="90.0" text="Mensajes" />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                     <children>
                         <Button fx:id="btnEditState" mnemonicParsing="false" onAction="#handleButtonEditState" prefHeight="30.0" prefWidth="90.0" text="Estado" />
                      </children>
                   </VBox>

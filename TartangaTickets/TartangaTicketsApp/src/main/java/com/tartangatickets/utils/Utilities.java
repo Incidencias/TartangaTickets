@@ -5,6 +5,9 @@
  */
 package com.tartangatickets.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,14 +21,14 @@ import java.util.regex.Pattern;
  *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
  *  @version 1.0, Feb 21 2018
  */
-public class Reader {
+public class Utilities {
     
     private static final String EMAIL_REGEX = 
             "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:"
             + "[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
     
     /**
-     *  Check if a given email format is valid
+     * Check if a given email format is valid
      * @param email String email to check
      * @return boolean True - pass filter/False - don't pass filter
      */
@@ -33,5 +36,16 @@ public class Reader {
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+    
+    /**
+     * Formats the date to <strong>yyy-MM-dd</strong> format.
+     * 
+     * @param date  Date to format.
+     * @return      Formatted date string.
+     */
+    public static String formatDate(Date date) {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.format(date);
     }
 }

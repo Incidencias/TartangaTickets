@@ -19,7 +19,7 @@ public class TicketListView {
     
     public View getView() {
         try {
-            View view = FXMLLoader.load(TicketView.class.getResource("incidencias_charmlist.fxml"));
+            View view = FXMLLoader.load(TicketListView.class.getResource("incidencias_charmlist.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

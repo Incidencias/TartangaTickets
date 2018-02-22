@@ -43,7 +43,7 @@ public class LoginController {
     @FXML
     private Button btnRecoverpass;
     private final LogicInterface logic = TartangaTickets.LOGIC;
-    private final HashMap sessionContent = logic.getSESSION_CONTENT();
+    private final HashMap sessionContent = logic.getSessionContent();
     
     /**
      * First actions when initialize the window
@@ -85,7 +85,7 @@ public class LoginController {
         }
     }
     /**
-     * Load the window for recovery pass
+     * Load the window for password recovery.
      */
     @FXML
     private void handleButtonRecoverpass(){

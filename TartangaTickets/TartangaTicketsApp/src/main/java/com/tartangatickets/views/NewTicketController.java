@@ -12,6 +12,7 @@ import com.tartangatickets.entities.State.STATE;
 import com.tartangatickets.logic.LogicInterface;
 import java.util.Date;
 import com.tartangatickets.utils.DialogHelper;
+import com.tartangatickets.utils.Utilities;
 import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -54,7 +55,7 @@ public class NewTicketController {
     @FXML
     private Button btnCreateTicket;
     private final LogicInterface logic = TartangaTickets.LOGIC;
-    private final HashMap sessionContent = logic.getSESSION_CONTENT();
+    private final HashMap sessionContent = logic.getSessionContent();
     private final User user = (User) sessionContent.get("activeId");
     
     /**
@@ -78,7 +79,7 @@ public class NewTicketController {
         });
         lblUser.setText(user.getFullName());
         lblDepartment.setText(user.getDepartment().getName());
-        lblCreateDate.setText(new Date().toString());
+        lblCreateDate.setText(Utilities.formatDate(new Date()));
     }     
     
     /**

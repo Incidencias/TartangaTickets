@@ -49,7 +49,7 @@ public class PassModifyController {
     @FXML
     private Button btModify;
     private final LogicInterface logic = TartangaTickets.LOGIC;
-    private final HashMap sessionContent = logic.getSESSION_CONTENT();
+    private final HashMap sessionContent = logic.getSessionContent();
     private final User user = (User) sessionContent.get("activeId");
 
     /**

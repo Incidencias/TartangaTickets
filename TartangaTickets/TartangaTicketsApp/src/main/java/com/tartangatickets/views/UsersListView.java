@@ -23,7 +23,7 @@ public class UsersListView {
     
     public View getView() {
         try {
-            View view = FXMLLoader.load(UsersView.class.getResource("usuarios_charmlist.fxml"));
+            View view = FXMLLoader.load(UsersListView.class.getResource("usuarios_charmlist.fxml"));
             view.setName(name);
             return view;
         } catch (IOException e) {

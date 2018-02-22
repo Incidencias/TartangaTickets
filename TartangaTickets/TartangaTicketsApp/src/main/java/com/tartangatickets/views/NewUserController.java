@@ -20,7 +20,7 @@ import com.tartangatickets.entities.User;
 import com.tartangatickets.exceptions.NoDepartmentException;
 import com.tartangatickets.logic.LogicInterface;
 import com.tartangatickets.utils.DialogHelper;
-import com.tartangatickets.utils.Reader;
+import com.tartangatickets.utils.Utilities;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
@@ -125,7 +125,7 @@ public class NewUserController  {
             department = departments.get(0);
             //email  
             String email = tfEmail.getText();
-            if (!Reader.checkValidEmail(email)) {
+            if (!Utilities.checkValidEmail(email)) {
                 DialogHelper.newInstance("ERROR", EMAIL_VALID_ERROR);
                 return;
             }

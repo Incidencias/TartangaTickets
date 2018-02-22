@@ -43,7 +43,7 @@ public class MainMenuController{
     private Button btShowUsers;
     
     private final LogicInterface logic = TartangaTickets.LOGIC; 
-    private final HashMap sessionContent = logic.getSESSION_CONTENT();
+    private final HashMap sessionContent = logic.getSessionContent();
     private User user;
    
      /**

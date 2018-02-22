@@ -2,7 +2,6 @@ package com.tartangatickets.views;
 
 import com.gluonhq.charm.glisten.animation.FadeInLeftBigTransition;
 import com.gluonhq.charm.glisten.application.MobileApplication;
-import com.gluonhq.charm.glisten.application.ViewStackPolicy;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.control.Dialog;
 import com.gluonhq.charm.glisten.mvc.View;
@@ -16,9 +15,8 @@ import com.tartangatickets.exceptions.NoTechnicianException;
 import com.tartangatickets.exceptions.NoTicketException;
 import com.tartangatickets.logic.LogicInterface;
 import com.tartangatickets.utils.DialogHelper;
+import com.tartangatickets.utils.Utilities;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -65,8 +63,6 @@ public class TicketDetailController {
     @FXML
     private Label lblEndDateTicket;
     @FXML
-    private Button btnSendMessage;
-    @FXML
     private Button btnEditState;
     @FXML
     private Button btnStore;
@@ -74,13 +70,12 @@ public class TicketDetailController {
     private ComboBox<Technician> comboTechnician;
     
     private final LogicInterface logic = TartangaTickets.LOGIC; 
-    private final HashMap sessionContent = logic.getSESSION_CONTENT();
+    private final HashMap sessionContent = logic.getSessionContent();
     private User user;
     private Ticket ticket;
     private ObservableList<Technician> itemsTechnicians;
-    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     
-       /**
+    /**
      * First actions when initialize the window
      * -Set up the AppBar
      * -Get the logged user
@@ -136,15 +131,6 @@ public class TicketDetailController {
     }
     
     /**
-     * Load the MessageView
-     * @throws IOException 
-     */
-    @FXML
-    private void handleButtonSendMessage() throws IOException{
-        MobileApplication.getInstance().switchView("MessageView");
-    }
-    
-    /**
      * Dialog to select the state 
      * @throws IOException 
      */
@@ -193,6 +179,7 @@ public class TicketDetailController {
             }
             else{   
                 ticket.setState(STATE.CLOSED);
+                ticket.setEndDate(new Date());
                 dialog.hide();
             }
         });
@@ -289,11 +276,10 @@ public class TicketDetailController {
         lblMachineCodeTicket.setText(ticket.getMachineCode());
         lblStateTicket.setText(ticket.getState().name().toLowerCase());
         if(ticket.getCreateDate()!=null){
-            lblCreateDateTicket.setText(formatter.format(ticket.getCreateDate()));                                     
+            lblCreateDateTicket.setText(Utilities.formatDate(ticket.getCreateDate()));                                     
         }
         if(ticket.getEndDate()!=null){
-                    
-            lblEndDateTicket.setText(formatter.format(ticket.getEndDate()));                
+            lblEndDateTicket.setText(Utilities.formatDate(ticket.getEndDate()));                
         }
     }
 
@@ -317,7 +303,6 @@ public class TicketDetailController {
      */
     private void updateUIState() {
         lblStateTicket.setText(ticket.getState().name().toLowerCase());
-        if (ticket.getState().equals(STATE.CLOSED))
-            lblEndDateTicket.setText(formatter.format(new Date()));
+        lblEndDateTicket.setText(Utilities.formatDate(ticket.getEndDate()));
     }
 }
