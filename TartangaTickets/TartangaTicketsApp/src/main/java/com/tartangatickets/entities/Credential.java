@@ -48,6 +48,7 @@ public class Credential implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date lastPassChange;
 
+    
     public String getLogin() {
         return login;
     }

@@ -32,9 +32,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
- * FXML Controller class
- *
- * @author Iker Jon Mediavilla
+ * Handle the ticket details window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *      <li><strong>sessionContent:</strong> HasMap from logic</li> 
+ *      <li><strong>formatter:</strong> Simple Date Formate with "yyyy-MM-dd" format</li> 
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class TicketDetailController {
     
@@ -74,10 +80,15 @@ public class TicketDetailController {
     private ObservableList<Technician> itemsTechnicians;
     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     
-    /**
-     * Initializes the controller class.
+       /**
+     * First actions when initialize the window
+     * -Set up the AppBar
+     * -Get the logged user
+     * -Get the selected ticket with sessionContent ticketId
+     * -Load data
+     * -Set up visible fields if logged user is a technician
+     * -Fill technician combobox
      */
-    
     @FXML
     public void initialize() {
         detalles_incidencia.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
@@ -124,11 +135,19 @@ public class TicketDetailController {
         });
     }
     
+    /**
+     * Load the MessageView
+     * @throws IOException 
+     */
     @FXML
     private void handleButtonSendMessage() throws IOException{
         MobileApplication.getInstance().switchView("MessageView");
     }
     
+    /**
+     * Dialog to select the state 
+     * @throws IOException 
+     */
     @FXML
     private void handleButtonEditState() throws IOException{
         Dialog dialog = new Dialog();
@@ -186,7 +205,9 @@ public class TicketDetailController {
         updateUIState();
     }
 
-    
+    /**
+     * Set technician of the ticket depending of the technician combobox selection
+     */
     public void handleComboBoxTechnician(){
         Technician technician = 
                 comboTechnician.getSelectionModel().getSelectedItem();
@@ -197,6 +218,9 @@ public class TicketDetailController {
         }
     }
     
+    /**
+     * updates a ticket
+     */
     public void updateTicket() {
         try {
             logic.updateTicket(ticket);
@@ -204,7 +228,10 @@ public class TicketDetailController {
             DialogHelper.newInstance("ERROR", GENERAL_ERROR);
         }
     }
-    
+    /**
+     * Get all the technicians from the database
+     * @return List with all the database technician
+     */
     private List<Technician> getAllTechnicians() {
         List<Technician> technicians = null;
         try {
@@ -218,6 +245,9 @@ public class TicketDetailController {
         return technicians;
     }
     
+    /**
+     * Fill technicians combo with all the database technicians
+     */
     private void fillTechniciansCombo() {
         itemsTechnicians = FXCollections.observableArrayList();
         List<Technician> technicians = getAllTechnicians();
@@ -230,7 +260,10 @@ public class TicketDetailController {
         
         comboTechnician.getItems().addAll(itemsTechnicians);
     }
-
+    /**
+     * Creates an empty technician
+     * @return empty technician with name balnk and lasName blank
+     */
     private Technician getEmptyTechnician() {
         Technician technician = new Technician();
         technician.setLastName1("");
@@ -239,6 +272,9 @@ public class TicketDetailController {
     }
    
     // Checked
+    /**
+     * Load the data of the fields in the view
+     */
     private void loadData() {
         lblTitleTicket.setText(ticket.getId().toString());
         lblUserTicket.setText(ticket.getUser().getFullName());
@@ -261,6 +297,10 @@ public class TicketDetailController {
         }
     }
 
+    /**
+     * get a ticket with a given ticket id
+     * @param ticketId Integer - the ticket id to find the ticket
+     */
     private void getTicket(Integer ticketId) {
         try {
             ticket = logic.findTicketById(ticketId);
@@ -272,6 +312,9 @@ public class TicketDetailController {
         }
     }
 
+    /**
+     * Updates the ui state
+     */
     private void updateUIState() {
         lblStateTicket.setText(ticket.getState().name().toLowerCase());
         if (ticket.getState().equals(STATE.CLOSED))

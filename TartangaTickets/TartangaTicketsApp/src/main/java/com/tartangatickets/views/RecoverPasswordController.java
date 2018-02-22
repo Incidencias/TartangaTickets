@@ -17,8 +17,14 @@ import javafx.scene.control.Button;
 
 
 /**
- *
- * @author ionut
+ * Handle the recover password window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class RecoverPasswordController {
     
@@ -31,6 +37,11 @@ public class RecoverPasswordController {
     private TextField tfUser;
     private final LogicInterface logic = TartangaTickets.LOGIC;
     
+        /**
+     * First actions when initialize the window
+     * -Set up the AppBar
+     *
+     */
     public void initialize() {
         recuperar_pass.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         recuperar_pass.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -48,7 +59,9 @@ public class RecoverPasswordController {
         });
     }
     
-    
+    /**
+     * Sends a email to the user email in the textfield
+     */
     @FXML
     private void handleButtonRecoverpass() {
         

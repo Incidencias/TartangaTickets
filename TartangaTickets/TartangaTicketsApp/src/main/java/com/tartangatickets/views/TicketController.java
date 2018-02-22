@@ -27,9 +27,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 
 /**
- * FXML Controller class
- *
- * @author Iker Jon 
+ * Handle the ticket window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *      <li><strong>sessionContent:</strong> HasMap from logic</li> 
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class TicketController {
     
@@ -52,10 +57,12 @@ public class TicketController {
     private ObservableList<String> itemsState;
     private ObservableList<String> itemsTechnicians;
     
-    /**
-     * Initializes the controller class.
+        /**
+     * First actions when initialize the window
+     * -Set up the AppBar
+     * -Fill state and technician comboBox
+     * -Fill ticket list
      */
-     
     public void initialize() {
         ver_incidencias.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         ver_incidencias.showingProperty().addListener((obs, oldValue, newValue) -> {  
@@ -79,7 +86,12 @@ public class TicketController {
             }
         });
     }
-    
+    /**
+     * Handle de changes on the ticket list
+     * @param observable
+     * @param oldValue
+     * @param newValue 
+     */
     private void handleTicketListSelectionChanged(
             ObservableValue observable, String oldValue,String newValue) {
         if(newValue!=null){
@@ -88,12 +100,18 @@ public class TicketController {
         }
     }
     
+    /**
+     * Set to "" the ticket and technician combobox
+     */
     @FXML
     private void handleFilterReset(){
         cbStateLTicket.setValue("");
         cbTechnicianLTicket.setValue("");
     }
     
+    /**
+     * Filters the tickets with a specific state
+     */
     @FXML
     private void handleFilterState() {
         if (cbStateLTicket.getSelectionModel().getSelectedIndex() != -1) {
@@ -117,7 +135,9 @@ public class TicketController {
         updateTicketList();
     }
     
-    
+    /**
+     * Filters the tickets with specific technician
+     */
     @FXML
     private void handleFilterTechnician() {
         int t = cbTechnicianLTicket.getSelectionModel().getSelectedIndex();
@@ -141,6 +161,9 @@ public class TicketController {
         updateTicketList();
     }
     
+    /**
+     * Fill state combobox with (OPEN,INPROGRESS,BLOQUED,CLOSED)
+     */
     private void fillStateCombo() {
         itemsState = FXCollections.observableArrayList();
         itemsState.addAll(STATE.OPEN.name(), STATE.INPROGRESS.name(), 
@@ -148,7 +171,9 @@ public class TicketController {
         );          
         cbStateLTicket.getItems().addAll(itemsState);
     }
-
+    /**
+     * Fill technician combobox with technician Name+Lastname
+     */
     private void fillTechniciansCombo() {
         itemsTechnicians = FXCollections.observableArrayList();
         List<Technician> technicians = getAllTechnicians();
@@ -160,6 +185,11 @@ public class TicketController {
         cbTechnicianLTicket.getItems().addAll(itemsTechnicians);
     }
     
+    /**
+     * fill ticket list with
+     *      -All tickets if it's a technician the logged person
+     *      -User created tickets if it's a user the logged person
+     */
     private void fillTicketList() {
         itemTickets = FXCollections.observableArrayList();
         if (user instanceof Technician) {
@@ -175,6 +205,9 @@ public class TicketController {
         lvLTicket.setItems(itemTickets);
     }
     
+    /**
+     * Updates the data of the ticket list
+     */
     private void updateTicketList() {
         itemTickets.clear();
         visibleTickets.forEach((ticket)-> {
@@ -185,6 +218,10 @@ public class TicketController {
         lvLTicket.setItems(itemTickets);
     }
     
+    /**
+     * Get all tickets
+     * @return list with all tickets in the database
+     */
     private List<Ticket> getAllTickets() {
         List<Ticket> tickets = null;
         try {
@@ -197,6 +234,10 @@ public class TicketController {
         return tickets;
     }
     
+    /**
+     * Get all technicians
+     * @return list with all the technicians in the database
+     */
     private List<Technician> getAllTechnicians() {
         List<Technician> technicians = null;
         try {

@@ -19,9 +19,16 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * FXML Controller class
- *
- * @author ionut
+ * Handle the new ticket window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *      <li><strong>sessionContent:</strong> HasMap from logic</li>
+ *      <li><strong>user:</strong> logged user from sessionContent</li>
+
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class NewTicketController {
 
@@ -51,7 +58,9 @@ public class NewTicketController {
     private final User user = (User) sessionContent.get("activeId");
     
     /**
-     * Initializes the controller class.
+     * First actions when initialize the window
+     * -Set up the AppBar
+     * -Fill some fields with logged user data
      */
     public void initialize() {
         nueva_incidencia.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
@@ -72,6 +81,9 @@ public class NewTicketController {
         lblCreateDate.setText(new Date().toString());
     }     
     
+    /**
+     * Creates a new ticket with the data of fields in the view 
+     */
     @FXML
     private void handleButtonCreateTicket() {
         Ticket ticket = null;

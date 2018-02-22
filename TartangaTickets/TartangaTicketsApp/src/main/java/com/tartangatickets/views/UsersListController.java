@@ -26,7 +26,12 @@ import javafx.scene.control.Button;
 /**
  * Shows a list of users registered in the application and shows a option to 
  * create new users
- * @author ubuntu
+ *
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class UsersListController {
     
@@ -41,6 +46,11 @@ public class UsersListController {
     private final LogicInterface logic = TartangaTickets.LOGIC; 
     private List <User> users;
     
+     /**
+     * First actions when initialize the window
+     * -Set up the AppBar
+     * -fill users list
+     */
     public void initialize() {
         usuarios_charmlist.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         charmUsuarios.setCellFactory(p -> new UserCell());
@@ -58,6 +68,9 @@ public class UsersListController {
         });
     }
     
+    /**
+     * Creates and load  NEWUSER_VIEW
+     */
     @FXML
     private void handleButtonNewUser(){
         MobileApplication

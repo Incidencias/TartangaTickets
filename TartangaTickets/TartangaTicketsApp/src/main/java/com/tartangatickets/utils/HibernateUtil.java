@@ -14,10 +14,18 @@ import com.tartangatickets.entities.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+/**
+ * Configuration of hibernate, set up classes
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
+ */
 public class HibernateUtil {
 
     private static final SessionFactory sessionFactory = buildSessionFactory();
-
+    /**
+     * Set up the classes in hibernate and get data from hibernate configuration file
+     * @return SessionFactory - data from hibernate configuration file
+     */
     private static SessionFactory buildSessionFactory() {
         try {
             Configuration config = new Configuration();
@@ -44,6 +52,9 @@ public class HibernateUtil {
         return sessionFactory;
     }
 
+    /**
+     * close the sessionFactory
+     */
     public static void shutdown() {
         // Close caches and connection pools
         getSessionFactory().close();

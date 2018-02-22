@@ -13,13 +13,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- *
- * @author jon
+ * Charm list with users
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class UserCell extends CharmListCell<User> {
     private final ListTile tile;
     private final ImageView image;
     
+    /**
+     * Constructor 
+     */
     public UserCell() {
         this.tile = new ListTile();
         this.image = new ImageView();
@@ -27,6 +31,11 @@ public class UserCell extends CharmListCell<User> {
         setText(null);
     }
 
+    /**
+     * Set up the information of each user (name,department and login) and put an image if it's a technician
+     * @param item
+     * @param empty 
+     */
     @Override
     public void updateItem(User item, boolean empty) {
         super.updateItem(item, empty);

@@ -12,7 +12,25 @@ import com.tartangatickets.views.TicketDetailView;
 import com.tartangatickets.views.TicketListView;
 import com.tartangatickets.views.UsersListView;
 
-
+/**
+ * Initializes views of the application and sets the style of it
+ *  
+ *  <ul>
+ *      <li><strong>LOGIN_VIEW:</strong> window view name</li>
+ *      <li><strong>RECOVERPASS_VIEW:</strong> window view name</li>
+ *      <li><strong>MAINMENU_VIEW:</strong> window view name</li>
+ *      <li><strong>NEWUSER_VIEW:</strong> window view name</li>
+ *      <li><strong>MESSAGE_VIEW:</strong> window view name</li>
+ *      <li><strong>TICKETDETAIL_VIEW:</strong> window view name</li>
+ *      <li><strong>NEWTICKET_VIEW:</strong> window view name</li>
+ *      <li><strong>PASSMODIFY_VIEW:</strong> window view name</li>
+ *      <li><strong>USER_LIST_VIEW:</strong> window view name</li>
+ *      <li><strong>TICKET_LIST_VIEW:</strong> window view name</li>
+ *      <li><strong>LOGIC:</strong> Creates the logic used in the application </li>
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
+ */
 public class TartangaTickets extends MobileApplication {
 
     public static final String LOGIN_VIEW = HOME_VIEW;
@@ -27,7 +45,9 @@ public class TartangaTickets extends MobileApplication {
     public static final String TICKET_LIST_VIEW = "TicketListView";
     public static final LogicInterface LOGIC = new Logic();
 
-    
+    /**
+     * Initializes views of the application 
+     */
     @Override
     public void init() {
         
@@ -39,6 +59,10 @@ public class TartangaTickets extends MobileApplication {
         addViewFactory(TICKETDETAIL_VIEW, () -> new TicketDetailView(TICKETDETAIL_VIEW).getView());
     }
 
+    /**
+     * Assigns styles to the application
+     * @param scene 
+     */
     @Override
     public void postInit(Scene scene) {
         Swatch.AMBER.assignTo(scene);

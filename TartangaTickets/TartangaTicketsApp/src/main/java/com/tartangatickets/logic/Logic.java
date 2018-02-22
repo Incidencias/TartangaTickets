@@ -33,8 +33,18 @@ import java.util.logging.Level;
 import javax.transaction.Transactional;
 
 /**
- *
- * @author ubuntu
+ * Implements all the logic transactions of the program
+ * 
+ *  
+ *  <ul>
+ *      <li><strong>LOGGER:</strong> Logger.</li>
+ *      <li><strong>factory:</strong> Factory of the SessionFactory.</li>
+ *      <li><strong>session:</strong> Open session of factory</li>
+ *      <li><strong>tx:</strong> Transaction</li>
+ *      <li><strong>SESSION_CONTENT:</strong>HashMap to move data inside the application </li>
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 
 @Transactional(rollbackOn = Exception.class)
@@ -46,6 +56,12 @@ public class Logic implements LogicInterface {
     private Transaction tx = null;
     private static final HashMap SESSION_CONTENT = new HashMap<>();
     
+    /**
+     * Finds a ticket using a id of the ticket
+     * @param id identificator of the ticket
+     * @return corresponding ticket to the id
+     * @throws java.lang.Exception
+     */
     @Override
     public Ticket findTicketById(Integer id) throws Exception {
         LOGGER.info("Fetching ticket by Id");
@@ -62,12 +78,19 @@ public class Logic implements LogicInterface {
         LOGGER.info("Ticket found");
         return tickets.get(0);
     }
-    
+    /**
+     * 
+     * @return the session_content HashMap
+     */
     @Override
     public HashMap getSESSION_CONTENT() {
         return SESSION_CONTENT;
     }
     
+    /**
+     * Creates a new ticket with received parameters
+     * @param ticket 
+     */
     @Override
     public void createTicket(Ticket ticket) {
         LOGGER.info("Creating ticket");
@@ -90,8 +113,13 @@ public class Logic implements LogicInterface {
         LOGGER.info("Ticket created");
     }
 
+    /**
+     * Appends new message a ticket
+     * @param message 
+     * @throws java.lang.Exception 
+     */
     @Override
-    public void sendMessage(Message message) {
+    public void sendMessage(Message message) throws Exception {
         LOGGER.info("Creating ticket message");
         tx = session.beginTransaction();
         //session.persist(message);
@@ -105,9 +133,15 @@ public class Logic implements LogicInterface {
         LOGGER.info("Ticket message created");
     }
 
+    /**
+     * Finds a ticked using the user login
+     * @param userLogin user identification (email)
+     * @return list of tickets corresponding to received user
+     * @throws java.lang.Exception
+     */
     @Override
     public List<Ticket> findTicketsByUser(String userLogin) 
-            throws NoTicketException {
+            throws Exception {
         LOGGER.info("Fetching tickets by user");
         List<Ticket> tickets = null;
         tx = session.beginTransaction();
@@ -127,6 +161,11 @@ public class Logic implements LogicInterface {
         return tickets;
     }
 
+    /**
+     * Finds all the tickets data
+     * @return List with all tickets
+     * @throws Exception 
+     */
     @Override
     public List<Ticket> findAllTickets() throws Exception {
         LOGGER.info("Fetching all tickets");
@@ -146,7 +185,13 @@ public class Logic implements LogicInterface {
         tx.commit();
         return tickets;
     }
-
+    
+    /**
+     * Change a password from the user corresponding to credential
+     * @param credential accreditation of the user
+     * @param newPassword new password of the user
+     * @throws Exception 
+     */
     @Override
     public void changePassword(Credential credential, String newPassword) 
             throws Exception {
@@ -168,6 +213,11 @@ public class Logic implements LogicInterface {
         LOGGER.info("Password changed");
     }
 
+    /**
+     * Recovers the received user password, sends an email with new password
+     * @param login user email
+     * @throws Exception 
+     */
     @Override
     public void recoverPassword(String login) throws Exception {
         LOGGER.info("Recovering user password");
@@ -188,6 +238,12 @@ public class Logic implements LogicInterface {
         LOGGER.info("Password recovery successful");
     }
     
+    /**
+     * Sets a password to a specific user
+     * @param user a user to change password
+     * @return the new password
+     * @throws Exception 
+     */
     private String setPassword(User user) throws Exception  {
         LOGGER.info("Setting new password");
         String login = user.getCredential().getLogin();
@@ -199,6 +255,13 @@ public class Logic implements LogicInterface {
         return newPassword;
     }
 
+    /**
+     * Creates a user with the given data and sends an email with the generated
+     * password to the user email
+     * @param user the new user 
+     * @return the created user
+     * @throws Exception 
+     */
     @Override
     public User createUser(User user) throws Exception {
         LOGGER.info("Creating user");
@@ -212,6 +275,10 @@ public class Logic implements LogicInterface {
         return user;
     }
 
+    /**
+     * Delete user from database
+     * @param user a user to erase
+     */
     @Override
     public void deleteUser(User user) {
         LOGGER.info("Deleting user");
@@ -221,6 +288,11 @@ public class Logic implements LogicInterface {
         LOGGER.info("User deleted");
     }
 
+    /**
+     * Finds all users
+     * @return a list of all the users
+     * @throws Exception 
+     */
     @Override
     public List<User> findAllUsers() throws Exception {
         LOGGER.info("Fetching all users");
@@ -240,6 +312,11 @@ public class Logic implements LogicInterface {
         return users;
     }
     
+    /**
+     * Finds all technicians
+     * @return a list with all technicians
+     * @throws Exception 
+     */
     @Override
     public List<Technician> findAllTechnicians() throws Exception {
         LOGGER.info("Fetching all technicians");
@@ -260,8 +337,13 @@ public class Logic implements LogicInterface {
         return technicians;
     }
 
+    /**
+     * Assigns the ticket to technician corresponding to ticket technician
+     * @param ticket the ticket to assign
+     * @throws java.lang.Exception
+     */
     @Override
-    public void assignTicket(Ticket ticket) {
+    public void assignTicket(Ticket ticket) throws Exception {
         LOGGER.info("Assigning ticket");
         tx = session.beginTransaction();
         session.merge(ticket);
@@ -271,8 +353,13 @@ public class Logic implements LogicInterface {
         LOGGER.info("Ticket assigned");
     }
 
+    /**
+     * Updates the ticket data with the given ticket information
+     * @param ticket ticket whose state is going to change
+     * @throws Exception
+     */
     @Override
-    public void changeState(Ticket ticket) {
+    public void changeState(Ticket ticket)throws Exception {
         LOGGER.info("Changing ticket state");
         tx = session.beginTransaction();
         session.merge(ticket);
@@ -281,6 +368,13 @@ public class Logic implements LogicInterface {
         LOGGER.info("Ticket state changed");
     }
 
+    /**
+     * Checks if the credentials of a user exist with login and password
+     * @param login String that contains the email of the user
+     * @param password String that contains the password of the user
+     * @return the user with that login and password
+     * @throws Exception 
+     */
     @Override
     public User authenticate(String login, String password) throws Exception {
         LOGGER.info("Authenticating user");
@@ -306,6 +400,12 @@ public class Logic implements LogicInterface {
         return user;
     }
 
+    /**
+     * Find all departments
+     * @return a list with a list with all the departments - if no tickets
+     * match raises a NoDepartmentException
+     * @throws Exception 
+     */
     @Override
     public List<Department> findAllDepartments() throws Exception {
         LOGGER.info("Fetching department by name");
@@ -325,6 +425,13 @@ public class Logic implements LogicInterface {
         return departments;
     }
 
+    /**
+     * Finds all tickets that have the given state
+     * @param state STATE to filter the ticket(OPEN,INPROGRESS,BLOQUED,CLOSED)
+     * @return a list with the tickets that match with the state - if no tickets
+     * match raises a NoTicketException
+     * @throws Exception 
+     */
     @Override
     public List<Ticket> findTicketsByState(STATE state) throws Exception {
         LOGGER.info("Fetching tickets by state");
@@ -345,6 +452,13 @@ public class Logic implements LogicInterface {
         return tickets;
     }
 
+    /**
+     * Finds all the tickets that have given technician assigned
+     * @param login String login email of the user
+     * @return  a list with the tickets that have assigned that technician
+     * - if no tickets match raises a NoTicketException
+     * @throws Exception 
+     */
     @Override
     public List<Ticket> findTicketsByTechnician(String login) throws Exception {
         LOGGER.info("Fetching tickets by technician");
@@ -364,6 +478,12 @@ public class Logic implements LogicInterface {
         return tickets;
     }
 
+    /**
+     * Finds all the users who have that login
+     * @param login user email
+     * @return a list of user who match with the login
+     * @throws Exception 
+     */
     @Override
     public List<User> findUserByLogin(String login) throws Exception {
         LOGGER.info("Fetching users by login");
@@ -379,6 +499,12 @@ public class Logic implements LogicInterface {
         return users;
     }
 
+    /**
+     * Updates a ticket and if ticket has technician then set up the ticket to the
+     * technician list of tickets
+     * @param ticket ticket with the data to update
+     * @throws Exception 
+     */
     @Override
     public void updateTicket(Ticket ticket) throws Exception {
         LOGGER.info("Updating ticket");

@@ -7,7 +7,8 @@ package com.tartangatickets.exceptions;
 
 /**
  *
- * @author ubuntu
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class NoTechnicianException extends Exception {
 

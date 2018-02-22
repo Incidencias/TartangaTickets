@@ -10,11 +10,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
- *
- * @author ubuntu
+ * 
+ * 
+ * Custom dialog with a given title and content
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
+
  */
 public final class DialogHelper extends Dialog{
     
+    /**
+     * Generate a dialog with personalized title and message
+     * @param title String the title of the dialog
+     * @param content String the message of the dialog
+     */
     public static void newInstance(String title,String content){
         Dialog dialog = new Dialog();
         dialog.setTitle(new Label(title));

@@ -23,9 +23,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 
 /**
- * FXML Controller class
- *
- * @author Sergio
+ * Handle the password modify window 
+ *  
+ *  <ul>
+ *      <li><strong>logic:</strong> Get the logic of the program from TartangaTickets</li>
+ *      <li><strong>sessionContent:</strong> HasMap from logic</li>
+ *      <li><strong>user:</strong> logged user from sessionContent</li>
+ *  </ul>
+ *  @author Sergio López, Iker Jon Mediavilla, Ionut Savin, Jon Zaballa
+ *  @version 1.0, Feb 21 2018
  */
 public class PassModifyController {
     
@@ -46,6 +52,11 @@ public class PassModifyController {
     private final HashMap sessionContent = logic.getSESSION_CONTENT();
     private final User user = (User) sessionContent.get("activeId");
 
+    /**
+     * First actions when initialize the window
+     * -Set up the AppBar
+     *
+     */
     public void initialize() {
         modificar_pass.setShowTransitionFactory(v -> new FadeInLeftBigTransition(v));
         modificar_pass.showingProperty().addListener((obs, oldValue, newValue) -> {
@@ -63,6 +74,9 @@ public class PassModifyController {
         });
     }
     
+    /**
+     * Modify the password changing it for the old one
+     */
     @FXML
     private void handleButtonModify(){
         if(!pfOldPass.getText().trim().isEmpty()&&!pfNewPass.getText().trim().isEmpty()&&!pfRepeatPass.getText().trim().isEmpty()){

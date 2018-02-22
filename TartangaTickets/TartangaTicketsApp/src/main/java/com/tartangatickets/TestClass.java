@@ -44,7 +44,7 @@ public class TestClass {
 //
 //        createTechnician();
 //
-        createAdmin();
+          createAdmin();
 //
 //        createTicket();
 //
@@ -229,13 +229,13 @@ public class TestClass {
 
     private static void createAdmin() {
         Credential credential = new Credential();
-        credential.setLogin("jzaballazarzosa@gmail.com");
+        credential.setLogin("catxser@gmail.com");
         User user = new Technician(
                 credential.getLogin(),
                 credential,
-                "Jon",
-                "Zaballa",
-                "Zarzosa",
+                "Sergio",
+                "López",
+                "Fuentefría",
                 new Department("INF", "Informática"),
                 null,
                 null,
