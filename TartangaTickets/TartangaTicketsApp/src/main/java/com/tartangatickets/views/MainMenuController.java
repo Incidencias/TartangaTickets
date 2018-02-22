@@ -60,11 +60,14 @@ public class MainMenuController{
                 appBar.setTitleText("Menú");
             }
             
-            if(user == null)
+            if (user == null)
                 user = (User) sessionContent.get("activeId");
 
-            if(user instanceof Technician && ((Technician)user).getIsAdmin()){
-                btShowUsers.setVisible(true);
+            if (user instanceof Technician) {
+                if (((Technician)user).getIsAdmin() != null)
+                    btShowUsers.setVisible(true);
+                else
+                    btShowUsers.setVisible(false);
             } else {
                 btShowUsers.setVisible(false);
             }
