@@ -65,8 +65,6 @@ public class TicketDetailController {
     @FXML
     private Button btnEditState;
     @FXML
-    private Button btnStore;
-    @FXML
     private ComboBox<Technician> comboTechnician;
     
     private final LogicInterface logic = TartangaTickets.LOGIC; 
@@ -95,16 +93,19 @@ public class TicketDetailController {
                 Button back = MaterialDesignIcon.ARROW_BACK.button();
                 back.setOnAction(event -> {
                     sessionContent.remove("ticketId");
+                    user = null;
                     MobileApplication.getInstance().switchView(TartangaTickets.TICKET_LIST_VIEW);
                 });
                 Button home = MaterialDesignIcon.HOME.button();
                 home.setOnAction(event -> {
                     sessionContent.remove("ticketId");
+                    user = null;
                     MobileApplication.getInstance().switchView(TartangaTickets.MAINMENU_VIEW);
                 });
                 Button store = MaterialDesignIcon.SAVE.button();
                 store.setOnAction(event -> {
                     updateTicket();
+                    user = null;
                     MobileApplication.getInstance().switchView(TartangaTickets.TICKET_LIST_VIEW);
                 });
                 appBar.setNavIcon(back);
@@ -120,8 +121,12 @@ public class TicketDetailController {
                 
                 if(!(user instanceof Technician)){
                     btnEditState.setVisible(false);
-                    btnStore.setVisible(false);
-                    comboTechnician.setEditable(true);
+                    store.setVisible(false);
+                    comboTechnician.setDisable(true);
+                } else {
+                    btnEditState.setVisible(true);
+                    store.setVisible(true);
+                    comboTechnician.setDisable(false);
                 }
             }
             if (comboTechnician.getItems().isEmpty())
